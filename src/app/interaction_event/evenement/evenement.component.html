@@ -1,0 +1,76 @@
+<br>
+<br>
+<div class="container">
+
+
+
+
+
+  <div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9">
+      <h2 class="text-center">Toutes les événements</h2>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6" *ngFor="let evt of evenements">
+          <div class="image-flip">
+            <div class="mainflip">
+
+              <div class="frontside">
+
+                <div class="card" [routerLink]="['/payement']">
+                  <div class="card-body">
+
+                    <div class="row">
+                      <div class="col-sm-4 " style="background-color:#DE6262 ;height: 200px;   position: relative;
+border-radius: 2%">
+
+                        <div class="centerDiv">
+                          <h4>{{evt.dateDebut|date}}</h4></div>
+
+
+                      </div>
+                      <div class="col-sm-8">
+                        <h4 class="card-title text-center">{{evt.titre}}</h4>
+                        <p class="card-text">
+
+                          {{evt.description}}</p>
+
+
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <!--       <div class="frontside">
+                         <div class="card">
+                           <div class="card-body text-center">
+                             <p><img class=" img-fluid"
+                                     src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png"
+                                     alt="card image"></p>
+                             <h4 class="card-title">{{evt.titre}}</h4>
+                             <p class="card-text">{{evt.description}}</p>
+                             <a class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                           </div>
+
+                         </div>
+
+
+                       </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card" *ngIf="calendarEvents.length>0">
+      <full-calendar
+        [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+    </div>
+  </div>
+</div>

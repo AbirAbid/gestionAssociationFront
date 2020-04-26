@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <img [src]=image alt="imageTest">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-uppercase" href="#">Qui sommes nous ? <span class="sr-only">(current)</span></a>
+      </li>
+
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="dropdown01" data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">Agir avec NOUS</a>
+        <div class="dropdown-menu text-uppercase" aria-labelledby="dropdown01">
+          <a class="dropdown-item " href="#">Devenir adhérent</a>
+          <a class="dropdown-item " href="#">Devenir bénévole</a>
+          <a class="dropdown-item " href="#">Donner des biens</a>
+
+        </div>
+
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-uppercase active" [routerLink]="['/evenementList']" tabindex="-1" aria-disabled="true">évenements</a>
+      </li>
+      <button class="btn btn-login float-right  mx-3 my-2 my-sm-0" [routerLink]="['/payement']">FAITES UN DON</button>
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0 ml-auto">
+
+      <button class="btn btn-outline-dark my-2 my-sm-0" *ngIf="!userService.isAuthenticated()"
+              [routerLink]="['/login']">S'authentifier
+      </button>
+
+      <button class="btn btn-outline-dark mx-3 my-sm-0" *ngIf="!userService.isAuthenticated()"
+              [routerLink]="['/inscription']">Inscription
+      </button>
+      <ul class="navbar-nav ml-auto" *ngIf="userService.isAuthenticated()">
+
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle pointer "
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false"
+             ngbDropdownToggle>
+            {{userService.getProfileCurrentUser().username.toLocaleUpperCase()}}
+
+            <i class="fa fa-user"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+            <a class="dropdown-item" routerLink="/account">
+              <i class="fas fa-user"></i> Mon profile
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" routerLink="/tabBord">
+              <i class="fas fa-table"></i> Tableau de Bord
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item pointer" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+          </div>
+        </li>
+
+
+      </ul>
+
+
+    </form>
+  </div>
+</nav>

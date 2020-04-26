@@ -1,0 +1,94 @@
+<!--
+<p>test works!</p>
+<br>
+<h1>{{variable}}</h1>
+<img [src]=image alt="imageTest">
+<button class="btn btn-info" (click)="hello(variable)"> hello</button>
+<div *ngFor="let b of booksList">
+
+  {{b}}
+</div>
+<div *ngIf="myCondition">
+  hello
+
+</div>
+<div *ngIf="booksList.length==0" class="alert alert-danger">
+  hi
+</div>
+<div class="container">
+  <table class="table border">
+    <div *ngIf="booksList.length==0" class="alert alert-danger"> vide!!</div>
+    <tr>
+      <th>livre</th>
+      <th>Nom</th>
+      <th>tel</th>
+      <th> delete</th>
+      <th> update</th>
+    </tr>
+    <tr *ngFor="let b of booksList">
+      <td> {{b.id}}</td>
+      <td> {{b.nom}}</td>
+      <td> {{b.phone}}</td>
+      <td>
+        <button class="btn btn-danger"> delete</button>
+      </td>
+      <td>
+        <button class="btn btn-info"> update</button>
+      </td>
+
+
+    </tr>
+
+  </table>
+  <table class="table border">
+    <div *ngIf="userlist.length==0" class="alert alert-danger"> vide!!</div>
+    <tr>
+      <th>livre</th>
+      <th>Nom</th>
+      <th>tel</th>
+      <th> delete</th>
+      <th> update</th>
+    </tr>
+    <tr *ngFor="let b of userlist">
+      <td> {{b.id}}</td>
+      <td> {{b.name}}</td>
+      <td> {{b.phone}}</td>
+      <td>
+        <button class="btn btn-danger"> delete</button>
+      </td>
+      <td>
+        <button class="btn btn-info"> update</button>
+      </td>
+
+
+    </tr>
+
+  </table>
+</div>
+-->
+<br>
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="add()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="firstname"> FirstName</label>
+        <input type="text" name="firstname" id="firstname" formControlName="firstname" class="form-control">
+        <div *ngIf="firstname.invalid && firstname.touched">
+          <small *ngIf="firstname.errors.required" class="text-danger"> required !!! </small>
+          <small *ngIf="firstname.errors.pattern" class="text-danger"> pattern !!! </small>
+          <small *ngIf="firstname.errors.minlength" class="text-danger"> minlength !!! </small>
+
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- <label for="a"> FirstName</label>
+     <input type="text" name="a" id="a" formControlName="a"><br>
+     <label for="b"> FirstName</label>
+     <input type="text" name="b" id="b" formControlName="b"><br>
+     <label for="c"> FirstName</label>
+     <input type="text" name="c" id="c" formControlName="c">-->
+
+    <input type="submit" value="send" [disabled]="myForm.invalid">
+  </form>
+</div>
