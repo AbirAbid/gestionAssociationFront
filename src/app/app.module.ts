@@ -29,6 +29,9 @@ import {EspaceAdherentComponent} from './tableau_bord/espace-adherent/espace-adh
 import {DonsBiensComponent} from './tableau_bord/dons-biens/dons-biens.component';
 import {ActivBenevoleComponent} from './tableau_bord/activ-benevole/activ-benevole.component';
 import {InscriptionEventComponent} from './tableau_bord/inscription-event/inscription-event.component';
+import { DonnerBiensComponent } from './interaction_event/donner-biens/donner-biens.component';
+import { DevenirBenevoleComponent } from './interaction_event/devenir-benevole/devenir-benevole.component';
+import { DevenirAdherentComponent } from './interaction_event/devenir-adherent/devenir-adherent.component';
 
 
 @NgModule({
@@ -49,7 +52,10 @@ import {InscriptionEventComponent} from './tableau_bord/inscription-event/inscri
     EspaceAdherentComponent,
     DonsBiensComponent,
     ActivBenevoleComponent,
-    InscriptionEventComponent
+    InscriptionEventComponent,
+    DonnerBiensComponent,
+    DevenirBenevoleComponent,
+    DevenirAdherentComponent
   ],
   /*imports array enesemble des libraries */
   imports: [

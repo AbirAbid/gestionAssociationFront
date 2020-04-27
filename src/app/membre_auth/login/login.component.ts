@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
             this.isLoggedIn = true;
             console.log('userService', this.userService);
             this.router.navigate(['/']);
-            this.toastr.success('Welcome', currentUser.profile.username);
+            this.toastr.success('Content de vous revoir  !', currentUser.profile.username);
           }
         } catch (ex) {
           console.log(ex);
