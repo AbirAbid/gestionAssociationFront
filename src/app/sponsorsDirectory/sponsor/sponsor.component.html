@@ -1,7 +1,44 @@
-<div *ngFor="let sp of sponsors">
-  {{sp.titreSponsor}}
-  {{sp.emailSponsor}}
-  {{sp.photoSponsor}}
+<br>
+<table class="table ">
+
+  <!--Table head-->
+  <thead>
+  <tr>
+    <th>
+      <div style="text-align: center;">Nom sponsor</div>
+    </th>
+    <th>
+      <div style="text-align: center;">Email</div>
+    </th>
+    <th>
+      <div style="text-align: center;">PhotoSponsor</div>
+    </th>
+
+  </tr>
+  </thead>
+  <!--Table head-->
+
+  <!--Table body-->
+  <tbody *ngFor="let sp of sponsors">
+  <tr>
+    <td>
+      <div style="text-align: center;"> {{sp.titreSponsor}}
+
+      </div>
+    </td>
+    <td>
+      <div style="text-align: center;">{{sp.emailSponsor}}</div>
+    </td>
+    <td>
+      <div style="text-align: center;">{{sp.photoSponsor}}</div>
+    </td>
+  
+
+  </tr>
+
+  </tbody>
+  <!--Table body-->
 
 
-</div>
+</table>
+<!--Table-->
