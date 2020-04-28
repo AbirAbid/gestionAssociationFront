@@ -8,16 +8,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" [formGroup]="myForm" (ngSubmit)="getAllBienByRegion()">
         <label class="mr-sm-2">Région </label>
-        <select name="region" class="form-control mr-sm-2" id="selectRegion">
-          <option value="Tunisie" selected>Tunisie</option>
+        <select class="form-control mr-sm-2" name="region" name="region" formControlName="region">
+          <option value="Tunisie">Tunisie</option>
           <option value="Ariana">Ariana</option>
           <option value="Béja">Béja</option>
           <option value="BenArous">Ben Arous</option>
           <option value="Bizerte">Bizerte</option>
           <option value="Gabès">Gabès</option>
           <option value="Gafsa">Gafsa</option>
+          <option value="Sousse">Sousse</option>
           <option value="Jendouba">Jendouba</option>
           <option value="Kairouan">Kairouan</option>
           <option value="Kasserine">Kasserine</option>
@@ -37,11 +38,20 @@
           <option value="Tunis">Tunis</option>
           <option value="Zaghouan">Zaghouan</option>
         </select>
-        <button class="btn btn-login" title="chercher par région"> Chercher</button>
+        <button class="btn btn-login" title="chercher par région"><i class="fas fa-search"></i></button>
       </form>
     </div>
   </nav>
+  <br>
+  <div class="alert alert-warning" role="alert" *ngIf="show">
+    Filtres actif Région sélectionnée: <span class="badge badge-pill badge-warning"> {{region.value}}</span>
 
+    <button (click)="load()" type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+
+  </div>
   <div class="login-sec">
     <h2 class="text-center">Nous soutenir
 
@@ -72,7 +82,13 @@
     <!--Table head-->
 
     <!--Table body-->
-    <tbody *ngFor="let bien of listBien">
+    <tbody *ngFor="let bien of listBien | paginate:{
+    id:'listing_pagination',
+    itemsPerPage:10,
+    currentPage:page,
+    totalItems:totalRecords
+
+    }">
     <tr>
       <td>
         <div style="text-align: center;">{{bien.titreBien}}</div>
@@ -81,10 +97,10 @@
         <div style="text-align: center;">{{bien.qte}}</div>
       </td>
       <td>
-        <div style="text-align: center;">{{bien.evenement.titre}}</div>
+        <div style="text-align: center;" > <a [routerLink]="['/devenirBenevole']">{{bien.evenement.titre}}</a></div>
       </td>
       <td>
-        <div style="text-align: center;"><input type="number" class="form-control"></div>
+        <div style="text-align: center;"><input type="number" class="form-control "></div>
       </td>
       <td>
         <div style="text-align: center;">
@@ -100,4 +116,17 @@
 
   </table>
   <!--Table-->
+
+  <div style="text-align: center;">
+    <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                         previousLabel="Précédent"
+                         nextLabel="Suivant"
+                         (pageChange)="page=$event"></pagination-controls>
+
+  </div>
 </div>
+<style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: #DE6262;
+  }
+</style>

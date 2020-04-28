@@ -31,7 +31,8 @@ export class TestComponent implements OnInit {
     let formContrls = {
       // all validators to input firstname
       firstname: new FormControl('', [Validators.required,
-        Validators.minLength(2), Validators.pattern('[a-z . , -]+')])
+        Validators.minLength(2), Validators.pattern('[a-z . , -]+')]),
+      region: new FormControl()
     };
     // relie formGrp + formControl
     this.myForm = this.fb.group(formContrls);
@@ -42,8 +43,14 @@ export class TestComponent implements OnInit {
     return this.myForm.get('firstname');
   }
 
+  get region() {
+    return this.myForm.get('region');
+  }
+
   add() {
     console.log('this.myForm.value', this.myForm.value);
+    console.log('this.region', this.region.value);
+
     /* console.log(this.myForm.get('v').value);
      console.log(' ', this.myForm.get('v'));
      return this.myForm.get('v');*/

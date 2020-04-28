@@ -14,4 +14,8 @@ export class BiensService {
   getAllBien(): Observable<any> {
     return this.http.get(environment.baseUrl + 'listBien');
   }
+
+  getAllBienRegion(ville: string): Observable<any> {
+    return this.http.get(environment.baseUrl + 'listBienRegion/' + ville);
+  }
 }

@@ -27,6 +27,7 @@
     "@mobiscroll/angular-lite": "^4.10.2",
     "@syncfusion/ej2-angular-schedule": "^18.1.44",
     "bs-stepper": "^1.7.0",
+    "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^12.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

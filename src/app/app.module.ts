@@ -29,10 +29,11 @@ import {EspaceAdherentComponent} from './tableau_bord/espace-adherent/espace-adh
 import {DonsBiensComponent} from './tableau_bord/dons-biens/dons-biens.component';
 import {ActivBenevoleComponent} from './tableau_bord/activ-benevole/activ-benevole.component';
 import {InscriptionEventComponent} from './tableau_bord/inscription-event/inscription-event.component';
-import { DonnerBiensComponent } from './interaction_event/donner-biens/donner-biens.component';
-import { DevenirBenevoleComponent } from './interaction_event/devenir-benevole/devenir-benevole.component';
-import { DevenirAdherentComponent } from './interaction_event/devenir-adherent/devenir-adherent.component';
-
+import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-biens.component';
+import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/devenir-benevole.component';
+import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {MbscModule} from "@mobiscroll/angular-lite";
 
 @NgModule({
   /* declarations array ensemble des compons utilisée*/
@@ -76,7 +77,9 @@ import { DevenirAdherentComponent } from './interaction_event/devenir-adherent/d
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    NgxPaginationModule,
+    MbscModule
 
   ],
 

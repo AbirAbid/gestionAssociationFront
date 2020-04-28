@@ -71,6 +71,19 @@
   <form [formGroup]="myForm" (ngSubmit)="add()">
     <div class="form-row">
       <div class="form-group">
+        <select name="region" name="region"  formControlName="region" class="form-control">>
+          <option value="Tunisie" selected>Tunisie</option>
+          <option value="Ariana">Ariana</option>
+          <option value="Béja">Béja</option>
+          <option value="BenArous">Ben Arous</option>
+          <option value="Bizerte">Bizerte</option>
+          <option value="Gabès">Gabès</option>
+          <option value="Gafsa">Gafsa</option>
+          <option value="Sousse">Sousse</option>
+
+
+        </select>
+
         <label for="firstname"> FirstName</label>
         <input type="text" name="firstname" id="firstname" formControlName="firstname" class="form-control">
         <div *ngIf="firstname.invalid && firstname.touched">
