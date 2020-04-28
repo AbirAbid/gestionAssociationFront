@@ -1,1 +1,56 @@
-<p>donner-biens works!</p>
+<br>
+<div class="container card">
+  <table class="table  ">
+
+    <!--Table head-->
+    <thead>
+    <tr>
+      <th>
+        <div style="text-align: center;">Titre Bien</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Quantité demandée</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Évenement</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Votre Don</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Donner</div>
+      </th>
+    </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody *ngFor="let bien of listBien">
+    <tr>
+      <td>
+        <div style="text-align: center;">{{bien.titreBien}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;">{{bien.qte}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;">{{bien.evenement.titre}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;"><input type="number" class="form-control"></div>
+      </td>
+      <td>
+        <div style="text-align: center;">
+          <button class="btn btn-login" title="Donner"><i class="fas fa-hand-holding-medical	"></i></button>
+        </div>
+      </td>
+
+    </tr>
+
+    </tbody>
+    <!--Table body-->
+
+
+  </table>
+  <!--Table-->
+</div>
