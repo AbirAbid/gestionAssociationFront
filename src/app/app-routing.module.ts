@@ -15,7 +15,8 @@ import {ActivBenevoleComponent} from './tableau_bord/activ-benevole/activ-benevo
 import {InscriptionEventComponent} from './tableau_bord/inscription-event/inscription-event.component';
 import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/devenir-benevole.component';
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
-import {DonnerBiensComponent} from "./interaction_event/donner-biens/donner-biens.component";
+import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-biens.component';
+import {EventDetailComponent} from "./interaction_event/event-detail/event-detail.component";
 
 
 const routes: Routes = [
@@ -88,6 +89,11 @@ const routes: Routes = [
   {
     path: 'donnerBien',
     component: DonnerBiensComponent
+
+  },
+  {
+    path: 'eventDetail',
+    component: EventDetailComponent
 
   },
   {

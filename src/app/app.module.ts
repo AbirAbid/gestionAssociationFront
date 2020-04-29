@@ -34,6 +34,7 @@ import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/dev
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MbscModule} from "@mobiscroll/angular-lite";
+import { EventDetailComponent } from './interaction_event/event-detail/event-detail.component';
 
 @NgModule({
   /* declarations array ensemble des compons utilisée*/
@@ -56,7 +57,8 @@ import {MbscModule} from "@mobiscroll/angular-lite";
     InscriptionEventComponent,
     DonnerBiensComponent,
     DevenirBenevoleComponent,
-    DevenirAdherentComponent
+    DevenirAdherentComponent,
+    EventDetailComponent
   ],
   /*imports array enesemble des libraries */
   imports: [

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../membre_auth/services/user.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
 
   // LOGO = require ('../images/logoProx-ConvertImage.jpg');
 
-  constructor(public userService: UserService, private router: Router) {
+  constructor(public userService: UserService, private router: Router, private toastr: ToastrService) {
     const currentUser = JSON.parse(localStorage.getItem('CUREENT_USER'));
     console.log('currentUser ', currentUser);
 
@@ -31,6 +32,8 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
+    this.toastr.info('Déconnexion!');
+
   }
 }

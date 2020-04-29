@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BiensService} from '../services/biens.service';
+import {BiensService} from '../services/bien-service/biens.service';
 import {Bien} from '../models/Bien';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 

@@ -57,7 +57,7 @@
 
     </h2>
   </div>
-  <table class="table ">
+  <table class="table table-bordered">
 
     <!--Table head-->
     <thead>
@@ -97,7 +97,7 @@
         <div style="text-align: center;">{{bien.qte}}</div>
       </td>
       <td>
-        <div style="text-align: center;" > <a [routerLink]="['/devenirBenevole']">{{bien.evenement.titre}}</a></div>
+        <div style="text-align: center;"><a [routerLink]="['/devenirBenevole']">{{bien.evenement.titre}}</a></div>
       </td>
       <td>
         <div style="text-align: center;"><input type="number" class="form-control "></div>
@@ -121,6 +121,7 @@
     <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
                          previousLabel="Précédent"
                          nextLabel="Suivant"
+                         responsive
                          (pageChange)="page=$event"></pagination-controls>
 
   </div>

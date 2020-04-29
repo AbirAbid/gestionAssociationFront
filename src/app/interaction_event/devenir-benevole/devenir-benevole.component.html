@@ -1,1 +1,130 @@
-<p>devenir-benevole works!</p>
+<br>
+
+<div class="container card  ">
+  <br>
+
+  <nav class="navbar navbar-expand-lg border rounded">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <form class="form-inline my-2 my-lg-0" [formGroup]="myForm" (ngSubmit)="getAllMissionByRegion()">
+        <label class="mr-sm-2">Région </label>
+        <select class="form-control mr-sm-2" name="region" name="region" formControlName="region">
+          <option value="Tunisie">Tunisie</option>
+          <option value="Ariana">Ariana</option>
+          <option value="Béja">Béja</option>
+          <option value="BenArous">Ben Arous</option>
+          <option value="Bizerte">Bizerte</option>
+          <option value="Gabès">Gabès</option>
+          <option value="Gafsa">Gafsa</option>
+          <option value="Sousse">Sousse</option>
+          <option value="Jendouba">Jendouba</option>
+          <option value="Kairouan">Kairouan</option>
+          <option value="Kasserine">Kasserine</option>
+          <option value="Kébili">Kébili</option>
+          <option value="LeKef"> Le Kef</option>
+          <option value="Mahdia">Mahdia</option>
+          <option value="LaManouba">La Manouba</option>
+          <option value="Médenine">Médenine</option>
+          <option value="Monastir">Monastir</option>
+          <option value="Nabeul">Nabeul</option>
+          <option value="Sfax">Sfax</option>
+          <option value="SidiBouzid">Sidi Bouzid</option>
+          <option value="Siliana">Siliana</option>
+          <option value="Sousse">Sousse</option>
+          <option value="Tataouine">Tataouine</option>
+          <option value="Tozeur">Tozeur</option>
+          <option value="Tunis">Tunis</option>
+          <option value="Zaghouan">Zaghouan</option>
+        </select>
+        <button class="btn btn-login" title="chercher par région"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+  </nav>
+  <br>
+  <div class="alert alert-warning" role="alert" *ngIf="show">
+    Filtres actif Région sélectionnée: <span class="badge badge-pill badge-warning"> {{region.value}}</span>
+
+    <button (click)="load()" type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+
+  </div>
+  <div class="login-sec">
+    <h2 class="text-center">Devenir bénévole une bonne idée
+
+    </h2>
+  </div>
+  <table class="table table-bordered">
+
+    <!--Table head-->
+    <thead>
+    <tr>
+      <th>
+        <div style="text-align: center;">Titre Mission</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Déscription</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Évenement</div>
+      </th>
+
+      <th>
+        <div style="text-align: center;">Postuler</div>
+      </th>
+    </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody *ngFor="let missionBenevole of listMission | paginate:{
+    id:'listing_pagination',
+    itemsPerPage:10,
+    currentPage:page,
+    totalItems:totalRecords
+
+    }">
+    <tr>
+      <td>
+        <div style="text-align: center;">{{missionBenevole.titre}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;">{{missionBenevole.description}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;"><a [routerLink]="['/devenirBenevole']">{{missionBenevole.evenement.titre}}</a>
+        </div>
+      </td>
+
+      <td>
+        <div style="text-align: center;">
+          <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
+        </div>
+      </td>
+
+    </tr>
+
+    </tbody>
+    <!--Table body-->
+
+
+  </table>
+  <!--Table-->
+
+  <div style="text-align: center;">
+    <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                         previousLabel="Précédent"
+                         nextLabel="Suivant"
+                         responsive
+                         (pageChange)="page=$event"></pagination-controls>
+
+  </div>
+</div>
+<style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: #DE6262;
+  }
+</style>

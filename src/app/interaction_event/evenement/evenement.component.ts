@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {EventService} from '../services/event.service';
+import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {toTitleCase} from 'codelyzer/util/utils';
