@@ -3,9 +3,6 @@
 <div class="container">
 
 
-
-
-
   <div class="row">
     <div class="col-xs-9 col-sm-9 col-md-9">
       <h2 class="text-center">Toutes les événements</h2>
@@ -16,7 +13,7 @@
 
               <div class="frontside">
 
-                <div class="card" [routerLink]="['/eventDetail']">
+                <div class="card" (click)="eventDetail(evt.id)">
                   <div class="card-body">
 
                     <div class="row">

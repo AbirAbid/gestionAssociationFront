@@ -1,4 +1,5 @@
 export class Evenement {
+  id: number;
   titre: string;
   description: string;
   dateDebut: string;

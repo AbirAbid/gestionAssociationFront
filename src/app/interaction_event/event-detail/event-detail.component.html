@@ -3,6 +3,41 @@
 <div class="container card  ">
   <br>
 
+  <p></p><br>
+  <h2> The information about the created tasks. </h2>
+
+  <hr/>
+  <div *ngIf="event" class="container">
+    <div>
+      <label><b> ID : </b></label> {{event.id}}
+    </div>
+    <div>
+      <label><b> Title: </b></label> {{event.titre}}
+    </div>
+    <div>
+      <label><b> Description: </b></label> {{event.description}}
+    </div>
+    <div>
+      <label><b>Start date: </b></label> {{event.dateDebut |date}}
+    </div>
+    <div>
+      <label><b>End date : </b></label> {{event.dateFin | date}}
+    </div>
+    <div>
+      <label><b>State : </b></label> {{event.frais}}
+    </div>
+
+    <div>
+
+      <div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"

@@ -92,7 +92,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'eventDetail',
+    path: 'eventDetail/:id',
     component: EventDetailComponent
 
   },

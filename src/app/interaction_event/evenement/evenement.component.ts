@@ -36,26 +36,11 @@ export class EvenementComponent implements OnInit {
 
 
     });
+  }
 
-
-    /*
-        this.eventService.getAllEvent().subscribe((data) => {
-          this.events = data;
-          console.log('this.events', this.events);
-
-          /!*  for (let index = 0 ; index < this.taskAffect.users.length ; index++)
-            { if (this.taskAffect.users[index].roles[0].name == 'ROLE_TECHNICIEN') {
-              listRoleTech.push(this.taskAffect.users[index]);} }
-            return listRoleTech;
-          }*!/
-          // tslint:disable-next-line:prefer-for-of
-          for (let index = 0; index < this.events.length; index++) {
-            this.calendarEvents.push({title: this.events[index].titre, date: this.events[index].dateDebut});
-          }
-          console.log('this.calendarEvents,', this.calendarEvents);
-
-        });*/
-
+  eventDetail(id: number) {
+    //[routerLink]="['/eventDetail']
+    this.router.navigate(['eventDetail', id]);
 
   }
 }
