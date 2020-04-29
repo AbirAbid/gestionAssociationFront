@@ -1,60 +1,151 @@
 <br>
 
-<div class="container card  ">
+<div class="container card" *ngIf="event">
   <br>
 
-  <p></p><br>
-  <h2> The information about the created tasks. </h2>
+  <div style="text-align: center;"><h2>  {{event.titre}} </h2></div>
 
   <hr/>
-  <div *ngIf="event" class="container">
-    <div>
-      <label><b> ID : </b></label> {{event.id}}
-    </div>
-    <div>
-      <label><b> Title: </b></label> {{event.titre}}
-    </div>
-    <div>
-      <label><b> Description: </b></label> {{event.description}}
-    </div>
-    <div>
-      <label><b>Start date: </b></label> {{event.dateDebut |date}}
-    </div>
-    <div>
-      <label><b>End date : </b></label> {{event.dateFin | date}}
-    </div>
-    <div>
-      <label><b>State : </b></label> {{event.frais}}
-    </div>
-
-    <div>
-
-      <div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <p><strong>Déscription :</strong> {{event.description}} </p>
 
 
       </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-6"><i class="fas fa-clock"></i><strong> Quand? :</strong>
+            {{event.dateDebut | date}}
+          </div>
+          <div class="col-sm-6"><i class="fas fa-map-marked-alt"></i> <strong> Où? : </strong>
+            {{event.ville}} à {{event.adresse}}
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="event.frais">
+          <div class="col-sm-6">
+            <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
+          </div>
+          <div class="col-sm-6">
+            <span class="badge badge-danger">Inscription obligatoire</span></div>
+        </div>
 
+
+      </div>
+    </div>
+    <br>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+           aria-selected="true">Besoin des biens </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+           aria-selected="false"> Activités bénévoles </a>
+      </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <br>
+        <table class="table table-bordered" *ngIf="biens">
+
+          <!--Table head-->
+          <thead class="table-active rounded">
+          <tr>
+            <th>
+              <div style="text-align: center;">Titre Bien</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Quantité demandée</div>
+            </th>
+
+            <th>
+              <div style="text-align: center;">Votre Don</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Donner</div>
+            </th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody *ngFor="let b of biens">
+          <tr>
+            <td>
+              <div style="text-align: center;">{{b.titreBien}}</div>
+            </td>
+            <td>
+              <div style="text-align: center;">{{b.qte}}</div>
+            </td>
+
+            <td>
+              <div style="text-align: center;"><input type="number" class="form-control "></div>
+            </td>
+            <td>
+              <div style="text-align: center;">
+                <button class="btn btn-login" title="Donner"><i class="fas fa-hand-holding-medical	"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="missions">
+        <br>
+        <table class="table table-bordered ">
+
+          <!--Table head-->
+          <thead class="table-active ">
+          <tr>
+            <th>
+              <div style="text-align: center;">Titre Mission</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Déscription</div>
+            </th>
+
+
+            <th>
+              <div style="text-align: center;">Postuler</div>
+            </th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody *ngFor="let m of missions">
+          <tr>
+            <td>
+              <div style="text-align: center;">{{m.titre}}</div>
+            </td>
+            <td>
+              <div style="text-align: center;">{{m.description}}</div>
+            </td>
+
+
+            <td>
+              <div style="text-align: center;">
+                <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
+              </div>
+            </td>
+
+          </tr>
+
+          </tbody>
+          <!--Table body-->
+
+
+        </table>
+
+      </div>
     </div>
   </div>
-
-
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-         aria-selected="true">Événement </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-         aria-selected="false">Besoin des biens</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-         aria-selected="false">Activités bénévoles</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">kdskdsd</div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">..fdsf.</div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.dfds..</div>
-  </div>
-</div>
