@@ -50,7 +50,10 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <br>
+
+
         <table class="table table-bordered" *ngIf="biens">
+          <small *ngIf="greater" class="text-danger"> required !!! </small>
 
           <!--Table head-->
           <thead class="table-active rounded">
@@ -65,38 +68,46 @@
             <th>
               <div style="text-align: center;">Votre Don</div>
             </th>
-            <th>
-              <div style="text-align: center;">Donner</div>
-            </th>
+
           </tr>
           </thead>
           <!--Table head-->
 
-          <!--Table body-->
+
           <tbody *ngFor="let b of biens">
           <tr>
             <td>
-              <div style="text-align: center;">{{b.titreBien}}</div>
+              <div style="text-align: center;">{{b.id}}**{{b.titreBien}}</div>
             </td>
             <td>
               <div style="text-align: center;">{{b.qte}}</div>
             </td>
 
             <td>
-              <div style="text-align: center;"><input type="number" class="form-control "></div>
-            </td>
-            <td>
               <div style="text-align: center;">
-                <button class="btn btn-login" title="Donner"><i class="fas fa-hand-holding-medical	"></i></button>
+                <form [formGroup]="myForm" (ngSubmit)="addParticipation(b)">
+                  <input type="number" class="form-control " name="qtedonnee"
+                         id="qtedonnee" formControlName="qtedonnee">
+                  <div style="text-align: center;">
+                    <button type="submit" class="btn btn-login" title="Donner"><i
+                      class="fas fa-hand-holding-medical	"></i></button>
+                  </div>
+
+
+                </form>
+
+
               </div>
             </td>
+
+
           </tr>
 
           </tbody>
           <!--Table body-->
 
-
         </table>
+
 
       </div>
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="missions">
@@ -143,9 +154,8 @@
           </tbody>
           <!--Table body-->
 
-
         </table>
-
       </div>
     </div>
   </div>
+</div>

@@ -102,7 +102,7 @@ export class UserService {
   }
 
 
-  updateUser(id: number, value: any): Observable<Object> {
+  updateUser(id: number, value: any): Observable<any> {
     this.result = true;
     return this.http.put(this.baseUrl + 'users/' + id, value);
 
@@ -112,8 +112,8 @@ export class UserService {
     return this.http.get(this.baseUrl + 'users');
   }
 
-  getUserById(id: number): Observable<any> {
-    return this.http.get(this.baseUrl + 'users/' + id);
+  getUserByUsername(username: string): Observable<any> {
+    return this.http.get(environment.baseUrl + 'getUser/' + username);
   }
 
   signUp(user: User): Observable<string> {

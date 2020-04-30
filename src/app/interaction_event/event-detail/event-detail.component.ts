@@ -3,7 +3,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import {Bien} from '../models/Bien';
-import {MissionBenevole} from "../models/MissionBenevole";
+import {MissionBenevole} from '../models/MissionBenevole';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {UserService} from '../../membre_auth/services/user.service';
+import {BiensService} from '../services/bien-service/biens.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-event-detail',
@@ -16,9 +20,22 @@ export class EventDetailComponent implements OnInit {
   event: Evenement = new Evenement();
   biens: Bien[] = [];
   missions: MissionBenevole[] = [];
+  participerBienForm: any;
+  participerBien: any;
+  myForm: FormGroup;
+  greater = false;
 
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder, private userService: UserService, private biensService: BiensService, private toastr: ToastrService) {
+    const formContrls = {
+      // all validators to input firstname
+      qtedonnee: new FormControl()
+    };
+    // relie formGrp + formControl
+    this.myForm = this.fb.group(formContrls);
+  }
 
-  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService) {
+  get qtedonnee() {
+    return this.myForm.get('qtedonnee');
   }
 
   ngOnInit(): void {
@@ -41,6 +58,27 @@ export class EventDetailComponent implements OnInit {
 
   }
 
+  addParticipation(b: Bien) {
+    if (b.qte < this.qtedonnee.value) {
+      this.greater = true;
+    } else {
+      this.participerBien = {};
+      this.participerBienForm = {};
+      const username = this.userService.getProfileCurrentUser().username;
+      this.participerBien.qteDonnee = this.qtedonnee.value;
+      this.participerBienForm.bien = b;
+      this.participerBienForm.participerBien = this.participerBien;
+
+      console.log(' this.participerBienForm', this.participerBienForm);
+
+      this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
+        console.log('data', data);
+      }, error => console.log(error));
+
+      this.toastr.success('Merci de votre aide');
+    }
+  }
 }
+
 
 
