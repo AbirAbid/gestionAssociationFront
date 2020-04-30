@@ -4,5 +4,6 @@ export class Bien {
   id: number;
   titreBien: string;
   qte: number;
+  qteDonnee: number;
   evenement: Evenement;
 }

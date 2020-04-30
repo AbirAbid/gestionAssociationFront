@@ -48,20 +48,30 @@ export class EventDetailComponent implements OnInit {
         this.event = data;
       }, error => console.log(error));
 
-    this.eventService.getAllBienByEvent(this.id).subscribe(data => {
-      this.biens = data;
-    }, error => console.log(error));
 
+    this.getAllBien();
+
+    this.getAllMission();
+  }
+
+  getAllMission() {
     this.eventService.getAllMissionByEvent(this.id).subscribe(data => {
       this.missions = data;
     }, error => console.log(error));
+  }
 
+  getAllBien() {
+    this.eventService.getAllBienByEvent(this.id).subscribe(data => {
+      this.biens = data;
+    }, error => console.log(error));
   }
 
   addParticipation(b: Bien) {
-    if (b.qte < this.qtedonnee.value) {
+    if (b.qte < this.qtedonnee.value + b.qteDonnee) {
       this.greater = true;
     } else {
+      this.greater = false;
+
       this.participerBien = {};
       this.participerBienForm = {};
       const username = this.userService.getProfileCurrentUser().username;
@@ -74,8 +84,10 @@ export class EventDetailComponent implements OnInit {
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
         console.log('data', data);
       }, error => console.log(error));
-
       this.toastr.success('Merci de votre aide');
+
+      //this.getAllBien();
+
     }
   }
 }

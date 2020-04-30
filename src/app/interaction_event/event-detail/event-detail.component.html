@@ -53,7 +53,7 @@
 
 
         <table class="table table-bordered" *ngIf="biens">
-          <small *ngIf="greater" class="text-danger"> required !!! </small>
+          <small *ngIf="greater" class="text-danger"> Vous avez dépassé la quantité restante!!! </small>
 
           <!--Table head-->
           <thead class="table-active rounded">
@@ -62,7 +62,13 @@
               <div style="text-align: center;">Titre Bien</div>
             </th>
             <th>
-              <div style="text-align: center;">Quantité demandée</div>
+              <div style="text-align: center;">Quantités demandées</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Totale Quantités données</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Quantités Restantes</div>
             </th>
 
             <th>
@@ -82,16 +88,22 @@
             <td>
               <div style="text-align: center;">{{b.qte}}</div>
             </td>
-
+            <td>
+              <div style="text-align: center;">{{b.qteDonnee}}</div>
+            </td>
+            <td>
+              <div style="text-align: center;">{{b.qte - b.qteDonnee}}</div>
+            </td>
             <td>
               <div style="text-align: center;">
-                <form [formGroup]="myForm" (ngSubmit)="addParticipation(b)">
-                  <input type="number" class="form-control " name="qtedonnee"
-                         id="qtedonnee" formControlName="qtedonnee">
-                  <div style="text-align: center;">
-                    <button type="submit" class="btn btn-login" title="Donner"><i
-                      class="fas fa-hand-holding-medical	"></i></button>
-                  </div>
+                <form [formGroup]="myForm" (ngSubmit)="addParticipation(b)" class="form-inline my-2 my-lg-0">
+
+                  <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 " name="qtedonnee"
+                         id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
+                  <button class="btn btn-login my-2 my-sm-0" title="Donner" type="submit"
+                          [disabled]="b.qte==b.qteDonnee"><i
+                    class="fas fa-hand-holding-medical"></i>
+                  </button>
 
 
                 </form>
