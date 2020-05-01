@@ -68,7 +68,7 @@
               <div style="text-align: center;">Totale Quantités données</div>
             </th>
             <th>
-              <div style="text-align: center;">Quantités Restantes</div>
+              <div style="text-align: center;">Reste </div>
             </th>
 
             <th>
@@ -89,10 +89,10 @@
               <div style="text-align: center;">{{b.qte}}</div>
             </td>
             <td>
-              <div style="text-align: center;">{{b.qteDonnee}}</div>
+              <div style="text-align: center;">{{b.totaleqteDonnee}}</div>
             </td>
             <td>
-              <div style="text-align: center;">{{b.qte - b.qteDonnee}}</div>
+              <div style="text-align: center;">{{b.qte - b.totaleqteDonnee}}</div>
             </td>
             <td>
               <div style="text-align: center;">
@@ -101,7 +101,7 @@
                   <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 " name="qtedonnee"
                          id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
                   <button class="btn btn-login my-2 my-sm-0" title="Donner" type="submit"
-                          [disabled]="b.qte==b.qteDonnee"><i
+                          [disabled]="b.qte==b.totaleqteDonnee"><i
                     class="fas fa-hand-holding-medical"></i>
                   </button>
 

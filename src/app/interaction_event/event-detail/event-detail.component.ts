@@ -67,17 +67,15 @@ export class EventDetailComponent implements OnInit {
   }
 
   addParticipation(b: Bien) {
-    if (b.qte < this.qtedonnee.value + b.qteDonnee) {
+    if (b.qte < this.qtedonnee.value + b.totaleqteDonnee) {
       this.greater = true;
     } else {
       this.greater = false;
 
-      this.participerBien = {};
       this.participerBienForm = {};
       const username = this.userService.getProfileCurrentUser().username;
-      this.participerBien.qteDonnee = this.qtedonnee.value;
+      this.participerBienForm.qteDon = this.qtedonnee.value;
       this.participerBienForm.bien = b;
-      this.participerBienForm.participerBien = this.participerBien;
 
       console.log(' this.participerBienForm', this.participerBienForm);
 
@@ -85,9 +83,6 @@ export class EventDetailComponent implements OnInit {
         console.log('data', data);
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');
-
-      //this.getAllBien();
-
     }
   }
 }
