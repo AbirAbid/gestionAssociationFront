@@ -68,7 +68,7 @@
               <div style="text-align: center;">Totale Quantités données</div>
             </th>
             <th>
-              <div style="text-align: center;">Reste </div>
+              <div style="text-align: center;">Reste</div>
             </th>
 
             <th>
@@ -96,7 +96,7 @@
             </td>
             <td>
               <div style="text-align: center;">
-                <form [formGroup]="myForm" (ngSubmit)="addParticipation(b)" class="form-inline my-2 my-lg-0">
+                <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)" class="form-inline my-2 my-lg-0">
 
                   <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 " name="qtedonnee"
                          id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
@@ -157,7 +157,13 @@
 
             <td>
               <div style="text-align: center;">
-                <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
+                <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
+
+                  <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
+                  <button *ngIf="participMission.enAttente==1" class="btn btn-login" title="EnAttente"><i
+                    class="fas fa-hands-helping"></i></button>
+
+                </form>
               </div>
             </td>
 

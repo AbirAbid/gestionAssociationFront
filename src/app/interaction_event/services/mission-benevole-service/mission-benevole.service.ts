@@ -19,4 +19,9 @@ export class MissionBenevoleService {
   getAllMissionRegion(ville: string): Observable<any> {
     return this.http.get(environment.baseUrl + 'listMissionBenevoleRegion/' + ville);
   }
+
+  /**** Demande Mission*****/
+  demandeMission(participerMissionForm: any, username: string): Observable<any> {
+    return this.http.post<string>(environment.baseUrl + 'participerMission/' + username, participerMissionForm);
+  }
 }

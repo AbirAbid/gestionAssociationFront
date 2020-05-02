@@ -8,6 +8,8 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UserService} from '../../membre_auth/services/user.service';
 import {BiensService} from '../services/bien-service/biens.service';
 import {ToastrService} from 'ngx-toastr';
+import {MissionBenevoleService} from '../services/mission-benevole-service/mission-benevole.service';
+import {ParticiperMissionBenevole} from '../models/ParticiperMissionBenevole';
 
 @Component({
   selector: 'app-event-detail',
@@ -21,13 +23,15 @@ export class EventDetailComponent implements OnInit {
   biens: Bien[] = [];
   missions: MissionBenevole[] = [];
   participerBienForm: any;
-  participerBien: any;
   myForm: FormGroup;
   greater = false;
   today = new Date();
+  participerMissionForm: any;
+  participMission: ParticiperMissionBenevole = new ParticiperMissionBenevole();
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
-              private userService: UserService, private biensService: BiensService, private toastr: ToastrService) {
+              private  missionBenevoleService: MissionBenevoleService, private userService: UserService, private biensService: BiensService,
+              private toastr: ToastrService) {
     const formContrls = {
       // all validators to input firstname
       qtedonnee: new FormControl()
@@ -68,12 +72,11 @@ export class EventDetailComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  addParticipation(b: Bien) {
+  addParticipationBien(b: Bien) {
     if (b.qte < this.qtedonnee.value + b.totaleqteDonnee) {
       this.greater = true;
     } else {
       this.greater = false;
-
       this.participerBienForm = {};
       const username = this.userService.getProfileCurrentUser().username;
       this.participerBienForm.qteDon = this.qtedonnee.value;
@@ -85,8 +88,22 @@ export class EventDetailComponent implements OnInit {
         console.log('data', data);
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');
-      //this.getAllBien();
     }
+  }
+
+  addParticipationMission(m: MissionBenevole) {
+    this.participerMissionForm = {};
+    const username = this.userService.getProfileCurrentUser().username;
+    this.participerMissionForm.missionBenevole = m;
+    this.participerMissionForm.dateD = this.today;
+    this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
+      console.log(data);
+      this.participMission = data;
+      console.log('this.participMission', this.participMission);
+    }, error => {
+      console.log(error);
+    });
+    this.toastr.success('Merci de votre aide');
   }
 }
 
