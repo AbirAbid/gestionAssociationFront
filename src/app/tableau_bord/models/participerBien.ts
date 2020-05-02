@@ -6,4 +6,5 @@ export class ParticiperBien {
   qteDonnee: number;
   bien: Bien;
   user: User;
+  dateParticipation: Date;
 }

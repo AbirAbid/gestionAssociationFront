@@ -24,6 +24,7 @@ export class EventDetailComponent implements OnInit {
   participerBien: any;
   myForm: FormGroup;
   greater = false;
+  today = new Date();
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private userService: UserService, private biensService: BiensService, private toastr: ToastrService) {
@@ -49,7 +50,7 @@ export class EventDetailComponent implements OnInit {
         this.event = data;
       }, error => console.log(error));
 
-
+    console.log('this.today', this.today);
     this.getAllBien();
 
     this.getAllMission();
@@ -77,7 +78,7 @@ export class EventDetailComponent implements OnInit {
       const username = this.userService.getProfileCurrentUser().username;
       this.participerBienForm.qteDon = this.qtedonnee.value;
       this.participerBienForm.bien = b;
-
+      this.participerBienForm.datePart = this.today;
       console.log(' this.participerBienForm', this.participerBienForm);
 
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
