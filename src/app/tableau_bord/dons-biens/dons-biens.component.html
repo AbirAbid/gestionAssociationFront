@@ -1,1 +1,52 @@
-<p>dons-biens works!</p>
+<br> <br>
+<div class="container card">
+  <br>
+  <table class="table table-bordered" *ngIf="listParticiperBien">
+
+
+    <!--Table head-->
+    <thead class="table-active rounded">
+    <tr>
+      <th>
+        <div style="text-align: center;">Titre Bien</div>
+      </th>
+
+      <th>
+        <div style="text-align: center;"> Quantités données</div>
+      </th>
+
+      <th>
+        <div style="text-align: center;">Événements</div>
+      </th>
+      <th>
+        <div style="text-align: center;">Événements</div>
+      </th>
+    </tr>
+    </thead>
+    <!--Table head-->
+
+
+    <tbody *ngFor="let participerBien of listParticiperBien ">
+    <tr>
+      <td>
+        <div style="text-align: center;">{{participerBien.bien.titreBien}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;">{{participerBien.qteDonnee}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;">{{participerBien.bien.evenement.titre}}</div>
+      </td>
+      <td>
+        <div style="text-align: center;" class="alert alert-success" role="alert">
+          Merci de votre Générosité
+        </div>
+      </td>
+
+    </tr>
+
+    </tbody>
+    <!--Table body-->
+
+  </table>
+</div>

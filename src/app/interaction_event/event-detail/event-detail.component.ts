@@ -25,7 +25,8 @@ export class EventDetailComponent implements OnInit {
   myForm: FormGroup;
   greater = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder, private userService: UserService, private biensService: BiensService, private toastr: ToastrService) {
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
+              private userService: UserService, private biensService: BiensService, private toastr: ToastrService) {
     const formContrls = {
       // all validators to input firstname
       qtedonnee: new FormControl()
@@ -83,6 +84,7 @@ export class EventDetailComponent implements OnInit {
         console.log('data', data);
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');
+      //this.getAllBien();
     }
   }
 }

@@ -39,7 +39,6 @@ export class EvenementComponent implements OnInit {
   }
 
   eventDetail(id: number) {
-    //[routerLink]="['/eventDetail']
     this.router.navigate(['eventDetail', id]);
 
   }
