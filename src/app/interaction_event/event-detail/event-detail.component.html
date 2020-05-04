@@ -48,11 +48,17 @@
 
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <br>
+
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"
+      >
+        <div class="alert alert-danger" role="alert" *ngIf="biens.length == 0">
+          Cet événement ne contient pas des besoins
+        </div>
         <br>
 
 
-        <table class="table table-bordered" *ngIf="biens">
+        <table class="table table-bordered" *ngIf="biens.length != 0">
           <small *ngIf="greater" class="text-danger"> Vous avez dépassé la quantité restante!!! </small>
 
           <!--Table head-->
@@ -80,7 +86,13 @@
           <!--Table head-->
 
 
-          <tbody *ngFor="let b of biens">
+          <tbody *ngFor="let b of biens| paginate:{
+    id:'listing_pagination',
+    itemsPerPage:10,
+    currentPage:page,
+    totalItems:totalbien
+
+    }">
           <tr>
             <td>
               <div style="text-align: center;">{{b.id}}**{{b.titreBien}}</div>
@@ -100,11 +112,16 @@
 
                   <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 " name="qtedonnee"
                          id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
-                  <button class="btn btn-login my-2 my-sm-0" title="Donner" type="submit"
+                  <button *ngIf="userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Donner"
+                          type="submit"
                           [disabled]="b.qte==b.totaleqteDonnee"><i
                     class="fas fa-hand-holding-medical"></i>
                   </button>
-
+                  <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Donner"
+                          [routerLink]="['/login']"
+                          [disabled]="b.qte==b.totaleqteDonnee"><i
+                    class="fas fa-hand-holding-medical"></i>
+                  </button>
 
                 </form>
 
@@ -117,14 +134,26 @@
 
           </tbody>
           <!--Table body-->
-
         </table>
 
 
+        <div style="text-align: center;" *ngIf="biens.length != 0">
+          <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                               previousLabel="Précédent"
+                               nextLabel="Suivant"
+                               responsive
+                               (pageChange)="page=$event"></pagination-controls>
+
+        </div>
+
       </div>
+
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="missions">
         <br>
-        <table class="table table-bordered ">
+        <div class="alert alert-danger" role="alert" *ngIf="missions.length == 0">
+          Cet événement ne contient pas des missions.
+        </div>
+        <table class="table table-bordered " *ngIf="missions.length != 0">
 
           <!--Table head-->
           <thead class="table-active ">
@@ -145,7 +174,13 @@
           <!--Table head-->
 
           <!--Table body-->
-          <tbody *ngFor="let m of missions">
+          <tbody *ngFor="let m of missions| paginate:{
+    id:'listing_pagination2',
+    itemsPerPage:10,
+    currentPage:pagem,
+    totalItems:totalmission
+
+    }">
           <tr>
             <td>
               <div style="text-align: center;">{{m.titre}}</div>
@@ -159,10 +194,12 @@
               <div style="text-align: center;">
                 <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
 
-                  <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
-                  <button *ngIf="participMission.enAttente==1" class="btn btn-login" title="EnAttente"><i
+                  <button *ngIf="userService.isAuthenticated()" class="btn btn-login" title="Postuler"><i
                     class="fas fa-hands-helping"></i></button>
-
+                  <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Postuler"
+                          [routerLink]="['/login']">
+                    <i
+                      class="fas fa-hands-helping"></i></button>
                 </form>
               </div>
             </td>
@@ -173,7 +210,21 @@
           <!--Table body-->
 
         </table>
+        <div style="text-align: center;" *ngIf="missions.length != 0">
+          <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
+                               previousLabel="Précédent"
+                               nextLabel="Suivant"
+                               responsive
+                               (pageChange)="pagem=$event"></pagination-controls>
+
+        </div>
+
       </div>
     </div>
   </div>
 </div>
+<style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: #DE6262;
+  }
+</style>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MissionBenevoleService} from '../services/mission-benevole-service/mission-benevole.service';
 import {MissionBenevole} from '../models/MissionBenevole';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-devenir-benevole',
@@ -15,7 +16,7 @@ export class DevenirBenevoleComponent implements OnInit {
   totalRecords: number;
   page = 1;
 
-  constructor(private missionBenevoleService: MissionBenevoleService, private fb: FormBuilder) {
+  constructor(private missionBenevoleService: MissionBenevoleService, private fb: FormBuilder, private router: Router) {
     const formContrls = {
       region: new FormControl()
     };
@@ -56,5 +57,10 @@ export class DevenirBenevoleComponent implements OnInit {
         console.log('this.listBien', this.listMission);
       });
     }
+  }
+
+  eventDetail(id: number) {
+    this.router.navigate(['eventDetail', id]);
+
   }
 }

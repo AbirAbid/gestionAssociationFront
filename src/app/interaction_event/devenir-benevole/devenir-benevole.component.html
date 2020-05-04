@@ -57,6 +57,9 @@
 
     </h2>
   </div>
+  <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0">
+    Aucune Mission bénévole disponible pour l'instant à <span
+    class="badge badge-pill badge-danger"> {{region.value}}</span></div>
   <table class="table table-bordered">
 
     <!--Table head-->
@@ -72,9 +75,7 @@
         <div style="text-align: center;">Évenement</div>
       </th>
 
-      <th>
-        <div style="text-align: center;">Postuler</div>
-      </th>
+
     </tr>
     </thead>
     <!--Table head-->
@@ -95,15 +96,11 @@
         <div style="text-align: center;">{{missionBenevole.description}}</div>
       </td>
       <td>
-        <div style="text-align: center;"><a [routerLink]="['/devenirBenevole']">{{missionBenevole.evenement.titre}}</a>
+        <div style="text-align: center;"><a [routerLink]=""
+                                            (click)="eventDetail(missionBenevole.evenement.id)">{{missionBenevole.evenement.titre}}</a>
         </div>
       </td>
 
-      <td>
-        <div style="text-align: center;">
-          <button class="btn btn-login" title="Postuler"><i class="fas fa-hands-helping"></i></button>
-        </div>
-      </td>
 
     </tr>
 
@@ -114,7 +111,7 @@
   </table>
   <!--Table-->
 
-  <div style="text-align: center;">
+  <div style="text-align: center;" *ngIf="listMission.length != 0">
     <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
                          previousLabel="Précédent"
                          nextLabel="Suivant"

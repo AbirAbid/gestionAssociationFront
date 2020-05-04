@@ -17,7 +17,10 @@ import {ParticiperMissionBenevole} from '../models/ParticiperMissionBenevole';
   styleUrls: ['./event-detail.component.scss']
 })
 export class EventDetailComponent implements OnInit {
-
+  totalbien: number;
+  page = 1;
+  totalmission: number;
+  pagem = 1;
   id: number;
   event: Evenement = new Evenement();
   biens: Bien[] = [];
@@ -30,8 +33,9 @@ export class EventDetailComponent implements OnInit {
   participMission: ParticiperMissionBenevole = new ParticiperMissionBenevole();
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
-              private  missionBenevoleService: MissionBenevoleService, private userService: UserService, private biensService: BiensService,
+              private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
               private toastr: ToastrService) {
+
     const formContrls = {
       // all validators to input firstname
       qtedonnee: new FormControl()
@@ -63,12 +67,14 @@ export class EventDetailComponent implements OnInit {
   getAllMission() {
     this.eventService.getAllMissionByEvent(this.id).subscribe(data => {
       this.missions = data;
+      this.totalmission = this.missions.length;
     }, error => console.log(error));
   }
 
   getAllBien() {
     this.eventService.getAllBienByEvent(this.id).subscribe(data => {
       this.biens = data;
+      this.totalbien = this.biens.length;
     }, error => console.log(error));
   }
 
@@ -86,8 +92,12 @@ export class EventDetailComponent implements OnInit {
 
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
         console.log('data', data);
+        this.getAllBien();
+
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');
+
+
     }
   }
 
@@ -95,15 +105,18 @@ export class EventDetailComponent implements OnInit {
     this.participerMissionForm = {};
     const username = this.userService.getProfileCurrentUser().username;
     this.participerMissionForm.missionBenevole = m;
+    console.log(m);
     this.participerMissionForm.dateD = this.today;
     this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
       console.log(data);
       this.participMission = data;
       console.log('this.participMission', this.participMission);
+      this.getAllMission();
     }, error => {
       console.log(error);
     });
-    this.toastr.success('Merci de votre aide');
+    this.toastr.success('Merci de votre participation');
+
   }
 }
 

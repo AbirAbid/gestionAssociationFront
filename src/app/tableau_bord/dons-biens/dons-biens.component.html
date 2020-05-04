@@ -29,7 +29,13 @@
     <!--Table head-->
 
 
-    <tbody *ngFor="let participerBien of listParticiperBien ">
+    <tbody *ngFor="let participerBien of listParticiperBien | paginate:{
+    id:'listing_pagination',
+    itemsPerPage:10,
+    currentPage:page,
+    totalItems:totalbien
+
+    }">
     <tr>
       <td>
         <div style="text-align: center;">{{participerBien.bien.titreBien}}</div>
@@ -55,4 +61,17 @@
     <!--Table body-->
 
   </table>
+  <div style="text-align: center;" *ngIf="listParticiperBien.length != 0">
+    <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                         previousLabel="Précédent"
+                         nextLabel="Suivant"
+                         responsive
+                         (pageChange)="page=$event"></pagination-controls>
+
+  </div>
 </div>
+<style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: #DE6262;
+  }
+</style>

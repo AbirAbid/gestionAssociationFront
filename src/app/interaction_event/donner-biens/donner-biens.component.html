@@ -71,12 +71,7 @@
       <th>
         <div style="text-align: center;">Évenement</div>
       </th>
-      <th>
-        <div style="text-align: center;">Votre Don</div>
-      </th>
-      <th>
-        <div style="text-align: center;">Donner</div>
-      </th>
+
     </tr>
     </thead>
     <!--Table head-->
@@ -97,16 +92,10 @@
         <div style="text-align: center;">{{bien.qte}}</div>
       </td>
       <td>
-        <div style="text-align: center;"><a [routerLink]="['/devenirBenevole']">{{bien.evenement.titre}}</a></div>
+        <div style="text-align: center;"><a [routerLink]=""
+                                            (click)="eventDetail(bien.evenement.id)">{{bien.evenement.titre}}</a></div>
       </td>
-      <td>
-        <div style="text-align: center;"><input type="number" class="form-control "></div>
-      </td>
-      <td>
-        <div style="text-align: center;">
-          <button class="btn btn-login" title="Donner"><i class="fas fa-hand-holding-medical	"></i></button>
-        </div>
-      </td>
+
 
     </tr>
 
