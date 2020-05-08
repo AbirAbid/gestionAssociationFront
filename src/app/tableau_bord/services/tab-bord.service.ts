@@ -13,6 +13,6 @@ export class TabBordService {
 
   /***List biens by user***/
   getAllParticiperBienByUser(username: string): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listDonBienUsername/' + username);
+    return this.http.get(environment.baseUrl + 'listBienByUser/' + username);
   }
 }

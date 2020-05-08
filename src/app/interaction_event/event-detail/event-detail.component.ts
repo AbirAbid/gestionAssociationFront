@@ -74,6 +74,7 @@ export class EventDetailComponent implements OnInit {
   getAllBien() {
     this.eventService.getAllBienByEvent(this.id).subscribe(data => {
       this.biens = data;
+      console.log('this.biens ' + this.biens);
       this.totalbien = this.biens.length;
     }, error => console.log(error));
   }
@@ -85,14 +86,14 @@ export class EventDetailComponent implements OnInit {
       this.greater = false;
       this.participerBienForm = {};
       const username = this.userService.getProfileCurrentUser().username;
-      this.participerBienForm.qteDon = this.qtedonnee.value;
+      this.participerBienForm.qteDonnee = this.qtedonnee.value;
       this.participerBienForm.bien = b;
-      this.participerBienForm.datePart = this.today;
+      this.participerBienForm.dateParticipation = this.today;
       console.log(' this.participerBienForm', this.participerBienForm);
 
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
         console.log('data', data);
-        this.getAllBien();
+        // this.getAllBien();
 
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');

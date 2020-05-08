@@ -1,4 +1,5 @@
 import {Evenement} from './Evenement';
+import {UserBien} from './UserBien';
 
 export class Bien {
   id: number;
@@ -6,4 +7,6 @@ export class Bien {
   qte: number;
   totaleqteDonnee: number;
   evenement: Evenement;
+  // userBiens: Array<UserBien> = [];
+
 }
