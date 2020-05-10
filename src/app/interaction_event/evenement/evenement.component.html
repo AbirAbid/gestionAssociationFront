@@ -1,59 +1,127 @@
-<br>
-<br>
-<div class="container">
-
-  <h2 class="text-center">Toutes les événements</h2>
-  <div class="row">
-    <div class="col-xs-7 col-sm-7 col-md-7">
-
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6" *ngFor="let evt of evenements">
-          <div class="image-flip">
-            <div class="mainflip">
-
-              <div class="frontside">
-
-                <div class="card" (click)="eventDetail(evt.id)">
-                  <div class="card-body">
-
-                    <div class="row">
-                      <div class="col-sm-4 " style="background-color:#DE6262 ;height: 200px;   position: relative;
-border-radius: 2%">
-
-                        <div class="centerDiv">
-                          <h4>{{evt.dateDebut|date}}</h4></div>
-
-
-                      </div>
-                      <div class="col-sm-8">
-
-                        <p class="card-text">
-
-                        <h4 class=" text-center">{{evt.titre}}</h4>
-
-                      </div>
-
-                    </div>
-
-
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-    <div class="col-xs-5 col-sm-5 col-md-45">
-      <div class="card" *ngIf="calendarEvents.length>0">
-        <full-calendar
-          [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+<div class="hero-area">
+  <div class="page-banner parallax" style="background-image:url('../../assets/images/inside9.jpg');">
+    <div class="container">
+      <div class="page-banner-text">
+        <h1 class="block-title">Nos Événements </h1>
       </div>
     </div>
   </div>
-
 </div>
+<!-- Main Content -->
+<div id="main-container">
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 content-block">
+          <ul class="events-list" *ngFor="let evt of evenements">
+            <li class="event-list-item">
+                                <span class="event-date">
+                                    <span class="date">{{evt.dateDebut| date :'d'}} </span>
+                                    <span class="month">{{evt.dateDebut| date :'MMMM'}}</span>
+                                    <span class="year">{{evt.dateDebut| date :'y'}}</span>
+                                </span>
+              <div class="event-list-cont">
+                <span class="meta-data">{{evt.dateDebut|date}}</span>
+                <h4 class="post-title"><a href="#">{{evt.titre}}</a></h4>
+                <p>{{evt.description}}</p>
+                <a (click)="eventDetail(evt.id)" class="btn btn-default">Book Tickets</a>
+              </div>
+            </li>
+
+
+          </ul>
+          <!-- Page Pagination -->
+          <nav>
+            <ul class="pagination pagination-lg">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4 sidebar-block">
+          <div class="widget sidebar-widget widget_categories">
+            <h3 class="widgettitle">Event Categories</h3>
+            <ul>
+              <li><a href="#">Education</a> (3)</li>
+              <li><a href="#">Environment</a> (1)</li>
+              <li><a href="#">Global warming</a> (6)</li>
+              <li><a href="#">Water</a> (4)</li>
+              <li><a href="#">Wild life</a> (2)</li>
+              <li><a href="#">Small business</a> (12)</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="container">
+
+    <h2 class="text-center">Toutes les événements</h2>
+    <div class="row">
+      <div class="col-xs-7 col-sm-7 col-md-7">
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6" *ngFor="let evt of evenements">
+            <div class="image-flip">
+              <div class="mainflip">
+
+                <div class="frontside">
+
+                  <div class="card" (click)="eventDetail(evt.id)">
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-sm-4 " style="background-color:#DE6262 ;height: 200px;   position: relative;
+  border-radius: 2%">
+
+                          <div class="centerDiv">
+                            <h4>{{evt.dateDebut|date}}</h4></div>
+
+
+                        </div>
+                        <div class="col-sm-8">
+
+                          <p class="card-text">
+
+                          <h4 class=" text-center">{{evt.titre}}</h4>
+
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-xs-5 col-sm-5 col-md-45">
+        <div class="card" *ngIf="calendarEvents.length>0">
+          <full-calendar
+            [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+        </div>
+      </div>
+    </div>
+
+  </div>-->

@@ -1,230 +1,264 @@
-<br>
-
-<div class="container card" *ngIf="event">
-  <br>
-
-  <div style="text-align: center;"><h2>  {{event.titre}} </h2></div>
-
-  <hr/>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6">
-        <p><strong>Déscription :</strong> {{event.description}} </p>
-
-
-      </div>
-      <div class="col-sm-6">
-        <div class="row">
-          <div class="col-sm-6"><i class="fas fa-clock"></i><strong> Quand? :</strong>
-            {{event.dateDebut | date}}
-          </div>
-          <div class="col-sm-6"><i class="fas fa-map-marked-alt"></i> <strong> Où? : </strong>
-            {{event.ville}} à {{event.adresse}}
-          </div>
-        </div>
-        <br>
-        <div class="row" *ngIf="event.frais">
-          <div class="col-sm-6">
-            <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
-          </div>
-          <div class="col-sm-6">
-            <span class="badge badge-danger">Inscription obligatoire</span></div>
-        </div>
-
-
+<div class="hero-area">
+  <div class="page-banner parallax" style="background-image:url('../../assets/images/carousel2.jpg');">
+    <div class="container">
+      <div class="page-banner-text">
+        <h1 class="block-title">Nos Événements </h1>
       </div>
     </div>
-    <br>
+  </div>
+</div>
+<br>
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-           aria-selected="true">Besoin des biens </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-           aria-selected="false"> Activités bénévoles </a>
-      </li>
+<div class="container">
 
-    </ul>
-    <div class="tab-content" id="myTabContent">
+  <div class="col-md-12 col-sm-12" *ngIf="event">
+    <div class="well widget widget_volunteer_form">
+
+
+      <div style="text-align: center;"><h2>  {{event.titre}} </h2></div>
+
+      <hr/>
+      <div class="row">
+        <div class="col-sm-6">
+          <p><strong>Déscription :</strong> {{event.description}} </p>
+
+
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6"><i class="fas fa-clock"></i><strong> Quand? :</strong>
+              {{event.dateDebut | date}}
+            </div>
+            <div class="col-sm-6"><i class="fas fa-map-marked-alt"></i> <strong> Où? : </strong>
+              {{event.ville}} à {{event.adresse}}
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="event.frais">
+            <div class="col-sm-6">
+              <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
+            </div>
+            <div class="col-sm-6">
+              <span class="badge badge-danger">Inscription obligatoire</span></div>
+          </div>
+
+
+        </div>
+      </div>
       <br>
 
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"
-      >
-        <div class="alert alert-danger" role="alert" *ngIf="biens.length == 0">
-          Cet événement ne contient pas des besoins
-        </div>
-        <br>
+      <div class="tabs">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#sampletab1"> Besoin des biens </a></li>
+          <li><a data-toggle="tab" href="#sampletab2"> Missions bénévoles </a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="sampletab1" class="tab-pane active">
+            <div class="alert alert-danger" role="alert" *ngIf="biens.length == 0">
+              Cet événement ne contient pas des besoins
+            </div>
+            <br>
 
 
-        <table class="table table-bordered" *ngIf="biens.length != 0">
-          <small *ngIf="greater" class="text-danger"> Vous avez dépassé la quantité restante!!! </small>
+            <table class="table table-bordered" *ngIf="biens.length != 0">
+              <small *ngIf="greater" class="text-danger"> Vous avez dépassé la quantité restante!!! </small>
 
-          <!--Table head-->
-          <thead class="table-active rounded">
-          <tr>
-            <th>
-              <div style="text-align: center;">Titre Bien</div>
-            </th>
-            <th>
-              <div style="text-align: center;">Quantités demandées</div>
-            </th>
-            <th>
-              <div style="text-align: center;">Totale Quantités données</div>
-            </th>
-            <th>
-              <div style="text-align: center;">Reste</div>
-            </th>
+              <!--Table head-->
+              <thead class="table-active ">
+              <tr>
+                <th>
+                  <div style="text-align: center; color: black">Titre Bien</div>
+                </th>
+                <th>
+                  <div style="text-align: center;color: black">Quantités demandées</div>
+                </th>
+                <th>
+                  <div style="text-align: center;color: black">Totale Quantités données</div>
+                </th>
+                <th>
+                  <div style="text-align: center;color: black">Reste</div>
+                </th>
 
-            <th>
-              <div style="text-align: center;">Votre Don</div>
-            </th>
+                <th>
+                  <div style="text-align: center;color: black">Votre Don</div>
+                </th>
 
-          </tr>
-          </thead>
-          <!--Table head-->
+              </tr>
+              </thead>
+              <!--Table head-->
 
 
-          <tbody *ngFor="let b of biens| paginate:{
+              <tbody *ngFor="let b of biens| paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
     totalItems:totalbien
 
     }">
-          <tr>
-            <td>
-              <div style="text-align: center;">{{b.id}}**{{b.titreBien}}</div>
-            </td>
-            <td>
-              <div style="text-align: center;">{{b.qte}}</div>
-            </td>
-            <td>
-              <div style="text-align: center;">{{b.totaleqteDonnee}}</div>
-            </td>
-            <td>
-              <div style="text-align: center;">{{b.qte - b.totaleqteDonnee}}</div>
-            </td>
-            <td>
-              <div style="text-align: center;">
-                <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)" class="form-inline my-2 my-lg-0">
+              <tr>
+                <td>
+                  <div style="text-align: center; color: black">{{b.id}}**{{b.titreBien}}</div>
+                </td>
+                <td>
+                  <div style="text-align: center;color: black">{{b.qte}}</div>
+                </td>
+                <td>
+                  <div style="text-align: center;color: black">{{b.totaleqteDonnee}}</div>
+                </td>
+                <td>
+                  <div style="text-align: center;color: black">{{b.qte - b.totaleqteDonnee}}</div>
+                </td>
+                <td>
+                  <div style="text-align: center;">
+                    <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)"
+                          class="form-inline my-2 my-lg-0">
+                      <div class="input-group">
+                        <div class="row">
 
-                  <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 " name="qtedonnee"
-                         id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
-                  <button *ngIf="userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Donner"
-                          type="submit"
-                          [disabled]="b.qte==b.totaleqteDonnee"><i
-                    class="fas fa-hand-holding-medical"></i>
-                  </button>
-                  <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Donner"
-                          [routerLink]="['/login']"
-                          [disabled]="b.qte==b.totaleqteDonnee"><i
-                    class="fas fa-hand-holding-medical"></i>
-                  </button>
+                          <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
+                                 name="qtedonnee"
+                                 id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
+                          <ul class="social-icons-rounded social-icons-colored">
+                            <li class="btn-info btn-sm btn-rounded"><a href="#"><i
+                              class="fas fa-hand-holding-medical"></i></a></li>
+                          </ul>
+                          <button *ngIf="userService.isAuthenticated()" class="btn btn-info btn-sm"
+                                  title="Donner"
+                                  type="submit"
+                                  [disabled]="b.qte==b.totaleqteDonnee"><i
+                            class="fas fa-hand-holding-medical"></i>
+                          </button>
+                          <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
+                                  title="Donner"
+                                  [routerLink]="['/login']"
+                                  [disabled]="b.qte==b.totaleqteDonnee"><i
+                            class="fas fa-hand-holding-medical"></i>
+                          </button>
+                        </div>
+                      </div>
 
-                </form>
+                      <!--  <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
+                               name="qtedonnee"
+                               id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
+                        <button *ngIf="userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
+                                title="Donner"
+                                type="submit"
+                                [disabled]="b.qte==b.totaleqteDonnee"><i
+                          class="fas fa-hand-holding-medical"></i>
+                        </button>
+                        <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
+                                title="Donner"
+                                [routerLink]="['/login']"
+                                [disabled]="b.qte==b.totaleqteDonnee"><i
+                          class="fas fa-hand-holding-medical"></i>
+                        </button>-->
 
-
-              </div>
-            </td>
-
-
-          </tr>
-
-          </tbody>
-          <!--Table body-->
-        </table>
-
-
-        <div style="text-align: center;" *ngIf="biens.length != 0">
-          <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                               previousLabel="Précédent"
-                               nextLabel="Suivant"
-                               responsive
-                               (pageChange)="page=$event"></pagination-controls>
-
-        </div>
-
-      </div>
-
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="missions">
-        <br>
-        <div class="alert alert-danger" role="alert" *ngIf="missions.length == 0">
-          Cet événement ne contient pas des missions.
-        </div>
-        <table class="table table-bordered " *ngIf="missions.length != 0">
-
-          <!--Table head-->
-          <thead class="table-active ">
-          <tr>
-            <th>
-              <div style="text-align: center;">Titre Mission</div>
-            </th>
-            <th>
-              <div style="text-align: center;">Déscription</div>
-            </th>
+                    </form>
 
 
-            <th>
-              <div style="text-align: center;">Postuler</div>
-            </th>
-          </tr>
-          </thead>
-          <!--Table head-->
+                  </div>
+                </td>
 
-          <!--Table body-->
-          <tbody *ngFor="let m of missions| paginate:{
+
+              </tr>
+
+              </tbody>
+              <!--Table body-->
+            </table>
+
+
+            <div style="text-align: center;" *ngIf="biens.length != 0">
+              <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                                   previousLabel="Précédent"
+                                   nextLabel="Suivant"
+                                   responsive
+                                   (pageChange)="page=$event"></pagination-controls>
+
+            </div>
+          </div>
+          <div id="sampletab2" class="tab-pane">
+            <div class="alert alert-danger" role="alert" *ngIf="missions.length == 0">
+              Cet événement ne contient pas des missions.
+            </div>
+            <table class="table table-bordered " *ngIf="missions.length != 0">
+
+              <!--Table head-->
+              <thead class="table-active ">
+              <tr>
+                <th>
+                  <div style="text-align: center;">Titre Mission</div>
+                </th>
+                <th>
+                  <div style="text-align: center;">Déscription</div>
+                </th>
+
+
+                <th>
+                  <div style="text-align: center;">Postuler</div>
+                </th>
+              </tr>
+              </thead>
+              <!--Table head-->
+
+              <!--Table body-->
+              <tbody *ngFor="let m of missions| paginate:{
     id:'listing_pagination2',
     itemsPerPage:10,
     currentPage:pagem,
     totalItems:totalmission
 
     }">
-          <tr>
-            <td>
-              <div style="text-align: center;">{{m.titre}}</div>
-            </td>
-            <td>
-              <div style="text-align: center;">{{m.description}}</div>
-            </td>
+              <tr>
+                <td>
+                  <div style="text-align: center;">{{m.titre}}</div>
+                </td>
+                <td>
+                  <div style="text-align: center;">{{m.description}}</div>
+                </td>
 
 
-            <td>
-              <div style="text-align: center;">
-                <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
+                <td>
+                  <div style="text-align: center;">
+                    <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
 
-                  <button *ngIf="userService.isAuthenticated()" class="btn btn-login" title="Postuler"><i
-                    class="fas fa-hands-helping"></i></button>
-                  <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0" title="Postuler"
-                          [routerLink]="['/login']">
-                    <i
-                      class="fas fa-hands-helping"></i></button>
-                </form>
-              </div>
-            </td>
+                      <button *ngIf="userService.isAuthenticated()" class="btn btn-login" title="Postuler"><i
+                        class="fas fa-hands-helping"></i></button>
+                      <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
+                              title="Postuler"
+                              [routerLink]="['/login']">
+                        <i
+                          class="fas fa-hands-helping"></i></button>
+                    </form>
+                  </div>
+                </td>
 
-          </tr>
+              </tr>
 
-          </tbody>
-          <!--Table body-->
+              </tbody>
+              <!--Table body-->
 
-        </table>
-        <div style="text-align: center;" *ngIf="missions.length != 0">
-          <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
-                               previousLabel="Précédent"
-                               nextLabel="Suivant"
-                               responsive
-                               (pageChange)="pagem=$event"></pagination-controls>
+            </table>
+            <div style="text-align: center;" *ngIf="missions.length != 0">
+              <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
+                                   previousLabel="Précédent"
+                                   nextLabel="Suivant"
+                                   responsive
+                                   (pageChange)="pagem=$event"></pagination-controls>
+
+            </div>
+          </div>
 
         </div>
-
       </div>
+
+
     </div>
   </div>
 </div>
+
+
 <style>
   .my-pagination /deep/ .ngx-pagination .current {
-    background: #DE6262;
+    background: #3da0ff;
   }
 </style>

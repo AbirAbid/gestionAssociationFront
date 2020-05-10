@@ -1,3 +1,4 @@
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <img [src]=image alt="imageTest">
 
@@ -28,9 +29,9 @@
       <li class="nav-item">
         <a class="nav-link  active" [routerLink]="['/evenementList']" tabindex="-1" aria-disabled="true">Événements </a>
       </li>
-      <!-- <li class="nav-item">
+      &lt;!&ndash; <li class="nav-item">
          <a class="nav-link  active" [routerLink]="['/sponsorsList']" tabindex="-1" aria-disabled="true">Sponsors</a>
-       </li>-->
+       </li>&ndash;&gt;
       <button class="btn btn-login float-right  mx-3 my-2 my-sm-0" [routerLink]="['/payement']">FAITES UN DON</button>
 
     </ul>
@@ -79,3 +80,67 @@
     </form>
   </div>
 </nav>
+-->
+
+
+<div class="body">
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container">
+      <ul class="social-icons topmenu pull-right">
+        <li class="facebook"><a href="#"> S'authentifier <i class="fa fa-facebook-f"></i></a></li>
+        <li class="twitter"><a href="#"> s'inscrire<i class="fa fa-twitter"></i></a></li>
+        <li class="youtube"><a routerLink="/account"> <i class="fas fa-user"></i> Mon profile </a></li>
+      </ul>
+
+      <div class="header-info-col">
+        <i class="fa fa-headphones"></i> <strong>1800-9090-8089</strong>
+      </div>
+      <div class="header-info-col">
+        <i class="fa fa-envelope-o"></i> <strong>association@gmail.com</strong>
+      </div>
+    </div>
+  </header>
+  <!-- Site Header Wrapper -->
+  <div class="site-header-wrapper">
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="site-logo">
+          <a href="#" class="default-logo"><img [src]=image alt="Logo"></a>
+
+        </div>
+        <a href="#" class="visible-sm visible-xs" id="menu-toggle"><i class="fa fa-bars"></i></a>
+        <ul class="sf-menu dd-menu pull-right" role="menu">
+          <li><a href="index-2.html">Accueil</a></li>
+          <li><a>Agir avec nous</a>
+            <ul>
+              <li><a [routerLink]="['/payement']">Devenir adhérent</a></li>
+              <li><a [routerLink]="['/devenirBenevole']">Devenir Bénévole</a></li>
+              <li><a [routerLink]="['/donnerBien']">Donner des biens</a></li>
+
+            </ul>
+          </li>
+
+          <li><a>événements</a>
+            <ul>
+              <li><a [routerLink]="['/evenementList']" >Liste événements</a></li>
+              <li><a href="events-calendar.html">Calendrier des événements</a></li>
+            </ul>
+          </li>
+          <li><a href="gallery-caption-2cols.html">Qui sommes nous?</a>
+
+          </li>
+
+          <li>
+            <button href="#" class="btn btn-primary btn-ghost btn-light btn-rounded pull-right">Faire un don</button>
+
+
+          </li>
+        </ul>
+      </div>
+    </header>
+  </div>
+  <!-- Hero Area -->
+
+</div>

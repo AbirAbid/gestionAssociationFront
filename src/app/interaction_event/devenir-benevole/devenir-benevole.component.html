@@ -1,127 +1,136 @@
-<br>
-
-<div class="container card  ">
-  <br>
-
-  <nav class="navbar navbar-expand-lg border rounded">
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <form class="form-inline my-2 my-lg-0" [formGroup]="myForm" (ngSubmit)="getAllMissionByRegion()">
-        <label class="mr-sm-2">Région </label>
-        <select class="form-control mr-sm-2" name="region" name="region" formControlName="region">
-          <option value="Tunisie">Tunisie</option>
-          <option value="Ariana">Ariana</option>
-          <option value="Béja">Béja</option>
-          <option value="BenArous">Ben Arous</option>
-          <option value="Bizerte">Bizerte</option>
-          <option value="Gabès">Gabès</option>
-          <option value="Gafsa">Gafsa</option>
-          <option value="Sousse">Sousse</option>
-          <option value="Jendouba">Jendouba</option>
-          <option value="Kairouan">Kairouan</option>
-          <option value="Kasserine">Kasserine</option>
-          <option value="Kébili">Kébili</option>
-          <option value="LeKef"> Le Kef</option>
-          <option value="Mahdia">Mahdia</option>
-          <option value="LaManouba">La Manouba</option>
-          <option value="Médenine">Médenine</option>
-          <option value="Monastir">Monastir</option>
-          <option value="Nabeul">Nabeul</option>
-          <option value="Sfax">Sfax</option>
-          <option value="SidiBouzid">Sidi Bouzid</option>
-          <option value="Siliana">Siliana</option>
-          <option value="Sousse">Sousse</option>
-          <option value="Tataouine">Tataouine</option>
-          <option value="Tozeur">Tozeur</option>
-          <option value="Tunis">Tunis</option>
-          <option value="Zaghouan">Zaghouan</option>
-        </select>
-        <button class="btn btn-login" title="chercher par région"><i class="fas fa-search"></i></button>
-      </form>
+<div class="hero-area">
+  <div class="page-banner parallax" style="background-image: url('../../assets/images/parallax6.jpg');">
+    <div class="container">
+      <div class="page-banner-text">
+        <h1 class="block-title">Devenir bénévole une bonne idée</h1>
+      </div>
     </div>
-  </nav>
-  <br>
-  <div class="alert alert-warning" role="alert" *ngIf="show">
-    Filtres actif Région sélectionnée: <span class="badge badge-pill badge-warning"> {{region.value}}</span>
-
-    <button (click)="load()" type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-
-
   </div>
-  <div class="login-sec">
-    <h2 class="text-center">Devenir bénévole une bonne idée
+</div>
+<br>
+<div class="container">
 
-    </h2>
-  </div>
-  <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0">
-    Aucune Mission bénévole disponible pour l'instant à <span
-    class="badge badge-pill badge-danger"> {{region.value}}</span></div>
-  <table class="table table-bordered">
-
-    <!--Table head-->
-    <thead>
-    <tr>
-      <th>
-        <div style="text-align: center;">Titre Mission</div>
-      </th>
-      <th>
-        <div style="text-align: center;">Déscription</div>
-      </th>
-      <th>
-        <div style="text-align: center;">Évenement</div>
-      </th>
+  <div class="col-md-12 col-sm-12">
+    <div class="well widget widget_volunteer_form">
 
 
-    </tr>
-    </thead>
-    <!--Table head-->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <!--Table body-->
-    <tbody *ngFor="let missionBenevole of listMission | paginate:{
+        <form class="form-inline pull-right" [formGroup]="myForm" (ngSubmit)="getAllMissionByRegion()">
+          <label> Région : </label>
+          <select class="form-control" name="region" name="region" formControlName="region">
+            <option value="Tunisie">Tunisie</option>
+            <option value="Ariana">Ariana</option>
+            <option value="Béja">Béja</option>
+            <option value="BenArous">Ben Arous</option>
+            <option value="Bizerte">Bizerte</option>
+            <option value="Gabès">Gabès</option>
+            <option value="Gafsa">Gafsa</option>
+            <option value="Sousse">Sousse</option>
+            <option value="Jendouba">Jendouba</option>
+            <option value="Kairouan">Kairouan</option>
+            <option value="Kasserine">Kasserine</option>
+            <option value="Kébili">Kébili</option>
+            <option value="LeKef">  Kef</option>
+            <option value="Mahdia">Mahdia</option>
+            <option value="Manouba">Manouba</option>
+            <option value="Médenine">Médenine</option>
+            <option value="Monastir">Monastir</option>
+            <option value="Nabeul">Nabeul</option>
+            <option value="Sfax">Sfax</option>
+            <option value="SidiBouzid">Sidi Bouzid</option>
+            <option value="Siliana">Siliana</option>
+            <option value="Sousse">Sousse</option>
+            <option value="Tataouine">Tataouine</option>
+            <option value="Tozeur">Tozeur</option>
+            <option value="Tunis">Tunis</option>
+            <option value="Zaghouan">Zaghouan</option>
+          </select>
+          <button class="btn btn-primary  btn-sm pull-right"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
+      <br>
+
+      <div class="alert alert-info fade in" role="alert" *ngIf="show">
+        Filtres actif Région sélectionnée: <strong>{{region.value}}</strong>
+
+
+        <button (click)="load()" type="button" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+
+      </div>
+      <h2 class="text-center">Liste des missions bénévoles
+
+      </h2>
+    <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0">
+      Aucune Mission bénévole disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
+    </div>
+    <table class="table table-bordered">
+
+      <!--Table head-->
+      <thead>
+      <tr>
+        <th>
+          <div style="text-align: center; color: black">Titre Mission</div>
+        </th>
+        <th>
+          <div style="text-align: center; color: black">Déscription</div>
+        </th>
+        <th>
+          <div style="text-align: center; color: black">Évenement</div>
+        </th>
+
+
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody *ngFor="let missionBenevole of listMission | paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
     totalItems:totalRecords
 
     }">
-    <tr>
-      <td>
-        <div style="text-align: center;">{{missionBenevole.titre}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;">{{missionBenevole.description}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;"><a [routerLink]=""
-                                            (click)="eventDetail(missionBenevole.evenement.id)">{{missionBenevole.evenement.titre}}</a>
-        </div>
-      </td>
+      <tr>
+        <td>
+          <div style="text-align: center; color: black">{{missionBenevole.titre}}</div>
+        </td>
+        <td>
+          <div style="text-align: center; color: black">{{missionBenevole.description}}</div>
+        </td>
+        <td>
+          <div style="text-align: center;"><a [routerLink]=""
+                                              (click)="eventDetail(missionBenevole.evenement.id)">{{missionBenevole.evenement.titre}}</a>
+          </div>
+        </td>
 
 
-    </tr>
+      </tr>
 
-    </tbody>
-    <!--Table body-->
+      </tbody>
+      <!--Table body-->
 
 
-  </table>
-  <!--Table-->
+    </table>
+    <!--Table-->
 
-  <div style="text-align: center;" *ngIf="listMission.length != 0">
-    <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                         previousLabel="Précédent"
-                         nextLabel="Suivant"
-                         responsive
-                         (pageChange)="page=$event"></pagination-controls>
+    <div style="text-align: center;" *ngIf="listMission.length != 0">
+      <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                           previousLabel="Précédent"
+                           nextLabel="Suivant"
+                           responsive
+                           (pageChange)="page=$event"></pagination-controls>
 
+    </div>
   </div>
+</div>
 </div>
 <style>
   .my-pagination /deep/ .ngx-pagination .current {
-    background: #DE6262;
+    background: #3da0ff;
   }
 </style>
