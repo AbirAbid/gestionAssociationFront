@@ -11,6 +11,6 @@ export class Mission {
   evenement: Evenement;
 
   userMissions: Array<UserMission> = [];
-
+  enAtte: number;
 
 }

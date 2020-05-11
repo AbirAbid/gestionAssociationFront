@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MissionBenevoleService} from '../services/mission-benevole-service/mission-benevole.service';
-import {MissionBenevole} from '../models/MissionBenevole';
 import {Router} from '@angular/router';
+import {Mission} from '../models/Mission';
 
 @Component({
   selector: 'app-devenir-benevole',
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./devenir-benevole.component.scss']
 })
 export class DevenirBenevoleComponent implements OnInit {
-  listMission: MissionBenevole[] = [];
+  listMission: Mission[] = [];
   myForm: FormGroup;
   show = false;
   totalRecords: number;
@@ -54,7 +54,7 @@ export class DevenirBenevoleComponent implements OnInit {
       this.show = true;
       this.missionBenevoleService.getAllMissionRegion(this.region.value).subscribe((data) => {
         this.listMission = data;
-        console.log('this.listBien', this.listMission);
+        console.log('this.listMission', this.listMission);
       });
     }
   }

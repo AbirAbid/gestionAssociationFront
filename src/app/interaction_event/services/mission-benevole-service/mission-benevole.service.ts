@@ -13,15 +13,19 @@ export class MissionBenevoleService {
 
 
   getAllMission(): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listMissionBenevole');
+    return this.http.get(environment.baseUrl + 'listMission');
   }
 
   getAllMissionRegion(ville: string): Observable<any> {
     return this.http.get(environment.baseUrl + 'listMissionBenevoleRegion/' + ville);
   }
 
-  /**** Demande Mission*****/
+  /**** Participer Mission*****/
   demandeMission(participerMissionForm: any, username: string): Observable<any> {
     return this.http.post<string>(environment.baseUrl + 'participerMission/' + username, participerMissionForm);
+  }
+
+  getMissionPart(username: string): Observable<any> {
+    return this.http.get(environment.baseUrl + 'listMissionByUser/' + username);
   }
 }

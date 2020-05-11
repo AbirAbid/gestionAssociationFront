@@ -110,48 +110,29 @@
                 </td>
                 <td>
                   <div style="text-align: center;">
-                    <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)"
-                          class="form-inline my-2 my-lg-0">
+                    <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)">
                       <div class="input-group">
-                        <div class="row">
-
-                          <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
-                                 name="qtedonnee"
-                                 id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
-                          <ul class="social-icons-rounded social-icons-colored">
-                            <li class="btn-info btn-sm btn-rounded"><a href="#"><i
-                              class="fas fa-hand-holding-medical"></i></a></li>
-                          </ul>
-                          <button *ngIf="userService.isAuthenticated()" class="btn btn-info btn-sm"
-                                  title="Donner"
-                                  type="submit"
-                                  [disabled]="b.qte==b.totaleqteDonnee"><i
-                            class="fas fa-hand-holding-medical"></i>
-                          </button>
-                          <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
-                                  title="Donner"
-                                  [routerLink]="['/login']"
-                                  [disabled]="b.qte==b.totaleqteDonnee"><i
-                            class="fas fa-hand-holding-medical"></i>
-                          </button>
-                        </div>
-                      </div>
-
-                      <!--  <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
+                        <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
                                name="qtedonnee"
                                id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
-                        <button *ngIf="userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
-                                title="Donner"
-                                type="submit"
-                                [disabled]="b.qte==b.totaleqteDonnee"><i
-                          class="fas fa-hand-holding-medical"></i>
+                        <span class="input-group-btn">
+                         <button class="btn btn-primary btn-sm" *ngIf="userService.isAuthenticated()"
+                                 title="Donner"
+                                 type="submit"
+                                 [disabled]="b.qte==b.totaleqteDonnee">
+                      <i class="fas fa-hand-holding-medical"></i>
+                         </button>
+                          </span>
+                        <span class="input-group-btn">
+                         <button class="btn btn-primary btn-sm" *ngIf="!userService.isAuthenticated()"
+                                 title="Donner"
+                                 [routerLink]="['/login']"
+                                 [disabled]="b.qte==b.totaleqteDonnee"><i
+                           class="fas fa-hand-holding-medical"></i>
                         </button>
-                        <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
-                                title="Donner"
-                                [routerLink]="['/login']"
-                                [disabled]="b.qte==b.totaleqteDonnee"><i
-                          class="fas fa-hand-holding-medical"></i>
-                        </button>-->
+                          </span>
+                      </div>
+
 
                     </form>
 
@@ -186,15 +167,15 @@
               <thead class="table-active ">
               <tr>
                 <th>
-                  <div style="text-align: center;">Titre Mission</div>
+                  <div style="text-align: center;color: black">Titre Mission</div>
                 </th>
                 <th>
-                  <div style="text-align: center;">Déscription</div>
+                  <div style="text-align: center;color: black">Déscription</div>
                 </th>
 
 
                 <th>
-                  <div style="text-align: center;">Postuler</div>
+                  <div style="text-align: center; color: black">Postuler</div>
                 </th>
               </tr>
               </thead>
@@ -210,25 +191,41 @@
     }">
               <tr>
                 <td>
-                  <div style="text-align: center;">{{m.titre}}</div>
+                  <div style="text-align: center; color: black">{{m.titre}}</div>
                 </td>
                 <td>
-                  <div style="text-align: center;">{{m.description}}</div>
+                  <div style="text-align: center;  color: black">{{m.description}}</div>
                 </td>
 
 
                 <td>
-                  <div style="text-align: center;">
+                  <div style="text-align: center; color: black">
+
                     <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
 
-                      <button *ngIf="userService.isAuthenticated()" class="btn btn-login" title="Postuler"><i
-                        class="fas fa-hands-helping"></i></button>
-                      <button *ngIf="!userService.isAuthenticated()" class="btn btn-login my-2 my-sm-0"
+
+                      <button  [disabled]="true" *ngIf="userService.isAuthenticated()&& missionId.includes(m.id)"
+                              class="btn btn-info btn-sm">
+                        En Attente
+                        {{ missionId.includes(m.id)}}
+
+                      </button>
+                      <button *ngIf="userService.isAuthenticated()&& !missionId.includes(m.id)"
+                              class="btn btn-info btn-sm"
+                              title="Postuler">
+
+                        {{ !missionId.includes(m.id)}}
+                        <i class="fas fa-hands-helping"></i>
+                      </button>
+
+                      <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-sm"
                               title="Postuler"
                               [routerLink]="['/login']">
                         <i
                           class="fas fa-hands-helping"></i></button>
                     </form>
+
+
                   </div>
                 </td>
 

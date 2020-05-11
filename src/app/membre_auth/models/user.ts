@@ -1,3 +1,5 @@
+import {UserMission} from "../../interaction_event/models/UserMission";
+
 export class User {
   nom: string;
   username: string;
@@ -11,4 +13,6 @@ export class User {
   gouvernoratRes: string;
   occupation: string;
   isAdmin: number;
+  userMissions: Array<UserMission> = [];
+
 }

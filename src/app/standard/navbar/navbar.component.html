@@ -88,16 +88,18 @@
   <header class="topbar">
     <div class="container">
       <ul class="social-icons topmenu pull-right">
-        <li class="facebook"><a href="#"> S'authentifier <i class="fa fa-facebook-f"></i></a></li>
-        <li class="twitter"><a href="#"> s'inscrire<i class="fa fa-twitter"></i></a></li>
-        <li class="youtube"><a routerLink="/account"> <i class="fas fa-user"></i> Mon profile </a></li>
+        <li class="facebook"><a [routerLink]="['/login']"> S'authentifier </a></li>
+        <li class="twitter"><a  [routerLink]="['/inscription']"> S'inscrire</a></li>
+        <li class="youtube"><a routerLink="/account" *ngIf="userService.isAuthenticated()"> <i class="fas fa-user"></i> Mon profile </a></li>
+        <li class="youtube"><a (click)="logout()"*ngIf="userService.isAuthenticated()"><i class="fas fa-sign-out-alt"></i></a></li>
+
       </ul>
 
       <div class="header-info-col">
-        <i class="fa fa-headphones"></i> <strong>1800-9090-8089</strong>
+        <i class="fa fa-headphones"></i>  <strong> 1800-9090-8089</strong>
       </div>
       <div class="header-info-col">
-        <i class="fa fa-envelope-o"></i> <strong>association@gmail.com</strong>
+        <i class="far fa-envelope"></i>  <strong> association@gmail.com</strong>
       </div>
     </div>
   </header>
