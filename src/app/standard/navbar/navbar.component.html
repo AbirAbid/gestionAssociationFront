@@ -89,8 +89,10 @@
     <div class="container">
 
       <ul class="social-icons topmenu pull-right">
-        <li class="facebook"><a [routerLink]="['/login']" *ngIf="!userService.isAuthenticated()"> S'authentifier </a></li>
-        <li class="twitter"><a [routerLink]="['/inscription']" *ngIf="!userService.isAuthenticated()"> S'inscrire</a></li>
+        <li class="facebook"><a [routerLink]="['/login']" *ngIf="!userService.isAuthenticated()"> S'authentifier </a>
+        </li>
+        <li class="twitter"><a [routerLink]="['/inscription']" *ngIf="!userService.isAuthenticated()"> S'inscrire</a>
+        </li>
         <li class="youtube"><a routerLink="/account" *ngIf="userService.isAuthenticated()"> <i class="fas fa-user"></i>
           Mon profile </a></li>
         <li class="youtube"><a routerLink="/tabBord" *ngIf="userService.isAuthenticated()"><i class="fa fa-table"
@@ -142,7 +144,9 @@
           </li>
 
           <li>
-            <button href="#" class="btn btn-primary btn-ghost btn-light btn-rounded pull-right">Faire un don</button>
+            <button [routerLink]="['/payement']" class="btn btn-primary btn-ghost btn-light btn-rounded pull-right">
+              Faire un don
+            </button>
 
 
           </li>
