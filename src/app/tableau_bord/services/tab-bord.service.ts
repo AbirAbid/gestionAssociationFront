@@ -15,4 +15,11 @@ export class TabBordService {
   getAllParticiperBienByUser(username: string): Observable<any> {
     return this.http.get(environment.baseUrl + 'listBienByUser/' + username);
   }
+
+  /***List Mission by user***/
+
+
+  getAllParticiperMissionByUser(username: string): Observable<any> {
+    return this.http.get(environment.baseUrl + 'listMissionByUser/' + username);
+  }
 }

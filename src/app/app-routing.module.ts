@@ -17,6 +17,7 @@ import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/dev
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
 import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-biens.component';
 import {EventDetailComponent} from "./interaction_event/event-detail/event-detail.component";
+import {EventCalendarComponent} from "./interaction_event/event-calendar/event-calendar.component";
 
 
 const routes: Routes = [
@@ -94,6 +95,11 @@ const routes: Routes = [
   {
     path: 'eventDetail/:id',
     component: EventDetailComponent
+
+  },
+  {
+    path: 'eventCalendar',
+    component: EventCalendarComponent
 
   },
   {

@@ -1,7 +1,7 @@
 <br> <br>
 <div class="container card">
   <br>
-  <table class="table table-bordered" *ngIf="listBien">
+  <table class="table table-bordered" *ngIf="listBienUser">
 
 
     <!--Table head-->
@@ -29,7 +29,7 @@
     <!--Table head-->
 
 
-    <tbody *ngFor="let bien of listBien | paginate:{
+    <tbody *ngFor="let ub of listBienUser | paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
@@ -38,17 +38,18 @@
     }">
     <tr>
       <td>
-        <div style="text-align: center;">{{bien.titreBien}}</div>
+        <div style="text-align: center;">{{ub.bien.titreBien}}</div>
       </td>
-      <!--<td>
-        <div style="text-align: center;">{{participerBien.qteDonnee}}</div>
-      </td>-->
       <td>
-        <div style="text-align: center;">{{bien.evenement.titre}}</div>
-    <!--  </td>
+        <div style="text-align: center;">{{ub.qteDonnee}}</div>
+      </td>
       <td>
-        <div style="text-align: center;">{{participerBien.dateParticipation|date}}</div>
-      </td>-->
+        <div style="text-align: center;">{{ub.bien.evenement.titre}}</div>
+      </td>
+
+        <td>
+          <div style="text-align: center;">{{ub.dateParticipation|date}}</div>
+        </td>
       <td>
         <div style="text-align: center;" class="alert alert-success" role="alert">
           Merci de votre Générosité
@@ -61,14 +62,14 @@
     <!--Table body-->
 
   </table>
- <!-- <div style="text-align: center;" *ngIf="listParticiperBien.length != 0">
-    <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                         previousLabel="Précédent"
-                         nextLabel="Suivant"
-                         responsive
-                         (pageChange)="page=$event"></pagination-controls>
+  <!-- <div style="text-align: center;" *ngIf="listParticiperBien.length != 0">
+     <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                          previousLabel="Précédent"
+                          nextLabel="Suivant"
+                          responsive
+                          (pageChange)="page=$event"></pagination-controls>
 
-  </div>-->
+   </div>-->
 </div>
 <style>
   .my-pagination /deep/ .ngx-pagination .current {

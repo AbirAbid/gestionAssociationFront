@@ -137,9 +137,13 @@ export class EventDetailComponent implements OnInit {
   }
 
   addParticipationBien(b: Bien) {
+    console.log(' b', b);
+
     if (b.qte < this.qtedonnee.value + b.totaleqteDonnee) {
       this.greater = true;
     } else {
+      console.log(' b else', b);
+
       this.greater = false;
       this.participerBienForm = {};
       const username = this.userService.getProfileCurrentUser().username;
