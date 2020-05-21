@@ -25,7 +25,11 @@ export class MissionBenevoleService {
     return this.http.post<string>(environment.baseUrl + 'participerMission/' + username, participerMissionForm);
   }
 
-  getMissionPart(username: string): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listMissionByUser/' + username);
+  getMissionPart(username: string, id: number): Observable<any> {
+    return this.http.get(environment.baseUrl + 'listMissionDisplay/' + username + '/' + id);
+  }
+
+  annulerDemande(id: number, username: string): Observable<any> {
+    return this.http.post<string>(environment.baseUrl + 'annulerDemande/' + username, id);
   }
 }

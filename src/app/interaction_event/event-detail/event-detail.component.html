@@ -191,39 +191,50 @@
     }">
               <tr>
                 <td>
-                  <div style="text-align: center; color: black">{{m.titre}}</div>
+                  <div style="text-align: center; color: black">{{m.mission.id}}*{{m.mission.titre}}</div>
                 </td>
                 <td>
-                  <div style="text-align: center;  color: black">{{m.description}}</div>
+                  <div style="text-align: center;  color: black">{{m.mission.description}}</div>
                 </td>
 
 
                 <td>
                   <div style="text-align: center; color: black">
 
-                    <form (ngSubmit)="addParticipationMission(m)" class="form-inline my-2 my-lg-0">
 
 
-                      <button  [disabled]="true" *ngIf="userService.isAuthenticated()&& missionId.includes(m.id)"
-                              class="btn btn-info btn-sm">
+
+                      <button  [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
+                              class="btn btn-info btn-rounded btn-sm">
                         En Attente
-                        {{ missionId.includes(m.id)}}
 
                       </button>
-                      <button *ngIf="userService.isAuthenticated()&& !missionId.includes(m.id)"
-                              class="btn btn-info btn-sm"
+                    <form (ngSubmit)="libererMission(m.mission)" class="form-inline my-2 my-lg-0">
+
+                    <button   *ngIf="m.exist==1 && m.affected==0"
+                               class="btn btn-danger btn-rounded btn-sm">
+                       Annuler Votre demande
+
+                    </button></form>
+                      <button  [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
+                               class="btn btn-success btn-rounded btn-sm">
+                        Vous êtes affecté à cette mission <span class=" fas fa-heart" ></span>
+                      </button>
+                    <form (ngSubmit)="addParticipationMission(m.mission)" class="form-inline my-2 my-lg-0">
+                      <button *ngIf="m.exist==0"
+                              class="btn btn-info btn-rounded btn-sm"
                               title="Postuler">
 
-                        {{ !missionId.includes(m.id)}}
+
                         <i class="fas fa-hands-helping"></i>
                       </button>
-
-                      <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-sm"
+                    </form>
+                      <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-rounded btn-sm"
                               title="Postuler"
                               [routerLink]="['/login']">
                         <i
                           class="fas fa-hands-helping"></i></button>
-                    </form>
+
 
 
                   </div>

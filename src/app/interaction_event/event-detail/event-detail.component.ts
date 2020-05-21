@@ -10,6 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {MissionBenevoleService} from '../services/mission-benevole-service/mission-benevole.service';
 import {Mission} from '../models/Mission';
 import {User} from '../../membre_auth/models/user';
+import {MissionUserDisplay} from '../models/MissionUserDisplay';
 
 @Component({
   selector: 'app-event-detail',
@@ -24,17 +25,15 @@ export class EventDetailComponent implements OnInit {
   id: number;
   event: Evenement = new Evenement();
   biens: Bien[] = [];
-  missions: Mission[] = [];
+  missions: MissionUserDisplay[] = [];
   participerBienForm: any;
   myForm: FormGroup;
   greater = false;
   today = new Date();
   participerMissionForm: any;
-  missionList: Mission[] = [];
   username: string;
   user: User;
-  listMissionUser: Mission[] = [];
-  missionId: number[] = [];
+
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
@@ -58,7 +57,6 @@ export class EventDetailComponent implements OnInit {
     this.username = this.userService.getProfileCurrentUser().username;
     this.userService.getUserByUsername(this.username).subscribe((data) => {
       this.user = data;
-      //console.log('this.user in eventDetail', this.user);
 
     });
 
@@ -72,59 +70,15 @@ export class EventDetailComponent implements OnInit {
 
     this.getAllMission();
 
-    console.log(' this.missions OnInit', this.missions);
 
   }
 
-  /* displayListMission() {
-
-
-     this.eventService.getAllMissionByEvent(this.id).subscribe(data => {
-       this.missions = data;
-       this.missions.forEach((m) => {
-         m.enAtte = 0;
-       });
-       console.log('this.missions+enAtt', this.missions);
-
-       this.missionBenevoleService.getMissionPart(this.username).subscribe(data2 => {
-         this.listMissionUser = data2;
-         console.log('data2', data2);
-         this.missions.forEach((e1) => this.listMissionUser.forEach((e2) => {
-             if (e1.id === e2.id) {
-               e1.enAtte = 1;
-               this.missionList.push(e1);
-
-             } else {
-               e1.enAtte = 0;
-               this.missionList.push(e1);
-
-             }
-
-           }
-         ));
-       }, error => console.log(error));
-
-     }, error => console.log(error));
-
-     console.log('listMission', this.missionList);
-     return this.missionList;
-   }*/
 
   getAllMission() {
-    this.missionId = [];
-    this.eventService.getAllMissionByEvent(this.id).subscribe(data => {
+
+    this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
+      console.log('data', data);
       this.missions = data;
-      this.totalmission = this.missions.length;
-    }, error => console.log(error));
-
-    this.missionBenevoleService.getMissionPart(this.username).subscribe(data2 => {
-      this.listMissionUser = data2;
-      this.listMissionUser.forEach(m => {
-        console.log('m.id', m.id);
-        this.missionId.push(m.id);
-      });
-      console.log('this.missionId', this.missionId);
-
     }, error => console.log(error));
   }
 
@@ -179,6 +133,16 @@ export class EventDetailComponent implements OnInit {
       console.log(error);
     });
 
+  }
+
+  libererMission(m: Mission) {
+    const username = this.userService.getProfileCurrentUser().username;
+    this.missionBenevoleService.annulerDemande(m.id, username).subscribe(data => {
+      console.log('liberer');
+      this.getAllMission();
+    })
+
+    ;
   }
 }
 
