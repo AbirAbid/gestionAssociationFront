@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -34,8 +35,8 @@ import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/dev
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MbscModule} from "@mobiscroll/angular-lite";
-import { EventDetailComponent } from './interaction_event/event-detail/event-detail.component';
-import { EventCalendarComponent } from './interaction_event/event-calendar/event-calendar.component';
+import {EventDetailComponent} from './interaction_event/event-detail/event-detail.component';
+import {EventCalendarComponent} from './interaction_event/event-calendar/event-calendar.component';
 
 @NgModule({
   /* declarations array ensemble des compons utilisée*/
@@ -77,13 +78,13 @@ import { EventCalendarComponent } from './interaction_event/event-calendar/event
     MatInputModule,
     MatRippleModule,
     FullCalendarModule, // for FullCalendar!
-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
     NgxPaginationModule,
-    MbscModule
+    MbscModule,
+    NgbModule
 
   ],
 

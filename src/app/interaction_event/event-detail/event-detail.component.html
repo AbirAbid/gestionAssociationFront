@@ -202,24 +202,49 @@
                   <div style="text-align: center; color: black">
 
 
+                    <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
+                            class="btn btn-info btn-rounded btn-sm">
+                      En Attente
+
+                    </button>
+
+                    <button *ngIf="m.exist==1 && m.affected==0"
+                            class="btn btn-danger btn-rounded btn-sm" data-toggle="modal"
+                            data-target="#modalAnnulation">
+                      Annuler Votre demande
+
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="m.exist==1 && m.affected==0">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Annuler votre condidature</h5>
+
+                          </div>
+                          <div class="modal-body">
+                            vous êtes sûre d'annuler votre candidature pour <strong>{{m.mission.titre}}</strong>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Fermer
+                            </button>
+
+                            <button type="button" (click)="libererMission(m.mission)" data-dismiss="modal"
+                                    class="btn btn-danger btn-rounded btn-sm">Oui
+
+                            </button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
-                      <button  [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
-                              class="btn btn-info btn-rounded btn-sm">
-                        En Attente
-
-                      </button>
-                    <form (ngSubmit)="libererMission(m.mission)" class="form-inline my-2 my-lg-0">
-
-                    <button   *ngIf="m.exist==1 && m.affected==0"
-                               class="btn btn-danger btn-rounded btn-sm">
-                       Annuler Votre demande
-
-                    </button></form>
-                      <button  [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
-                               class="btn btn-success btn-rounded btn-sm">
-                        Vous êtes affecté à cette mission <span class=" fas fa-heart" ></span>
-                      </button>
+                    <button [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
+                            class="btn btn-success btn-rounded btn-sm">
+                      Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
+                    </button>
                     <form (ngSubmit)="addParticipationMission(m.mission)" class="form-inline my-2 my-lg-0">
                       <button *ngIf="m.exist==0"
                               class="btn btn-info btn-rounded btn-sm"
@@ -229,12 +254,11 @@
                         <i class="fas fa-hands-helping"></i>
                       </button>
                     </form>
-                      <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-rounded btn-sm"
-                              title="Postuler"
-                              [routerLink]="['/login']">
-                        <i
-                          class="fas fa-hands-helping"></i></button>
-
+                    <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-rounded btn-sm"
+                            title="Postuler"
+                            [routerLink]="['/login']">
+                      <i
+                        class="fas fa-hands-helping"></i></button>
 
 
                   </div>

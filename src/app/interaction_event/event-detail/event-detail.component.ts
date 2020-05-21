@@ -11,6 +11,8 @@ import {MissionBenevoleService} from '../services/mission-benevole-service/missi
 import {Mission} from '../models/Mission';
 import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-event-detail',
@@ -37,7 +39,7 @@ export class EventDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService, private modalService: NgbModal) {
 
     const formContrls = {
       // all validators to input firstname
@@ -137,6 +139,7 @@ export class EventDetailComponent implements OnInit {
 
   libererMission(m: Mission) {
     const username = this.userService.getProfileCurrentUser().username;
+    console.log(m)
     this.missionBenevoleService.annulerDemande(m.id, username).subscribe(data => {
       console.log('liberer');
       this.getAllMission();
@@ -144,6 +147,8 @@ export class EventDetailComponent implements OnInit {
 
     ;
   }
+
+
 }
 
 
