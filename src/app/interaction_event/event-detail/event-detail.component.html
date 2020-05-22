@@ -110,31 +110,38 @@
                 </td>
                 <td>
                   <div style="text-align: center;">
+
                     <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)">
                       <div class="input-group">
+
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
-                               name="qtedonnee"
+                               name="qtedonnee" *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated()"
                                id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
                         <span class="input-group-btn">
-                         <button class="btn btn-primary btn-sm" *ngIf="userService.isAuthenticated()"
+                         <button class="btn btn-primary btn-sm"
+                                 *ngIf="userService.isAuthenticated() && b.qte>b.totaleqteDonnee"
                                  title="Donner"
-                                 type="submit"
-                                 [disabled]="b.qte==b.totaleqteDonnee">
+                                 type="submit">
                       <i class="fas fa-hand-holding-medical"></i>
                          </button>
                           </span>
-                        <span class="input-group-btn">
-                         <button class="btn btn-primary btn-sm" *ngIf="!userService.isAuthenticated()"
+                      </div>
+                    </form>
+
+
+                      <span class="input-group-btn">
+                         <button class="btn btn-primary btn-sm"
+                                 *ngIf="!userService.isAuthenticated() && b.qte>b.totaleqteDonnee"
                                  title="Donner"
-                                 [routerLink]="['/login']"
-                                 [disabled]="b.qte==b.totaleqteDonnee"><i
+                                 data-toggle="modal"
+                                 data-target="#modallogin"><i
                            class="fas fa-hand-holding-medical"></i>
                         </button>
                           </span>
-                      </div>
+                      <h1 *ngIf="b.qte==b.totaleqteDonnee"><span
+                        class="badge badge-success">Nous avous obtenu le besoin</span>
+                      </h1>
 
-
-                    </form>
 
 
                   </div>
@@ -157,126 +164,197 @@
 
             </div>
           </div>
+
           <div id="sampletab2" class="tab-pane">
-            <div class="alert alert-danger" role="alert" *ngIf="missions.length == 0">
-              Cet événement ne contient pas des missions.
-            </div>
-            <table class="table table-bordered " *ngIf="missions.length != 0">
+            <div *ngIf="userService.isAuthenticated()">
+              <div class="alert alert-danger" role="alert" *ngIf="missionsAuth.length == 0">
+                Cet événement ne contient pas des missions.
+              </div>
+              <table class="table table-bordered " *ngIf="missionsAuth.length != 0">
 
-              <!--Table head-->
-              <thead class="table-active ">
-              <tr>
-                <th>
-                  <div style="text-align: center;color: black">Titre Mission</div>
-                </th>
-                <th>
-                  <div style="text-align: center;color: black">Déscription</div>
-                </th>
+                <!--Table head-->
+                <thead class="table-active ">
+                <tr>
+                  <th>
+                    <div style="text-align: center;color: black">Titre Mission</div>
+                  </th>
+                  <th>
+                    <div style="text-align: center;color: black">Déscription</div>
+                  </th>
 
 
-                <th>
-                  <div style="text-align: center; color: black">Postuler</div>
-                </th>
-              </tr>
-              </thead>
-              <!--Table head-->
+                  <th>
+                    <div style="text-align: center; color: black">Postuler</div>
+                  </th>
+                </tr>
+                </thead>
+                <!--Table head-->
 
-              <!--Table body-->
-              <tbody *ngFor="let m of missions| paginate:{
+                <!--Table body-->
+                <tbody *ngFor="let m of missionsAuth| paginate:{
     id:'listing_pagination2',
     itemsPerPage:10,
     currentPage:pagem,
     totalItems:totalmission
 
     }">
-              <tr>
-                <td>
-                  <div style="text-align: center; color: black">{{m.mission.id}}*{{m.mission.titre}}</div>
-                </td>
-                <td>
-                  <div style="text-align: center;  color: black">{{m.mission.description}}</div>
-                </td>
+                <tr>
+                  <td>
+                    <div style="text-align: center; color: black">{{m.mission.id}}*{{m.mission.titre}}</div>
+                  </td>
+                  <td>
+                    <div style="text-align: center;  color: black">{{m.mission.description}}</div>
+                  </td>
 
 
-                <td>
-                  <div style="text-align: center; color: black">
+                  <td>
+                    <div style="text-align: center; color: black">
 
 
-                    <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
-                            class="btn btn-info btn-rounded btn-sm">
-                      En Attente
+                      <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
+                              class="btn btn-info btn-rounded btn-sm">
+                        En Attente
 
-                    </button>
+                      </button>
 
-                    <button *ngIf="m.exist==1 && m.affected==0"
-                            class="btn btn-danger btn-rounded btn-sm" data-toggle="modal"
-                            data-target="#modalAnnulation">
-                      Annuler Votre demande
+                      <button *ngIf="m.exist==1 && m.affected==0"
+                              class="btn btn-danger btn-rounded btn-sm" data-toggle="modal"
+                              data-target="#modalAnnulation">
+                        Annuler Votre demande
 
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="m.exist==1 && m.affected==0">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Annuler votre condidature</h5>
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
+                           aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="m.exist==1 && m.affected==0">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Annuler votre condidature</h5>
 
-                          </div>
-                          <div class="modal-body">
-                            vous êtes sûre d'annuler votre candidature pour <strong>{{m.mission.titre}}</strong>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Fermer
-                            </button>
+                            </div>
+                            <div class="modal-body">
+                              vous êtes sûre d'annuler votre candidature pour <strong>{{m.mission.titre}}</strong>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Fermer
+                              </button>
 
-                            <button type="button" (click)="libererMission(m.mission)" data-dismiss="modal"
-                                    class="btn btn-danger btn-rounded btn-sm">Oui
+                              <button type="button" (click)="libererMission(m.mission)" data-dismiss="modal"
+                                      class="btn btn-danger btn-rounded btn-sm">Oui
 
-                            </button>
+                              </button>
 
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
 
-                    <button [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
-                            class="btn btn-success btn-rounded btn-sm">
-                      Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
-                    </button>
-                    <form (ngSubmit)="addParticipationMission(m.mission)" class="form-inline my-2 my-lg-0">
-                      <button *ngIf="m.exist==0"
-                              class="btn btn-info btn-rounded btn-sm"
-                              title="Postuler">
-
-
-                        <i class="fas fa-hands-helping"></i>
+                      <button [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
+                              class="btn btn-success btn-rounded btn-sm">
+                        Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
                       </button>
-                    </form>
-                    <button *ngIf="!userService.isAuthenticated() " class="btn btn-info btn-rounded btn-sm"
-                            title="Postuler"
-                            [routerLink]="['/login']">
-                      <i
-                        class="fas fa-hands-helping"></i></button>
+                      <form (ngSubmit)="addParticipationMission(m.mission)" class="form-inline my-2 my-lg-0">
+                        <button *ngIf="m.exist==0"
+                                class="btn btn-info btn-rounded btn-sm"
+                                title="Postuler">
 
 
-                  </div>
-                </td>
+                          <i class="fas fa-hands-helping"></i>
+                        </button>
+                      </form>
 
-              </tr>
+                    </div>
+                  </td>
 
-              </tbody>
-              <!--Table body-->
+                </tr>
 
-            </table>
-            <div style="text-align: center;" *ngIf="missions.length != 0">
-              <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
-                                   previousLabel="Précédent"
-                                   nextLabel="Suivant"
-                                   responsive
-                                   (pageChange)="pagem=$event"></pagination-controls>
+                </tbody>
+                <!--Table body-->
 
+              </table>
+              <div style="text-align: center;" *ngIf="missionsAuth.length != 0">
+                <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
+                                     previousLabel="Précédent"
+                                     nextLabel="Suivant"
+                                     responsive
+                                     (pageChange)="pagem=$event"></pagination-controls>
+
+              </div>
+            </div>
+
+
+            <div *ngIf="!userService.isAuthenticated()">
+              <div class="alert alert-danger" role="alert" *ngIf="missionsNotAuth.length == 0">
+                Cet événement ne contient pas des missions.
+              </div>
+              <table class="table table-bordered " *ngIf="missionsNotAuth.length != 0">
+
+                <!--Table head-->
+                <thead class="table-active ">
+                <tr>
+                  <th>
+                    <div style="text-align: center;color: black">Titre Mission</div>
+                  </th>
+                  <th>
+                    <div style="text-align: center;color: black">Déscription</div>
+                  </th>
+
+
+                  <th>
+                    <div style="text-align: center; color: black">Postuler</div>
+                  </th>
+                </tr>
+                </thead>
+
+
+                <!--Table body-->
+                <tbody *ngFor="let m of missionsNotAuth| paginate:{
+    id:'listing_pagination2',
+    itemsPerPage:10,
+    currentPage:pagem,
+    totalItems:totalmission
+
+    }">
+                <tr>
+                  <td>
+                    <div style="text-align: center; color: black">{{m.id}}*{{m.titre}}</div>
+                  </td>
+                  <td>
+                    <div style="text-align: center;  color: black">{{m.description}}</div>
+                  </td>
+
+
+                  <td>
+                    <div style="text-align: center; color: black">
+
+
+                      <button class="btn btn-info btn-rounded btn-sm"
+                              title="Postuler" data-toggle="modal"
+                              data-target="#modallogin">
+                        <i class="fas fa-hands-helping"></i></button>
+
+
+                      <!-- Modal -->
+
+
+                    </div>
+                  </td>
+
+                </tr>
+
+                </tbody>
+                <!--Table body-->
+
+              </table>
+              <div style="text-align: center;" *ngIf="missionsNotAuth.length != 0">
+                <pagination-controls class="my-pagination" id="listing_pagination3" maxSize="5" directionLinks="true"
+                                     previousLabel="Précédent"
+                                     nextLabel="Suivant"
+                                     responsive
+                                     (pageChange)="pagem=$event"></pagination-controls>
+
+              </div>
             </div>
           </div>
 
@@ -287,10 +365,69 @@
     </div>
   </div>
 </div>
+<!-- Modal Login -->
+<div class="modal fade" id="modallogin" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true"
+     *ngIf="!userService.isAuthenticated() ">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="text-center"> Connecte-toi maintenant! </h2>
+
+      </div>
 
 
+      <form class="login-form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="text-uppercase">Nom d'utilisteur</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="form.username"
+                   #username="ngModel"
+                   required/>
+            <div *ngIf="f.submitted && username.invalid">
+              <div *ngIf="username.errors.required" class="text-danger">Champs vide!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-uppercase">Mot de passe </label>
+            <input type="password" class="form-control" name="password"
+                   [(ngModel)]="form.password"
+                   #password="ngModel"
+                   required minlength="6"/>
+            <div *ngIf="f.submitted && password.invalid">
+              <div *ngIf="password.errors.required" class="text-danger">Champs vide!!</div>
+
+            </div>
+          </div>
+          <div *ngIf="f.submitted && isLoginFailed" class="text-danger">
+            Probléme d'authentification  {{errorMessage}}
+          </div>
+
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button type="button" class="btn btn-primary" (click)=" onSubmit()"
+                    data-dismiss="modal">Se connecter
+            </button>
+          </div>
+          <div class="copy-text"> Vous n'avez pas encore de compte ? <a href="inscription"> Créer
+            votre compte </a>
+          </div>
+        </div>
+      </form>
+
+      <div class="spacer-10"></div>
+
+
+    </div>
+  </div>
+</div>
 <style>
   .my-pagination /deep/ .ngx-pagination .current {
     background: #3da0ff;
   }
 </style>
+
+

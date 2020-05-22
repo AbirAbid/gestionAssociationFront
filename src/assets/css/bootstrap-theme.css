@@ -479,7 +479,7 @@ a:focus, .btn:focus,
 	-moz-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
-	transform: rotate(180deg);	
+	transform: rotate(180deg);
 }
 .accordion-heading.togglize .accordion-toggle i {
 	margin: -8px 0 0 0;
@@ -531,10 +531,10 @@ a:focus, .btn:focus,
  	position: relative;
   	top: 0px;
   	right: -22px;
-	color: #FFFFFF;	
+	color: #FFFFFF;
 	text-shadow: none;
   	line-height: 20px;
-	
+
 	-webkit-transition: opacity 0.1s linear 0s;
 	-moz-transition: opacity 0.1s linear 0s;
 	-ms-transition: opacity 0.1s linear 0s;
@@ -1078,6 +1078,9 @@ span.progress-bar-tooltip:after {
 .badge{
 	background:#999;
 }
+.badge-danger{background: #cf1600;}
+.badge-success{background: #2bb92e;}
+
 .well{
 	background-color:#F6F6F6;
 }

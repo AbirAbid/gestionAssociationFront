@@ -12,6 +12,7 @@ import {Mission} from '../models/Mission';
 import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {AuthLoginInfo} from '../../membre_auth/models/login-info';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EventDetailComponent implements OnInit {
   id: number;
   event: Evenement = new Evenement();
   biens: Bien[] = [];
-  missions: MissionUserDisplay[] = [];
+  missionsAuth: MissionUserDisplay[] = [];
+  missionsNotAuth: Mission[] = [];
   participerBienForm: any;
   myForm: FormGroup;
   greater = false;
@@ -35,7 +37,12 @@ export class EventDetailComponent implements OnInit {
   participerMissionForm: any;
   username: string;
   user: User;
-
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string;
+  loginInfo: AuthLoginInfo;
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
@@ -47,11 +54,13 @@ export class EventDetailComponent implements OnInit {
     };
     // relie formGrp + formControl
     this.myForm = this.fb.group(formContrls);
+    this.loginInfo = new AuthLoginInfo();
   }
 
   get qtedonnee() {
     return this.myForm.get('qtedonnee');
   }
+
 
   ngOnInit(): void {
 
@@ -70,17 +79,20 @@ export class EventDetailComponent implements OnInit {
 
     this.getAllBien();
 
-    this.getAllMission();
-
-
+    this.getAllMissionAuthentificated();
+    this.getMissionsNotAuth();
+    if (this.userService.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.userService.getAuthorities();
+    }
   }
 
 
-  getAllMission() {
+  getAllMissionAuthentificated() {
 
     this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
       console.log('data', data);
-      this.missions = data;
+      this.missionsAuth = data;
     }, error => console.log(error));
   }
 
@@ -97,7 +109,7 @@ export class EventDetailComponent implements OnInit {
 
     if (b.qte < this.qtedonnee.value + b.totaleqteDonnee) {
       this.greater = true;
-    } else {
+    } else if (this.qtedonnee.value) {
       console.log(' b else', b);
 
       this.greater = false;
@@ -110,13 +122,15 @@ export class EventDetailComponent implements OnInit {
 
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
         console.log('data', data);
-        // this.getAllBien();
+        this.getAllBien();
+        this.myForm.controls['qtedonnee'].setValue(0);
+
 
       }, error => console.log(error));
       this.toastr.success('Merci de votre aide');
-
-
     }
+
+
   }
 
   addParticipationMission(m: Mission) {
@@ -128,7 +142,7 @@ export class EventDetailComponent implements OnInit {
     this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
       console.log(data);
       // this.missions = this.displayListMission();
-      this.getAllMission();
+      this.getAllMissionAuthentificated();
       this.toastr.success('Merci de votre participation');
 
     }, error => {
@@ -139,15 +153,81 @@ export class EventDetailComponent implements OnInit {
 
   libererMission(m: Mission) {
     const username = this.userService.getProfileCurrentUser().username;
-    console.log(m)
+    console.log(m);
     this.missionBenevoleService.annulerDemande(m.id, username).subscribe(data => {
       console.log('liberer');
-      this.getAllMission();
+      this.getAllMissionAuthentificated();
     })
-
     ;
   }
 
+
+  getMissionsNotAuth() {
+    this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
+      console.log('data', data);
+      this.missionsNotAuth = data;
+    }, error => console.log(error));
+  }
+
+  onSubmit() {
+    this.isLoginFailed = false;
+    this.loginInfo.username = this.form.username;
+    this.loginInfo.password = this.form.password;
+    this.roles = this.userService.getAuthorities();
+
+    this.userService.attemptAuth(this.loginInfo).subscribe(
+      (data: any) => {
+        console.log('data', data);
+        try {
+          if (data && data.error) {
+            this.isLoginFailed = true;
+          } else {
+            let currentUser: any;
+            currentUser = {};
+            currentUser.profile = {};
+            currentUser.profile.firstname = '';
+            console.log('data.name', data.name);
+            currentUser.profile.lastname = 'lastname';
+            currentUser.profile.email = 'email@tunis.com';
+
+            /*this.user.username = data.username;
+            currentUser.profile = this.user;
+            console.log('currentUser.profile', currentUser.profile );*/
+            currentUser.profile.name = data.name;
+            console.log('data.name', data.name);
+            currentUser.profile.username = data.username;
+            currentUser.isAuthenticated = true;
+            currentUser.tokenAuth = data.accessToken;
+            console.log('current User', currentUser);
+            currentUser.profile.role = data.authorities;
+            console.log('currentUser.profile.role', currentUser.profile.role);
+            currentUser.profile.roleName = data.authorities[0].authority;
+            console.log('currentUser.profile.roleName', currentUser.profile.roleName);
+            this.userService.setCurrentUser(currentUser);
+            localStorage.setItem('CUREENT_USER', JSON.stringify(this.userService.getCurrentUser()));
+            this.isLoginFailed = false;
+            this.isLoggedIn = true;
+            this.username = this.userService.getProfileCurrentUser().username;
+
+            console.log('userService', this.userService);
+            this.missionsAuth = [];
+            this.router.navigate(['eventDetail', this.id]);
+
+            this.getAllMissionAuthentificated();
+            this.toastr.success('Content de vous revoir  !', currentUser.profile.username);
+          }
+        } catch (ex) {
+          console.log(ex);
+        }
+
+      },
+      error => {
+        console.log(error);
+        this.errorMessage = error.error.message;
+        this.isLoginFailed = true;
+      }
+    );
+  }
 
 }
 

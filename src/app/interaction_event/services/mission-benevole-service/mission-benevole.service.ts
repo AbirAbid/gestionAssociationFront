@@ -24,7 +24,9 @@ export class MissionBenevoleService {
   demandeMission(participerMissionForm: any, username: string): Observable<any> {
     return this.http.post<string>(environment.baseUrl + 'participerMission/' + username, participerMissionForm);
   }
-
+  getMissionByEvent(id: number): Observable<any> {
+    return this.http.get(environment.baseUrl + 'listMissionBenevoleEvent/'  + id);
+  }
   getMissionPart(username: string, id: number): Observable<any> {
     return this.http.get(environment.baseUrl + 'listMissionDisplay/' + username + '/' + id);
   }
