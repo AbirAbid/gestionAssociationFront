@@ -22,7 +22,12 @@
                                 </span>
               <div class="event-list-cont">
                 <span class="meta-data">{{evt.dateDebut|date}}</span>
-                <h4 class="post-title"><a href="#">{{evt.titre}}</a></h4>
+                <h4 class="post-title"><a href="#">{{evt.titre}}</a>
+                  &nbsp;
+                <span *ngIf="(evt.dateFin|date) < (dateJour | date)" class="badge badge-danger">
+                  Passé  </span>
+
+                </h4>
                 <p>{{evt.description}}</p>
                 <a (click)="eventDetail(evt.id)" class="btn btn-default">Découvrir</a>
               </div>

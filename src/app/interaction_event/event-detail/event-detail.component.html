@@ -15,7 +15,9 @@
     <div class="well widget widget_volunteer_form">
 
 
-      <div style="text-align: center;"><h2>  {{event.titre}} </h2></div>
+      <div style="text-align: center;"><h2>  {{event.titre}} </h2> <span
+        *ngIf="(event.dateFin|date) < (dateJour | date)" class="badge badge-danger">
+                  Passé  </span></div>
 
       <hr/>
       <div class="row">
@@ -39,7 +41,7 @@
               <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
             </div>
             <div class="col-sm-6">
-              <span class="badge badge-danger">Inscription obligatoire</span></div>
+              <span class="badge badge-success">Inscription obligatoire</span></div>
           </div>
 
 
@@ -112,14 +114,15 @@
                   <div style="text-align: center;">
 
                     <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)">
-                      <div class="input-group">
+                      <div class="input-group" *ngIf="(b.evenement.dateFin|date) >= (dateJour | date)">
 
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
-                               name="qtedonnee" *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated()"
+                               name="qtedonnee"
+                               *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated() "
                                id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
                         <span class="input-group-btn">
                          <button class="btn btn-primary btn-sm"
-                                 *ngIf="userService.isAuthenticated() && b.qte>b.totaleqteDonnee"
+                                 *ngIf="userService.isAuthenticated() && b.qte>b.totaleqteDonnee "
                                  title="Donner"
                                  type="submit">
                       <i class="fas fa-hand-holding-medical"></i>
@@ -129,20 +132,24 @@
                     </form>
 
 
-                      <span class="input-group-btn">
-                         <button class="btn btn-primary btn-sm"
-                                 *ngIf="!userService.isAuthenticated() && b.qte>b.totaleqteDonnee"
-                                 title="Donner"
-                                 data-toggle="modal"
-                                 data-target="#modallogin"><i
-                           class="fas fa-hand-holding-medical"></i>
-                        </button>
-                          </span>
-                      <h1 *ngIf="b.qte==b.totaleqteDonnee"><span
-                        class="badge badge-success">Nous avous obtenu le besoin</span>
-                      </h1>
+                    <div class="input-group-btn" *ngIf="(b.evenement.dateFin|date) >= (dateJour | date)">
+                      <button class="btn btn-primary btn-sm"
+                              *ngIf="!userService.isAuthenticated() && b.qte>b.totaleqteDonnee "
+                              title="Donner"
+                              data-toggle="modal"
+                              data-target="#modallogin"><i
+                        class="fas fa-hand-holding-medical"></i>
+                      </button>
+                    </div>
+                    <h1 *ngIf="b.qte==b.totaleqteDonnee && (b.evenement.dateFin|date) >= (dateJour | date)"><span
+                      class="badge badge-success">Nous avous obtenu le besoin</span>
+                    </h1>
 
+                    <h1 *ngIf="(b.evenement.dateFin|date) < (dateJour | date)">
+                      <span
+                        class="badge badge-danger">Cet événement est passé</span>
 
+                    </h1>
 
                   </div>
                 </td>
@@ -208,7 +215,8 @@
 
 
                   <td>
-                    <div style="text-align: center; color: black">
+                    <div style="text-align: center; color: black"
+                         *ngIf="(m.mission.evenement.dateFin|date) >= (dateJour | date)">
 
 
                       <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
@@ -265,6 +273,12 @@
                       </form>
 
                     </div>
+                    <h1 *ngIf="(m.mission.evenement.dateFin|date) < (dateJour | date)">
+                      <span
+                        class="badge badge-danger">Cet événement est passé</span>
+
+                    </h1>
+
                   </td>
 
                 </tr>
@@ -285,6 +299,7 @@
 
 
             <div *ngIf="!userService.isAuthenticated()">
+              <div></div>
               <div class="alert alert-danger" role="alert" *ngIf="missionsNotAuth.length == 0">
                 Cet événement ne contient pas des missions.
               </div>
@@ -331,11 +346,15 @@
 
                       <button class="btn btn-info btn-rounded btn-sm"
                               title="Postuler" data-toggle="modal"
-                              data-target="#modallogin">
+                              data-target="#modallogin" *ngIf="(m.evenement.dateFin|date) >= (dateJour | date)">
                         <i class="fas fa-hands-helping"></i></button>
 
 
-                      <!-- Modal -->
+                      <h1 *ngIf="(m.evenement.dateFin|date) < (dateJour | date)">
+                      <span
+                        class="badge badge-danger">Cet événement est passé</span>
+
+                      </h1>
 
 
                     </div>

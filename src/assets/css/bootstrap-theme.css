@@ -1080,7 +1080,10 @@ span.progress-bar-tooltip:after {
 }
 .badge-danger{background: #cf1600;}
 .badge-success{background: #2bb92e;}
-
+badge-secondary{background: #536866
+}
+.badge-warning{background: #efd536;
+color: black}
 .well{
 	background-color:#F6F6F6;
 }

@@ -25,6 +25,7 @@ export class EventDetailComponent implements OnInit {
   page = 1;
   totalmission: number;
   pagem = 1;
+  dateJour = new Date();
   id: number;
   event: Evenement = new Evenement();
   biens: Bien[] = [];

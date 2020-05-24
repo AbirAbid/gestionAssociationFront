@@ -20,11 +20,9 @@
       </th>
 
       <th>
-        <div style="text-align: center;">Status</div>
-      </th>
-      <th>
         <div style="text-align: center;"></div>
       </th>
+
     </tr>
     </thead>
     <!--Table head-->
@@ -39,24 +37,51 @@
     }">
     <tr>
       <td>
-        <div style="text-align: center;">{{lm.mission.titre}}</div>
+        <div style="text-align: center;"> {{lm.mission.titre}}</div>
       </td>
       <td>
-        <div style="text-align: center;">{{lm.mission.evenement.titre}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;">{{lm.demandeDate}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;">{{lm.affected}}</div>
-      </td>
-
-
-      <td>
-        <div style="text-align: center;" class="alert alert-success" role="alert">
-          Merci de votre Générosité
+        <div style="text-align: center;"><a [routerLink]=""
+                                            (click)="eventDetail(lm.mission.evenement.id)">{{lm.mission.evenement.titre}} </a>
         </div>
       </td>
+      <td>
+        <div style="text-align: center;">{{lm.demandeDate | date}}</div>
+      </td>
+      <td>
+        <div *ngIf="lm.affected==1" class="alert alert-success"> Vous êtes affectée à cette mission</div>
+        <div style="text-align: center;" *ngIf="lm.affected==0">
+          <button class="btn btn-rounded btn-danger" data-toggle="modal"
+                  data-target="#modalAnnulation"><span class="fas fa-window-close"></span></button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
+               aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Annuler votre condidature</h5>
+
+                </div>
+                <div class="modal-body">
+                  vous êtes sûre d'annuler votre candidature pour <strong>{{lm.mission.titre}}</strong>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Fermer
+                  </button>
+
+                  <button type="button" (click)="libererMission(lm.mission)" data-dismiss="modal"
+                          class="btn btn-danger btn-rounded btn-sm">Oui
+
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </td>
+
 
     </tr>
 

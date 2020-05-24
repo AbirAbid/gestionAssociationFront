@@ -44,7 +44,8 @@
         <div style="text-align: center;">{{ub.qteDonnee}}</div>
       </td>
       <td>
-        <div style="text-align: center;">{{ub.bien.evenement.titre}}</div>
+        <div style="text-align: center;"><a [routerLink]=""
+                                            (click)="eventDetail(ub.bien.evenement.id)">{{ub.bien.evenement.titre}}</a></div>
       </td>
 
         <td>

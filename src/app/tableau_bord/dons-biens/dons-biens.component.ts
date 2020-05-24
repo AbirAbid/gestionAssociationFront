@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TabBordService} from '../services/tab-bord.service';
 import {UserService} from '../../membre_auth/services/user.service';
 import {UserBien} from '../../interaction_event/models/UserBien';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dons-biens',
@@ -15,7 +16,7 @@ export class DonsBiensComponent implements OnInit {
   totalbien: number;
   page = 1;
 
-  constructor(private tabBordService: TabBordService, private userService: UserService) {
+  constructor(private tabBordService: TabBordService, private userService: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,4 +36,10 @@ export class DonsBiensComponent implements OnInit {
       console.log(' this.listParticiperBien ', this.listBienUser);
     }, error => console.log(error));
   }
+
+  eventDetail(id: number) {
+    this.router.navigate(['eventDetail', id]);
+
+  }
+
 }

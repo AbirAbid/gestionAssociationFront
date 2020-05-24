@@ -18,6 +18,7 @@ export class EvenementComponent implements OnInit {
   evenements: Evenement [] = [];
   calendarEvents = [];
 
+  dateJour = new Date();
 
   constructor(private eventService: EventService, private router: Router) {
 
