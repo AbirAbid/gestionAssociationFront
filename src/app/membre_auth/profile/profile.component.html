@@ -1,0 +1,168 @@
+<div style="background-image: url('../../assets/images/parallax6.jpg');">
+  <br><br>
+  <div class="container">
+    <div class="col-md-12 col-sm-12 ">
+      <div class="well widget widget_volunteer_form ">
+        <h2 class="text-center"> Devenir Membre </h2>
+        <div class="form-group col-md-12">
+
+          <div *ngIf="isSignedUp === true && isSignUpFailed === false" class="alert alert-success">
+            Félicitations ! Votre nouveau compte a été créé avec succès !!
+          </div>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
+          <div class="form-group col-md-6">
+            <label class="textlabel">Nom </label>
+            <input type="text" class="form-control" name="nom" formControlName="nom" placeholder="Nom "
+                   [(ngModel)]="user.nom"/>
+            <div *ngIf="nom.invalid && nom.touched">
+              <small *ngIf="nom.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
+              <small *ngIf="nom.errors.minlength" class="text-danger"> Un nom contenant 2 caractères au
+                minimum </small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Prénom :</label>
+            <input type="text" class="form-control" name="prenom" formControlName="prenom" placeholder="Prénom"
+                   [(ngModel)]="user.prenom"/>
+            <div *ngIf="prenom.invalid && prenom.touched">
+              <small *ngIf="prenom.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
+              <small *ngIf="prenom.errors.minlength" class="text-danger"> Un prénom contenant 2 caractères au
+                minimum </small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Votre Téléphone </label>
+            <input type="number" class="form-control" formControlName="telephone" placeholder="Téléphone"
+                   onKeyDown="if(this.value.length==8) return false;" [(ngModel)]="user.telephone"/>
+
+            <div *ngIf="telephone.invalid && telephone.touched">
+              <small *ngIf="telephone.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
+              <small *ngIf="telephone.errors.minlength" class="text-danger"> Un nom contenant 8 nombre au
+                minimum </small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Date de naissance </label>
+            <input type="date" class="form-control" name="dateNaissance" formControlName="dateNaissance"
+                   [(ngModel)]="user.dateNaissance"/>
+            <div *ngIf="dateNaissance.invalid && dateNaissance.touched">
+              <small *ngIf="dateNaissance.errors.required" class="text-danger"> Veuillez remplir ce
+                champs! </small>
+            </div>
+
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Votre mot de passe</label>
+            <input type="password" class="form-control" name="password" formControlName="password"
+                   placeholder="Mot de passe">
+            <div *ngIf="password.invalid && password.touched">
+              <small *ngIf="password.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
+              <small *ngIf="password.errors.minlength" class="text-danger"> Un nom contenant 8 nombre au
+                minimum </small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Retapez votre mot de passe</label>
+            <input type="password" class="form-control" name="passwordconfirm" formControlName="password2"
+                   placeholder="Retapez votre mot de passe "/>
+            <div *ngIf="password.value!=password2.value && password.touched ">
+              <small class="text-danger"> Veuillez remplir ce champs ! </small>
+
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel"> Votre adresse email </label>
+            <input type="email" class="form-control" name="email" formControlName="email"  disabled  [(ngModel)]="user.email"
+                   placeholder="Adresse email">
+
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel"> Choisissez un nom d'utilisateur</label>
+            <input type="text" class="form-control" name="username" formControlName="username"
+                   placeholder="Nom d'utilisateur">
+
+
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel"> Gouvernorat de résidence en Tunisie</label>
+            <select class="form-control" name="gouvernoratRes" formControlName="gouvernoratRes"  [(ngModel)]="user.gouvernoratRes">
+              <option value="Gouvernorat de résidence" disabled selected>Gouvernorat de résidence en Tunisie
+              </option>
+              <option value="ariana"> Ariana</option>
+              <option value="beja">Béja</option>
+              <option value="benarous"> Ben Arous</option>
+              <option value="bizerte">Bizerte</option>
+              <option value="gabes">Gabès</option>
+              <option value="gafsa">Gafsa</option>
+              <option value="jendouba">Jendouba</option>
+              <option value="kairouan">Kairouan</option>
+              <option value="kasserine"> Kasserine</option>
+              <option value="kebili">Kébili</option>
+              <option value="kef">Le Kef</option>
+              <option value="mahdia"> Mahdia</option>
+              <option value="manouba"> La Manouba</option>
+              <option value="mednine"> Médenine</option>
+              <option value="monastir"> Monastir</option>
+              <option value="nabeul">Nabeul</option>
+              <option value="sfax"> Sfax</option>
+              <option value="sidibouzid"> Sidi Bouzid</option>
+              <option value="siliana"> Siliana</option>
+              <option value="sousse"> Sousse</option>
+              <option value="tataouine"> Tataouine</option>
+              <option value="tozeur"> Tozeur</option>
+              <option value="tunis"> Tunis</option>
+              <option value="zaghoun"> Zaghouan</option>
+            </select>
+          </div>
+          <div class="form-group  col-md-6">
+
+            <label class="textlabel">Occupation</label>
+            <select class="form-control" name="occupation" formControlName="occupation"  [(ngModel)]="user.occupation">
+              <option value="Occupation" disabled selected> Occupation</option>
+
+              <option value="employe">Employé</option>
+
+              <option value="etudiant">Étudiant</option>
+
+              <option value="eleve">Élève</option>
+
+              <option value="autre">Autre</option>
+
+            </select>
+
+          </div>
+          <div class="form-group col-md-6">
+            <label class="textlabel">Genre </label>
+
+
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultChecked" name="genre"
+                     formControlName="genre" value="homme"
+                     checked  [(ngModel)]="user.genre">
+              <label class="custom-control-label" for="defaultChecked">Homme <i class="fas fa-male"></i></label>
+
+
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="defaultUnchecked" name="genre"
+                     formControlName="genre" value="femme"  [(ngModel)]="user.genre">
+              <label class="custom-control-label" for="defaultUnchecked">Femme <i
+                class="fas fa-female"></i></label>
+            </div>
+
+
+          </div>
+
+          <div class="form-group col-md-6">
+            <input type="submit" class="btn btn-primary" value="Modifier mon profile">
+          </div>
+          <div class="spacer-10"></div>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

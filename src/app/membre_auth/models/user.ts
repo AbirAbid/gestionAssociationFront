@@ -9,10 +9,9 @@ export class User {
   prenom: string;
   telephone: string;
   genre: string;
-  datenaissance: string;
+  dateNaissance: Date;
   gouvernoratRes: string;
   occupation: string;
   isAdmin: number;
-  userMissions: Array<UserMission> = [];
 
 }

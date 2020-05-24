@@ -37,6 +37,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {MbscModule} from "@mobiscroll/angular-lite";
 import {EventDetailComponent} from './interaction_event/event-detail/event-detail.component';
 import {EventCalendarComponent} from './interaction_event/event-calendar/event-calendar.component';
+import { ProfileComponent } from './membre_auth/profile/profile.component';
 
 @NgModule({
   /* declarations array ensemble des compons utilisée*/
@@ -61,7 +62,8 @@ import {EventCalendarComponent} from './interaction_event/event-calendar/event-c
     DevenirBenevoleComponent,
     DevenirAdherentComponent,
     EventDetailComponent,
-    EventCalendarComponent
+    EventCalendarComponent,
+    ProfileComponent
   ],
   /*imports array enesemble des libraries */
   imports: [

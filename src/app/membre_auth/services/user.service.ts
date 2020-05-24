@@ -102,9 +102,9 @@ export class UserService {
   }
 
 
-  updateUser(id: number, value: any): Observable<any> {
-    this.result = true;
-    return this.http.put(this.baseUrl + 'users/' + id, value);
+  updateUser(user: any): Observable<any> {
+
+    return this.http.put<string>(environment.baseUrl + 'updateProfile', user, httpOptions);
 
   }
 

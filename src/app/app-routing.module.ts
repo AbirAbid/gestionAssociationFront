@@ -18,6 +18,7 @@ import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/dev
 import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-biens.component';
 import {EventDetailComponent} from "./interaction_event/event-detail/event-detail.component";
 import {EventCalendarComponent} from "./interaction_event/event-calendar/event-calendar.component";
+import {ProfileComponent} from "./membre_auth/profile/profile.component";
 
 
 const routes: Routes = [
@@ -100,6 +101,11 @@ const routes: Routes = [
   {
     path: 'eventCalendar',
     component: EventCalendarComponent
+
+  },
+  {
+    path: 'account',
+    component: ProfileComponent
 
   },
   {
