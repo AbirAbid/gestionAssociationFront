@@ -44,8 +44,9 @@ export class LoginComponent implements OnInit {
       (data: any) => {
         console.log('data', data);
         try {
-          if (data && data.error) {
+          if (data == null) {
             this.isLoginFailed = true;
+            this.errorMessage = 'no';
           } else {
             let currentUser: any;
             currentUser = {};

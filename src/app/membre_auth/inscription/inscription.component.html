@@ -71,20 +71,11 @@
 
             </div>
           </div>
-          <div class="form-group col-md-6">
-            <label class="textlabel"> Votre adresse email </label>
-            <input type="email" class="form-control" name="email" formControlName="email"
-                   placeholder="Adresse email">
-            <div *ngIf="email.invalid && email.touched">
-              <small *ngIf="email.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
 
-            </div>
-
-          </div>
           <div class="form-group col-md-6">
-            <label class="textlabel"> Choisissez un nom d'utilisateur</label>
-            <input type="text" class="form-control" name="username" formControlName="username"
-                   placeholder="Nom d'utilisateur">
+            <label class="textlabel"> Votre adresse email</label>
+            <input type="email" class="form-control" name="username" formControlName="username"
+                   placeholder="email">
             <div *ngIf="username.invalid && username.touched">
               <small *ngIf="username.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
               <small *ngIf="username.errors.minlength" class="text-danger"> Un nom contenant 8 nombre au
@@ -164,8 +155,8 @@
 
           </div>
 
-          <div class="form-group col-md-6">
-            <input type="submit" class="btn btn-primary" value=" S'inscrire maintenant!">
+          <div class="form-group col-md-12">
+            <input type="submit" class="btn btn-primary" value=" S'inscrire maintenant">
           </div>
           <div class="spacer-10"></div>
 

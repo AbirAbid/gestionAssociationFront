@@ -7,7 +7,7 @@
 
         <form class="login-form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
           <div class="form-group">
-            <label class="text-uppercase">Nom d'utilisteur</label>
+            <label class="text-uppercase">Email</label>
             <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel"
                    required/>
             <div *ngIf="f.submitted && username.invalid">
@@ -24,8 +24,8 @@
 
             </div>
           </div>
-          <div *ngIf="f.submitted && isLoginFailed" class="text-danger">
-            Probléme d'authentification  {{errorMessage}}
+          <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+            Problem d'authentification {{errorMessage}}
           </div>
 
           <input type="submit" class="btn btn-primary" value="Se connecter">

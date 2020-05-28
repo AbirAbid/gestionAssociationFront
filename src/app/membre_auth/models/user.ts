@@ -1,9 +1,7 @@
-import {UserMission} from "../../interaction_event/models/UserMission";
 
 export class User {
   nom: string;
   username: string;
-  email: string;
   role: Array<string> = [];
   password: string;
   prenom: string;

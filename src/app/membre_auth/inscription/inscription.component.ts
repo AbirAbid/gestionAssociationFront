@@ -24,8 +24,6 @@ export class InscriptionComponent implements OnInit {
         Validators.minLength(2), Validators.maxLength(10)]),
       prenom: new FormControl('', [Validators.required,
         Validators.minLength(2), Validators.maxLength(10)]),
-      email: new FormControl('', [Validators.required,
-        Validators.minLength(2), Validators.maxLength(10), Validators.email]),
       password: new FormControl('', [Validators.required,
         Validators.minLength(5), Validators.maxLength(10)]),
       password2: new FormControl('', [Validators.required,
@@ -34,7 +32,7 @@ export class InscriptionComponent implements OnInit {
       telephone: new FormControl([Validators.required, Validators.minLength(8)]),
       gouvernoratRes: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required,
-        Validators.minLength(5), Validators.maxLength(10)]),
+        Validators.minLength(5), Validators.maxLength(10), Validators.email]),
       dateNaissance: new FormControl([Validators.required]),
       genre: new FormControl([Validators.required])
     };
@@ -54,9 +52,6 @@ export class InscriptionComponent implements OnInit {
     return this.myForm.get('prenom');
   }
 
-  get email() {
-    return this.myForm.get('email');
-  }
 
   get password() {
     return this.myForm.get('password');
