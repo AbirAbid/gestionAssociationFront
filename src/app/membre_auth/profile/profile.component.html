@@ -3,7 +3,7 @@
   <div class="container">
     <div class="col-md-12 col-sm-12 ">
       <div class="well widget widget_volunteer_form ">
-        <h2 class="text-center"> Devenir Membre </h2>
+        <h2 class="text-center"> Modifier mon profile </h2>
         <div class="form-group col-md-12">
 
           <div *ngIf="isSignedUp === true && isSignUpFailed === false" class="alert alert-success">
@@ -11,11 +11,11 @@
           </div>
         </div>
 
-        <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
+        <form (ngSubmit)="updateProfileSubmit()" [formGroup]="updateUserForm">
           <div class="form-group col-md-6">
             <label class="textlabel">Nom </label>
             <input type="text" class="form-control" name="nom" formControlName="nom" placeholder="Nom "
-                   [(ngModel)]="user.nom"/>
+              />
             <div *ngIf="nom.invalid && nom.touched">
               <small *ngIf="nom.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
               <small *ngIf="nom.errors.minlength" class="text-danger"> Un nom contenant 2 caractères au
@@ -25,7 +25,7 @@
           <div class="form-group col-md-6">
             <label class="textlabel">Prénom :</label>
             <input type="text" class="form-control" name="prenom" formControlName="prenom" placeholder="Prénom"
-                   [(ngModel)]="user.prenom"/>
+                />
             <div *ngIf="prenom.invalid && prenom.touched">
               <small *ngIf="prenom.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
               <small *ngIf="prenom.errors.minlength" class="text-danger"> Un prénom contenant 2 caractères au
@@ -35,7 +35,7 @@
           <div class="form-group col-md-6">
             <label class="textlabel">Votre Téléphone </label>
             <input type="number" class="form-control" formControlName="telephone" placeholder="Téléphone"
-                   onKeyDown="if(this.value.length==8) return false;" [(ngModel)]="user.telephone"/>
+                   onKeyDown="if(this.value.length==8) return false;" />
 
             <div *ngIf="telephone.invalid && telephone.touched">
               <small *ngIf="telephone.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
@@ -45,44 +45,26 @@
           </div>
           <div class="form-group col-md-6">
             <label class="textlabel">Date de naissance </label>
-            <input type="date" class="form-control" name="dateNaissance" formControlName="dateNaissance"
-                   [(ngModel)]="user.dateNaissance"/>
+            <input type="date"  class="form-control" name="dateNaissance" formControlName="dateNaissance"
+                />
             <div *ngIf="dateNaissance.invalid && dateNaissance.touched">
               <small *ngIf="dateNaissance.errors.required" class="text-danger"> Veuillez remplir ce
                 champs! </small>
             </div>
 
           </div>
-          <div class="form-group col-md-6">
-            <label class="textlabel">Votre mot de passe</label>
-            <input type="password" class="form-control" name="password" formControlName="password"
-                   placeholder="Mot de passe">
-            <div *ngIf="password.invalid && password.touched">
-              <small *ngIf="password.errors.required" class="text-danger"> Veuillez remplir ce champs ! </small>
-              <small *ngIf="password.errors.minlength" class="text-danger"> Un nom contenant 8 nombre au
-                minimum </small>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <label class="textlabel">Retapez votre mot de passe</label>
-            <input type="password" class="form-control" name="passwordconfirm" formControlName="password2"
-                   placeholder="Retapez votre mot de passe "/>
-            <div *ngIf="password.value!=password2.value && password.touched ">
-              <small class="text-danger"> Veuillez remplir ce champs ! </small>
 
-            </div>
-          </div>
 
           <div class="form-group col-md-6">
-            <label class="textlabel"> Choisissez un nom d'utilisateur</label>
+            <label class="textlabel"> Email </label>
             <input type="text" class="form-control" name="username" formControlName="username"
-                   placeholder="Nom d'utilisateur">
+                  disabled>
 
 
           </div>
           <div class="form-group col-md-6">
             <label class="textlabel"> Gouvernorat de résidence en Tunisie</label>
-            <select class="form-control" name="gouvernoratRes" formControlName="gouvernoratRes"  [(ngModel)]="user.gouvernoratRes">
+            <select class="form-control" name="gouvernoratRes" formControlName="gouvernoratRes" >
               <option value="Gouvernorat de résidence" disabled selected>Gouvernorat de résidence en Tunisie
               </option>
               <option value="ariana"> Ariana</option>
@@ -114,7 +96,7 @@
           <div class="form-group  col-md-6">
 
             <label class="textlabel">Occupation</label>
-            <select class="form-control" name="occupation" formControlName="occupation"  [(ngModel)]="user.occupation">
+            <select class="form-control" name="occupation" formControlName="occupation"  >
               <option value="Occupation" disabled selected> Occupation</option>
 
               <option value="employe">Employé</option>
@@ -135,14 +117,14 @@
             <div class="custom-control custom-radio">
               <input type="radio" class="custom-control-input" id="defaultChecked" name="genre"
                      formControlName="genre" value="homme"
-                     checked  [(ngModel)]="user.genre">
+                     checked  >
               <label class="custom-control-label" for="defaultChecked">Homme <i class="fas fa-male"></i></label>
 
 
             </div>
             <div class="custom-control custom-radio">
               <input type="radio" class="custom-control-input" id="defaultUnchecked" name="genre"
-                     formControlName="genre" value="femme"  [(ngModel)]="user.genre">
+                     formControlName="genre" value="femme"  >
               <label class="custom-control-label" for="defaultUnchecked">Femme <i
                 class="fas fa-female"></i></label>
             </div>

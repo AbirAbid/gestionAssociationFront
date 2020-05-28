@@ -104,7 +104,7 @@ export class UserService {
 
   updateUser(user: any): Observable<any> {
 
-    return this.http.put<string>(environment.baseUrl + 'updateProfile', user, httpOptions);
+    return this.http.post<string>(environment.baseUrl + 'updateProfile', user, httpOptions);
 
   }
 
