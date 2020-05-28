@@ -24,7 +24,7 @@
                 <span class="meta-data">{{evt.dateDebut|date}}</span>
                 <h4 class="post-title"><a href="#">{{evt.titre}}</a>
                   &nbsp;
-                <span *ngIf="(evt.dateFin|date) < (dateJour | date)" class="badge badge-danger">
+                <span *ngIf="(evt.dateFin|date:'short') < (dateJour | date:'short')" class="badge badge-danger">
                   Passé  </span>
 
                 </h4>

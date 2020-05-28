@@ -16,8 +16,13 @@
 
 
       <div style="text-align: center;"><h2>  {{event.titre}} </h2> <span
-        *ngIf="(event.dateFin|date) < (dateJour | date)" class="badge badge-danger">
-                  Passé  </span></div>
+        *ngIf="(event.dateFin|date:'short') < (dateJour | date:'short')" class="badge badge-danger">
+        Passé
+
+
+
+      </span></div>
+
 
       <hr/>
       <div class="row">
@@ -114,7 +119,7 @@
                   <div style="text-align: center;">
 
                     <form [formGroup]="myForm" (ngSubmit)="addParticipationBien(b)">
-                      <div class="input-group" *ngIf="(b.evenement.dateFin|date) >= (dateJour | date)">
+                      <div class="input-group" *ngIf="(b.evenement.dateFin|date:'short') >= (dateJour |date:'short')">
 
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
                                name="qtedonnee"
@@ -132,7 +137,7 @@
                     </form>
 
 
-                    <div class="input-group-btn" *ngIf="(b.evenement.dateFin|date) >= (dateJour | date)">
+                    <div class="input-group-btn" *ngIf="(b.evenement.dateFin|date:'short') >= (dateJour |date:'short')">
                       <button class="btn btn-primary btn-sm"
                               *ngIf="!userService.isAuthenticated() && b.qte>b.totaleqteDonnee "
                               title="Donner"
@@ -141,11 +146,11 @@
                         class="fas fa-hand-holding-medical"></i>
                       </button>
                     </div>
-                    <h1 *ngIf="b.qte==b.totaleqteDonnee && (b.evenement.dateFin|date) >= (dateJour | date)"><span
+                    <h1 *ngIf="b.qte==b.totaleqteDonnee && (b.evenement.dateFin|date:'short') >= (dateJour |date:'short')"><span
                       class="badge badge-success">Nous avous obtenu le besoin</span>
                     </h1>
 
-                    <h1 *ngIf="(b.evenement.dateFin|date) < (dateJour | date)">
+                    <h1 *ngIf="(b.evenement.dateFin|date:'short') < (dateJour  |date:'short')">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 
@@ -216,7 +221,7 @@
 
                   <td>
                     <div style="text-align: center; color: black"
-                         *ngIf="(m.mission.evenement.dateFin|date) >= (dateJour | date)">
+                         *ngIf="(m.mission.evenement.dateFin|date:'short') >= (dateJour |date:'short')">
 
 
                       <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
@@ -271,9 +276,8 @@
                           <i class="fas fa-hands-helping"></i>
                         </button>
                       </form>
-
                     </div>
-                    <h1 *ngIf="(m.mission.evenement.dateFin|date) < (dateJour | date)">
+                    <h1 *ngIf="(m.mission.evenement.dateFin|date:'short') < (dateJour |date:'short')">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 
@@ -346,11 +350,11 @@
 
                       <button class="btn btn-info btn-rounded btn-sm"
                               title="Postuler" data-toggle="modal"
-                              data-target="#modallogin" *ngIf="(m.evenement.dateFin|date) >= (dateJour | date)">
+                              data-target="#modallogin" *ngIf="(m.evenement.dateFin|date:'short') >= (dateJour |date:'short')">
                         <i class="fas fa-hands-helping"></i></button>
 
 
-                      <h1 *ngIf="(m.evenement.dateFin|date) < (dateJour | date)">
+                      <h1 *ngIf="(m.evenement.dateFin|date:'short') < (dateJour |date:'short')">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 

@@ -44,6 +44,7 @@ export class EventDetailComponent implements OnInit {
   errorMessage = '';
   roles: string;
   loginInfo: AuthLoginInfo;
+  MyArrayDate = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
@@ -64,7 +65,7 @@ export class EventDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.listDays();
     this.id = this.route.snapshot.params.id;
     this.username = this.userService.getProfileCurrentUser().username;
     this.userService.getUserByUsername(this.username).subscribe((data) => {
@@ -230,6 +231,28 @@ export class EventDetailComponent implements OnInit {
     );
   }
 
+
+  listDays() {
+    let date1 = new Date('2020-05-31 00:00:00');
+    let date2 = new Date('2020-06-06 00:00:00');
+    // To calculate the time difference of two dates
+    let Difference_In_Time = date2.getTime() - date1.getTime();
+
+// To calculate the no. of days between two dates
+    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    let dateIncrement = new Date(date1);
+
+    for (let i = 0; i < Difference_In_Days; i++) {
+      // tslint:disable-next-line:radix
+      this.MyArrayDate.push(dateIncrement);
+      dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
+
+      console.log('MyArrayType ', this.MyArrayDate[i]);
+
+    }
+
+    console.log('Difference_In_Days', Difference_In_Days);
+  }
 }
 
 

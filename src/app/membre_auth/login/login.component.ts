@@ -51,16 +51,15 @@ export class LoginComponent implements OnInit {
             let currentUser: any;
             currentUser = {};
             currentUser.profile = {};
-            currentUser.profile.firstname = '';
-            console.log('data.name', data.name);
-            currentUser.profile.lastname = 'lastname';
-            currentUser.profile.email = 'email@tunis.com';
+            currentUser.profile.nom = data.nom;
+            console.log('data.nom', data.nom);
+            currentUser.profile.prenom = data.prenom;
+            currentUser.profile.username = data.username;
 
             /*this.user.username = data.username;
             currentUser.profile = this.user;
             console.log('currentUser.profile', currentUser.profile );*/
-            currentUser.profile.name = data.name;
-            console.log('data.name', data.name);
+
             currentUser.profile.username = data.username;
             currentUser.isAuthenticated = true;
             currentUser.tokenAuth = data.accessToken;
