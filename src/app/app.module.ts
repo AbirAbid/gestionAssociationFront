@@ -34,10 +34,12 @@ import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-bien
 import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/devenir-benevole.component';
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {MbscModule} from "@mobiscroll/angular-lite";
+import {MbscModule} from '@mobiscroll/angular-lite';
 import {EventDetailComponent} from './interaction_event/event-detail/event-detail.component';
 import {EventCalendarComponent} from './interaction_event/event-calendar/event-calendar.component';
-import { ProfileComponent } from './membre_auth/profile/profile.component';
+import {ProfileComponent} from './membre_auth/profile/profile.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
+
 
 @NgModule({
   /* declarations array ensemble des compons utilisée*/
@@ -86,7 +88,9 @@ import { ProfileComponent } from './membre_auth/profile/profile.component';
     HttpClientJsonpModule,
     NgxPaginationModule,
     MbscModule,
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule
+
 
   ],
 

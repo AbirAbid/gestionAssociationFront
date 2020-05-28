@@ -13,6 +13,7 @@ import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {AuthLoginInfo} from '../../membre_auth/models/login-info';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class EventDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
-              private toastr: ToastrService, private modalService: NgbModal) {
+              private toastr: ToastrService,   private SpinnerService: NgxSpinnerService) {
 
     const formContrls = {
       // all validators to input firstname
@@ -73,10 +74,12 @@ export class EventDetailComponent implements OnInit {
 
     });
 
-    console.log('this.user in eventDetail', this.user);
+    this.SpinnerService.show();
     this.eventService.getEventById(this.id)
       .subscribe(data => {
         this.event = data;
+        this.SpinnerService.hide();
+
       }, error => console.log(error));
 
     this.getAllBien();
