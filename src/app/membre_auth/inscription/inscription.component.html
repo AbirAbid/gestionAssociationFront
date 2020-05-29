@@ -5,14 +5,26 @@
       <div class="well widget widget_volunteer_form ">
         <h2 class="text-center"> Devenir Membre </h2>
         <div class="form-group col-md-12">
-          <div *ngIf="isSignUpFailed" class="alert alert-danger">
+          <div *ngIf="isSignUpFailed" class="alert alert-danger fade in" role="alert">
             L'inscription a échoué !<br/>
-          </div>
-          <div *ngIf="isSignedUp === true && isSignUpFailed === false" class="alert alert-success">
-            Félicitations ! Votre nouveau compte a été créé avec succès !!
-          </div>
-        </div>
 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+
+        </div>
+        <div class="alert alert-success fade in" role="alert" *ngIf="isSignedUp === true && isSignUpFailed === false">
+          Félicitations ! Votre nouveau compte a été créé avec succès !!
+
+
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+
+        </div>
         <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
           <div class="form-group col-md-6">
             <label class="textlabel">Nom </label>

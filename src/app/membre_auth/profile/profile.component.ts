@@ -9,23 +9,23 @@ import {UserService} from '../services/user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  id: number;
 
   updateUserForm: FormGroup
   user: User;
-  isSignedUp = false;
-  isSignUpFailed = false;
+  isupdate = false;
   username: string;
+
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     let formContrls = {
-      // all validators to input firstname
+      // all validators to input
+      id: new FormControl(),
       nom: new FormControl('', [Validators.required,
         Validators.minLength(2), Validators.maxLength(10)]),
       prenom: new FormControl('', [Validators.required,
         Validators.minLength(2), Validators.maxLength(10)]),
       password: new FormControl('', [Validators.required,
-        Validators.minLength(5), Validators.maxLength(10)]),
-      password2: new FormControl('', [Validators.required,
         Validators.minLength(5), Validators.maxLength(10)]),
       occupation: new FormControl('', [Validators.required]),
       telephone: new FormControl([Validators.required, Validators.minLength(8)]),
@@ -56,9 +56,6 @@ export class ProfileComponent implements OnInit {
     return this.updateUserForm.get('password');
   }
 
-  get password2() {
-    return this.updateUserForm.get('password2');
-  }
 
   get occupation() {
     return this.updateUserForm.get('occupation');
@@ -81,8 +78,10 @@ export class ProfileComponent implements OnInit {
 
     this.userService.getUserByUsername(this.username).subscribe((data) => {
         this.user = data;
-
+        console.log('ngOnInit this.user', this.user);
+        this.id = this.user.id;
         this.updateUserForm.patchValue({
+          id: this.user.id,
           nom: this.user.nom,
           prenom: this.user.prenom,
           telephone: this.user.telephone,
@@ -98,20 +97,17 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfileSubmit() {
-
+    console.log(' this.user avant', this.user);
+    let user2 = this.user;
     this.user = this.updateUserForm.value;
-    console.log('this.user', this.user);
-    try {
+    this.user.id = user2.id;
+    console.log('updateProfileSubmit this.user', this.user);
 
-      this.userService.updateUser(this.user).subscribe(data => {
-        this.user = data;
-        console.log('data', data);
-
-      }, error => {
-      });
-    } catch (Exception) {
-
-    }
+    this.userService.updateUser(this.user).subscribe(data => {
+      console.log('data', data);
+      this.isupdate = true;
+    }, error => {
+    });
   }
 
 

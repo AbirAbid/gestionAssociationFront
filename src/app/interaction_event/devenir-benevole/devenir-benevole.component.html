@@ -66,6 +66,11 @@
       </h2>
     <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0">
       Aucune Mission bénévole disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
+
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
     </div>
     <table class="table table-bordered">
 

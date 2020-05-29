@@ -102,11 +102,12 @@ export class UserService {
   }
 
 
-  updateUser(user: any): Observable<any> {
+  updateUser(value: any): Observable<any> {
 
-    return this.http.post<string>(environment.baseUrl + 'updateProfile', user, httpOptions);
+    return this.http.post(environment.baseUrl + 'updateProfile', value);
 
   }
+
 
   getUsers(): Observable<any> {
     return this.http.get(this.baseUrl + 'users');
