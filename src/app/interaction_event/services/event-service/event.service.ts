@@ -25,7 +25,7 @@ export class EventService {
   /*** list biens by event id ***/
 
   getAllBienByEvent(id: number): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listBienEvent/' + id);
+    return this.http.get(environment.bienUrl + 'listBienEvent/' + id);
   }
 
   /*** list missions by event id ***/

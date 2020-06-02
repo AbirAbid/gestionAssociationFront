@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {httpOptions} from '../../../membre_auth/services/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ export class BiensService {
   }
 
   getAllBien(): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listBien');
+    return this.http.get(environment.bienUrl + 'listBien', {responseType: 'json'});
   }
 
   getAllBienRegion(ville: string): Observable<any> {
-    return this.http.get(environment.baseUrl + 'listBienRegion/' + ville);
+    return this.http.get(environment.bienUrl + 'listBienRegion/' + ville, {responseType: 'json'});
   }
+
   donnerBien(participerBienForm: any, username: string): Observable<any> {
-    return this.http.post<string>(environment.baseUrl + 'donnerBien/' + username, participerBienForm);
+    return this.http.post<string>(environment.authentificateUrl + 'donnerBien/' + username, participerBienForm, httpOptions);
   }
 }

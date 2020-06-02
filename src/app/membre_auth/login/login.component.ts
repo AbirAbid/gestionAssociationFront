@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit {
     this.loginInfo.username = this.form.username;
     this.loginInfo.password = this.form.password;
     this.roles = this.userService.getAuthorities();
-
+    /*subscribe like youtube chaine ==> les notifs intercept  */
+    /*n3ess 3al observable chnouwa ya3tini */
     this.userService.attemptAuth(this.loginInfo).subscribe(
       (data: any) => {
         console.log('data', data);
@@ -51,15 +52,7 @@ export class LoginComponent implements OnInit {
             let currentUser: any;
             currentUser = {};
             currentUser.profile = {};
-            currentUser.profile.nom = data.nom;
-            console.log('data.nom', data.nom);
-            currentUser.profile.prenom = data.prenom;
-            currentUser.profile.username = data.username;
-
-            /*this.user.username = data.username;
-            currentUser.profile = this.user;
-            console.log('currentUser.profile', currentUser.profile );*/
-
+            currentUser.profile.user = data.user.nom;
             currentUser.profile.username = data.username;
             currentUser.isAuthenticated = true;
             currentUser.tokenAuth = data.accessToken;
@@ -73,6 +66,7 @@ export class LoginComponent implements OnInit {
             this.isLoginFailed = false;
             this.isLoggedIn = true;
             console.log('userService', this.userService);
+            this.userService.setCurrentUser(currentUser);
             this.router.navigate(['/']);
             this.toastr.success('Content de vous revoir  !', currentUser.profile.username);
           }

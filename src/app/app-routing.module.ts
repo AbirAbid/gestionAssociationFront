@@ -16,9 +16,10 @@ import {InscriptionEventComponent} from './tableau_bord/inscription-event/inscri
 import {DevenirBenevoleComponent} from './interaction_event/devenir-benevole/devenir-benevole.component';
 import {DevenirAdherentComponent} from './interaction_event/devenir-adherent/devenir-adherent.component';
 import {DonnerBiensComponent} from './interaction_event/donner-biens/donner-biens.component';
-import {EventDetailComponent} from "./interaction_event/event-detail/event-detail.component";
-import {EventCalendarComponent} from "./interaction_event/event-calendar/event-calendar.component";
-import {ProfileComponent} from "./membre_auth/profile/profile.component";
+import {EventDetailComponent} from './interaction_event/event-detail/event-detail.component';
+import {EventCalendarComponent} from './interaction_event/event-calendar/event-calendar.component';
+import {ProfileComponent} from './membre_auth/profile/profile.component';
+import {AuthGaurdService} from './membre_auth/auth/auth-gaurd.service';
 
 
 const routes: Routes = [
@@ -55,7 +56,9 @@ const routes: Routes = [
   },
   {
     path: 'tabBord',
-    component: TabBordComponent
+    component: TabBordComponent,
+    canActivate: [AuthGaurdService]
+
 
   },
   {
@@ -65,7 +68,9 @@ const routes: Routes = [
   },
   {
     path: 'mesDons',
-    component: DonsBiensComponent
+    component: DonsBiensComponent,
+    canActivate: [AuthGaurdService]
+
 
   },
   {
@@ -75,7 +80,8 @@ const routes: Routes = [
   },
   {
     path: 'mesInscriptionEvent',
-    component: InscriptionEventComponent
+    component: InscriptionEventComponent,
+    canActivate: [AuthGaurdService]
 
   },
   {
@@ -90,7 +96,8 @@ const routes: Routes = [
   },
   {
     path: 'donnerBien',
-    component: DonnerBiensComponent
+    component: DonnerBiensComponent,
+    canActivate: [AuthGaurdService]
 
   },
   {
@@ -105,13 +112,16 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGaurdService]
 
   },
+
   {
     path: '**',
     component: Page404Component
   }
+
 ];
 
 @NgModule({

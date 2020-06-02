@@ -11,9 +11,7 @@ import {MissionBenevoleService} from '../services/mission-benevole-service/missi
 import {Mission} from '../models/Mission';
 import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {AuthLoginInfo} from '../../membre_auth/models/login-info';
-import {NgxSpinnerService} from 'ngx-spinner';
 
 
 @Component({
@@ -45,11 +43,11 @@ export class EventDetailComponent implements OnInit {
   errorMessage = '';
   roles: string;
   loginInfo: AuthLoginInfo;
-  MyArrayDate = [];
+  //MyArrayDate = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
-              private toastr: ToastrService,   private SpinnerService: NgxSpinnerService) {
+              private toastr: ToastrService,/* private SpinnerService: NgxSpinnerService*/) {
 
     const formContrls = {
       // all validators to input firstname
@@ -66,7 +64,7 @@ export class EventDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.listDays();
+  //  this.listDays();
     this.id = this.route.snapshot.params.id;
     this.username = this.userService.getProfileCurrentUser().username;
     this.userService.getUserByUsername(this.username).subscribe((data) => {
@@ -74,11 +72,11 @@ export class EventDetailComponent implements OnInit {
 
     });
 
-    this.SpinnerService.show();
+    // this.SpinnerService.show();
     this.eventService.getEventById(this.id)
       .subscribe(data => {
         this.event = data;
-        this.SpinnerService.hide();
+        // this.SpinnerService.hide();
 
       }, error => console.log(error));
 
@@ -234,8 +232,8 @@ export class EventDetailComponent implements OnInit {
     );
   }
 
-
-  listDays() {
+}
+  /*listDays() {
     let date1 = new Date('2020-05-31 00:00:00');
     let date2 = new Date('2020-06-06 00:00:00');
     // To calculate the time difference of two dates
@@ -260,3 +258,4 @@ export class EventDetailComponent implements OnInit {
 
 
 
+*/

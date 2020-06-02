@@ -6,14 +6,10 @@ import {environment} from '../../../environments/environment';
 import {AuthLoginInfo} from '../models/login-info';
 import {JwtResponse} from '../models/jwt-response';
 
-const httpOptions = {
+export const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-
-const TOKEN_KEY = 'AuthToken';
-const USERNAME_KEY = 'AuthUsername';
-const AUTHORITIES_KEY = 'AuthAuthorities';
 
 @Injectable({
   providedIn: 'root'
@@ -104,17 +100,17 @@ export class UserService {
 
   updateUser(value: any): Observable<any> {
 
-    return this.http.post(environment.baseUrl + 'updateProfile', value);
+    return this.http.post(environment.authentificateUrl + 'updateProfile', value);
 
   }
 
 
   getUsers(): Observable<any> {
-    return this.http.get(this.baseUrl + 'users');
+    return this.http.get(this.baseUrl + 'users', httpOptions);
   }
 
   getUserByUsername(username: string): Observable<any> {
-    return this.http.get(environment.baseUrl + 'getUser/' + username);
+    return this.http.get(environment.authentificateUrl + 'getUser/' + username, httpOptions);
   }
 
   signUp(user: User): Observable<string> {
