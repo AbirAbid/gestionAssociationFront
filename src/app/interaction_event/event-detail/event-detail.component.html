@@ -124,7 +124,7 @@
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
                                name="qtedonnee"
                                *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated() "
-                               id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don">
+                               id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don" min="0">
                         <span class="input-group-btn">
                          <button class="btn btn-primary btn-sm"
                                  *ngIf="userService.isAuthenticated() && b.qte>b.totaleqteDonnee "

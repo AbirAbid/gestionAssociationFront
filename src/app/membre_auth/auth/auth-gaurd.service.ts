@@ -6,6 +6,9 @@ import {UserService} from '../services/user.service';
 @Injectable({
   providedIn: 'root'
 })
+
+
+ /*Le principe: si une route possède une Guard, elle sera interrogée à chaque fois que la route sera demandée.*/
 export class AuthGaurdService implements CanActivate {
 
   constructor(private router: Router,
