@@ -41,7 +41,8 @@ export class EvenementComponent implements OnInit {
   }
 
   eventDetail(id: number) {
-    this.router.navigate(['eventDetail', id]);
+   this.router.navigate(['eventDetail', id]);
+   // this.router.navigate(['ok', id]);
 
   }
 }

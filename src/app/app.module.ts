@@ -65,8 +65,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     DevenirAdherentComponent,
     EventDetailComponent,
     EventCalendarComponent,
-    ProfileComponent
-  ],
+    ProfileComponent],
   /*imports array enesemble des libraries */
   imports: [
     BrowserModule,
