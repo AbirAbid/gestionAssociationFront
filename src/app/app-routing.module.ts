@@ -97,7 +97,6 @@ const routes: Routes = [
   {
     path: 'donnerBien',
     component: DonnerBiensComponent,
-    canActivate: [AuthGaurdService]
 
   },
   {
