@@ -7,14 +7,21 @@
     </div>
   </div>
 </div>
-<br>
+<div class="spacer-75"></div>
 <div id="main-container">
   <div class="content">
-    <div class="container" *ngIf="calendarEvents.length>0">
+    <div class="container">
 
-      <full-calendar eventTextColor="white"
-                     [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+      <div class="col-md-12 col-sm-12" >
+        <div class="well widget widget_volunteer_form">
 
+          <div *ngIf="calendarEvents.length>0">
+            <full-calendar eventTextColor="white"
+                           [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
