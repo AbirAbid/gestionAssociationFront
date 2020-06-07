@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     faireDon = 'assets/images/faire_don.png';*/
 
   constructor(private homeServicesService: HomeServicesService) {
+    this.eventCountElmtsDto = new EventCountElmtsDto();
   }
 
   ngOnInit(): void {
