@@ -14,10 +14,10 @@ import {toTitleCase} from 'codelyzer/util/utils';
 export class EvenementComponent implements OnInit {
   calendarPlugins = [dayGridPlugin];
 
-  // calendarEvents: any = [];
+  totalRecords: number;
+  page = 1;
   evenements: Evenement [] = [];
   calendarEvents = [];
-
   dateJour = new Date();
 
   constructor(private eventService: EventService, private router: Router) {
@@ -32,6 +32,8 @@ export class EvenementComponent implements OnInit {
         this.calendarEvents.push({title: data[index].titre, start: data[index].dateDebut});
       }
       this.evenements = data;
+      this.totalRecords =   this.evenements.length;
+
       console.log('this.calendarEvents,', this.calendarEvents);
 
       console.log('this.events', this.evenements);
