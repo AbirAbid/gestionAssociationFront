@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
     this.loginInfo.password = this.form.password;*/
     this.roles = this.userService.getAuthorities();
     /*subscribe like youtube chaine ==> les notifs intercept  */
-    /*n3ess 3al observable chnouwa ya3tini */
+    /*observer  observable Result  */
     this.userService.attemptAuth(this.loginInfo).subscribe(
       (data: any) => {
         console.log('data', data);

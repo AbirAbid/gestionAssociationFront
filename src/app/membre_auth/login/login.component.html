@@ -5,34 +5,7 @@
       <div class="well widget widget_volunteer_form ">
         <h2 class="text-center"> Connecte-toi maintenant! </h2>
 
-        <!--<form class="login-form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-          <div class="form-group">
-            <label class="text-uppercase">Email</label>
-            <input type="email" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel"
-                   required/>
-            <div *ngIf="f.submitted && username.invalid">
-              <div *ngIf="username.errors.required" class="text-danger">Champs vide!</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="text-uppercase">Mot de passe </label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="form.password"
-                   #password="ngModel"
-                   required minlength="6"/>
-            <div *ngIf="f.submitted && password.invalid">
-              <div *ngIf="password.errors.required" class="text-danger">Champs vide!!</div>
 
-            </div>
-          </div>
-          <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
-           Vérifier votre email ou votre mot de passe
-            {{errorMessage}}
-          </div>
-
-          <input type="submit" class="btn btn-primary" value="Se connecter">
-
-
-        </form>-->
         <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
 
           <div class="form-group ">
@@ -62,9 +35,12 @@
             <input type="submit" class="btn btn-primary" value="Se connecter">
           </div>
           <div class="spacer-10"></div>
-
+          <div *ngIf="isLoginFailed" class="alert alert-danger">
+            Votre mot de passe est incorrect. Veuillez le vérifier.
+          </div>
 
         </form>
+
         <div class="copy-text"> Vous n'avez pas encore de compte ? <a href="inscription"> Créer votre compte </a>
         </div>
         <div class="spacer-10"></div>
