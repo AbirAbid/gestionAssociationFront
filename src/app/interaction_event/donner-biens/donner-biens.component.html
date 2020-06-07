@@ -64,9 +64,12 @@
 
       </h2>
       <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0">
+        Impossible de se connecter au serveur pour l'instant .
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0 && show">
         Aucune Mission bénévole disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
       </div>
-      <table class="table table-bordered">
+      <table class="table table-bordered"  *ngIf="listBien.length != 0">
 
         <!--Table head-->
         <thead>
@@ -117,7 +120,7 @@
       <!--Table-->
 
       <div style="text-align: center;">
-        <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+        <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true" *ngIf="listBien.length != 0"
                              previousLabel="Précédent"
                              nextLabel="Suivant"
                              responsive

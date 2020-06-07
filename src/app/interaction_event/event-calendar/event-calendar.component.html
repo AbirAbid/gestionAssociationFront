@@ -12,9 +12,14 @@
   <div class="content">
     <div class="container">
 
-      <div class="col-md-12 col-sm-12" >
+      <div class="col-md-12 col-sm-12">
         <div class="well widget widget_volunteer_form">
+          <h2 class="text-center">Calendrier des événements
 
+          </h2>
+          <div class="alert alert-danger" role="alert" *ngIf="evenements.length == 0">
+            Impossible de se connecter au serveur pour l'instant .
+          </div>
           <div *ngIf="calendarEvents.length>0">
             <full-calendar eventTextColor="white"
                            [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>

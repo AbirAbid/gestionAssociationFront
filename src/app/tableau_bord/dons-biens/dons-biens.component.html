@@ -9,80 +9,92 @@
 </div>
 <div class="spacer-75"></div>
 
-<div class="container card">
-  <br>
-  <table class="table table-bordered" *ngIf="listBienUser">
+<div class="container">
+
+  <div class="col-md-12 col-sm-12">
+    <div class="well widget widget_volunteer_form">
+      <h2 class="text-center"> Mes dons des biens </h2>
+      <div class="alert alert-danger" role="alert" *ngIf="listBienUser.length == 0">
+        Impossible de se connecter au serveur pour l'instant .
+      </div>
+
+      <table class="table table-bordered" *ngIf="listBienUser.length!=0">
 
 
-    <!--Table head-->
-    <thead class="table-active rounded">
-    <tr>
-      <th>
-        <div style="text-align: center;">Titre Bien</div>
-      </th>
+        <!--Table head-->
+        <thead class="table-active rounded">
+        <tr>
+          <th>
+            <div style="text-align: center;">Titre Bien</div>
+          </th>
 
-      <th>
-        <div style="text-align: center;"> Quantités données</div>
-      </th>
+          <th>
+            <div style="text-align: center;"> Quantités données</div>
+          </th>
 
-      <th>
-        <div style="text-align: center;">Événements</div>
-      </th>
-      <th>
-        <div style="text-align: center;">Date de participation</div>
-      </th>
-      <th>
-        <div style="text-align: center;"></div>
-      </th>
-    </tr>
-    </thead>
-    <!--Table head-->
+          <th>
+            <div style="text-align: center;">Événements</div>
+          </th>
+          <th>
+            <div style="text-align: center;">Date de participation</div>
+          </th>
+          <th>
+            <div style="text-align: center;"></div>
+          </th>
+        </tr>
+        </thead>
+        <!--Table head-->
 
 
-    <tbody *ngFor="let ub of listBienUser | paginate:{
+        <tbody *ngFor="let ub of listBienUser | paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
     totalItems:totalbien
 
     }">
-    <tr>
-      <td>
-        <div style="text-align: center;">{{ub.bien.titreBien}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;">{{ub.qteDonnee}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;"><a [routerLink]=""
-                                            (click)="eventDetail(ub.bien.evenement.id)">{{ub.bien.evenement.titre}}</a>
-        </div>
-      </td>
+        <tr>
+          <td>
+            <div style="text-align: center;">{{ub.bien.titreBien}}</div>
+          </td>
+          <td>
+            <div style="text-align: center;">{{ub.qteDonnee}}</div>
+          </td>
+          <td>
+            <div style="text-align: center;"><a [routerLink]=""
+                                                (click)="eventDetail(ub.bien.evenement.id)">{{ub.bien.evenement.titre}}</a>
+            </div>
+          </td>
 
-      <td>
-        <div style="text-align: center;">{{ub.dateParticipation|date}}</div>
-      </td>
-      <td>
-        <div style="text-align: center;" class="alert alert-success" role="alert">
-          Merci de votre Générosité
-        </div>
-      </td>
+          <td>
+            <div style="text-align: center;">{{ub.dateParticipation|date}}</div>
+          </td>
+          <td>
+            <div style="text-align: center;" class="alert alert-success" role="alert">
+              Merci de votre Générosité
+            </div>
+          </td>
 
-    </tr>
+        </tr>
 
-    </tbody>
-    <!--Table body-->
+        </tbody>
+        <!--Table body-->
 
-  </table>
-  <!-- <div style="text-align: center;" *ngIf="listParticiperBien.length != 0">
-     <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                          previousLabel="Précédent"
-                          nextLabel="Suivant"
-                          responsive
-                          (pageChange)="page=$event"></pagination-controls>
+      </table>
 
-   </div>-->
+      <!-- <div style="text-align: center;" *ngIf="listParticiperBien.length != 0">
+         <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                              previousLabel="Précédent"
+                              nextLabel="Suivant"
+                              responsive
+                              (pageChange)="page=$event"></pagination-controls>
+
+       </div>-->
+    </div>
+  </div>
 </div>
+<div class="spacer-75"></div>
+
 <style>
   .my-pagination /deep/ .ngx-pagination .current {
     background: #DE6262;

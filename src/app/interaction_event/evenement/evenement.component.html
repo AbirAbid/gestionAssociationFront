@@ -15,6 +15,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 content-block">
+          <div class="alert alert-danger" role="alert" *ngIf="evenements.length == 0">
+            Impossible de se connecter au serveur pour l'instant .
+          </div>
           <ul class="events-list" *ngFor="let evt of evenements">
             <li class="event-list-item">
                                 <span class="event-date">
