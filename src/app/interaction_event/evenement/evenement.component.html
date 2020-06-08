@@ -37,11 +37,12 @@
                                 </span>
                     <div class="event-list-cont">
                       <span class="meta-data">{{evt.dateDebut|date}}</span>
-                      <h4 class="post-title"><a href="#">{{evt.titre}}</a>
+                      <h4 class="post-title"><a (click)="eventDetail(evt.id)">{{evt.titre}}</a>
                         &nbsp;
-                        <span *ngIf="(evt.dateFin|date:'short') < (dateJour | date:'short')" class="badge badge-danger">
+                        <span *ngIf="(evt.dateFin|date: 'shortDate') < (dateJour | date: 'shortDate')"
+                              class="badge badge-danger">
                   Passé  </span>
-
+                        {{evt.dateFin|date: 'shortDate'}} ****** {{dateJour | date: 'shortDate'}}
                       </h4>
                       <p>{{evt.description}}</p>
                       <a (click)="eventDetail(evt.id)" class="btn btn-default">Découvrir</a>

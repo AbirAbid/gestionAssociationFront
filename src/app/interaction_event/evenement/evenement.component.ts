@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {toTitleCase} from 'codelyzer/util/utils';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-evenement',
@@ -17,25 +17,24 @@ export class EvenementComponent implements OnInit {
   totalRecords: number;
   page = 1;
   evenements: Evenement [] = [];
-  calendarEvents = [];
   dateJour = new Date();
+  dateJour2 = new Date();
 
   constructor(private eventService: EventService, private router: Router) {
+    let date1 = new Date('2020-06-26 00:00:00');
 
+    console.log('date1', date1);
+
+    this.dateJour2 = new Date('8/6/20');
+    console.log('this.dateJour2', this.dateJour2);
 
   }
 
   ngOnInit(): void {
     this.eventService.getAllEvent().subscribe((data) => {
-      // tslint:disable-next-line:prefer-for-of
-      for (let index = 0; index < data.length; index++) {
-        this.calendarEvents.push({title: data[index].titre, start: data[index].dateDebut});
-      }
+
       this.evenements = data;
-      this.totalRecords =   this.evenements.length;
-
-      console.log('this.calendarEvents,', this.calendarEvents);
-
+      this.totalRecords = this.evenements.length;
       console.log('this.events', this.evenements);
 
 
@@ -43,8 +42,8 @@ export class EvenementComponent implements OnInit {
   }
 
   eventDetail(id: number) {
-   this.router.navigate(['eventDetail', id]);
-   // this.router.navigate(['ok', id]);
+    this.router.navigate(['eventDetail', id]);
+    // this.router.navigate(['ok', id]);
 
   }
 }

@@ -39,6 +39,7 @@ import {EventDetailComponent} from './interaction_event/event-detail/event-detai
 import {EventCalendarComponent} from './interaction_event/event-calendar/event-calendar.component';
 import {ProfileComponent} from './membre_auth/profile/profile.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -93,8 +94,9 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 
   ],
 
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, DatePipe],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }
