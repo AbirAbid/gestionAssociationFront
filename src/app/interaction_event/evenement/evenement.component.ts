@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {DatePipe} from '@angular/common';
 import {EventCountCategories} from '../models/EventCountCategories';
 
 @Component({
@@ -19,12 +18,10 @@ export class EvenementComponent implements OnInit {
   page = 1;
   evenements: Evenement [] = [];
   dateJour = new Date();
-  dateJour2 = new Date();
   eventCountCategories: EventCountCategories [] = [];
+  nb = 0;
 
   constructor(private eventService: EventService, private router: Router) {
-
-
   }
 
   ngOnInit(): void {
@@ -35,8 +32,18 @@ export class EvenementComponent implements OnInit {
 
     });
 
+    this.getAllEvents();
+  }
+
+  eventDetail(id: number) {
+    this.router.navigate(['eventDetail', id]);
+
+  }
+
+  getAllEvents() {
     this.eventService.getAllEvent().subscribe((data) => {
       this.evenements = data;
+      this.nb = this.evenements.length;
       this.totalRecords = this.evenements.length;
       console.log('this.events', this.evenements);
 
@@ -44,8 +51,13 @@ export class EvenementComponent implements OnInit {
     });
   }
 
-  eventDetail(id: number) {
-    this.router.navigate(['eventDetail', id]);
+  eventCat(categorie: string) {
+    this.eventService.getListEventByCategorie(categorie).subscribe((data) => {
+      this.evenements = data;
+      this.totalRecords = this.evenements.length;
+      console.log('this.events', this.evenements);
 
+
+    });
   }
 }

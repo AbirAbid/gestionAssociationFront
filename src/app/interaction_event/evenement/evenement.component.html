@@ -70,12 +70,17 @@
           <div class="widget sidebar-widget widget_categories">
             <h3 class="widgettitle">Catégories</h3>
             <ul>
-              <li><a href="#">all</a></li>
+              <li><a (click)="getAllEvents()" style=" text-transform: uppercase;">Tous les catégories</a>
+                ({{nb}})
+              </li>
             </ul>
+
             <ul *ngFor="let ev of eventCountCategories">
 
+              <li><a (click)="eventCat(ev.categorie)"><span
+                class="fas fa-caret-right"></span>  {{ev.categorie|uppercase}}</a> ({{ev.count}})
+              </li>
 
-              <li><a href="#">{{ev.categorie|uppercase}}</a> ({{ev.count}})</li>
             </ul>
           </div>
         </div>

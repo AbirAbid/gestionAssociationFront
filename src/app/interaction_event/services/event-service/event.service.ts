@@ -38,5 +38,10 @@ export class EventService {
     return this.http.get(environment.baseUrl + 'countEventCategories');
   }
 
+  /*** List  event by categories***/
+  getListEventByCategorie(categorie: string): Observable<any> {
+    return this.http.get(environment.baseUrl + 'eventByCatg/' + categorie);
+  }
+
 
 }
