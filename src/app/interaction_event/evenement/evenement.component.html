@@ -66,20 +66,18 @@
         </div>
 
 
-        <!-- Sidebar -->
         <div class="col-md-4 sidebar-block">
           <div class="widget sidebar-widget widget_categories">
-            <h3 class="widgettitle">Event Categories</h3>
+            <h3 class="widgettitle">Catégories</h3>
             <ul>
-              <li><a href="#">Education</a> (3)</li>
-              <li><a href="#">Environment</a> (1)</li>
-              <li><a href="#">Global warming</a> (6)</li>
-              <li><a href="#">Water</a> (4)</li>
-              <li><a href="#">Wild life</a> (2)</li>
-              <li><a href="#">Small business</a> (12)</li>
+              <li><a href="#">all</a></li>
+            </ul>
+            <ul *ngFor="let ev of eventCountCategories">
+
+
+              <li><a href="#">{{ev.categorie|uppercase}}</a> ({{ev.count}})</li>
             </ul>
           </div>
-
         </div>
       </div>
     </div>

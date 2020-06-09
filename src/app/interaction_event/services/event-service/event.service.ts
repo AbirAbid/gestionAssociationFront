@@ -33,5 +33,10 @@ export class EventService {
     return this.http.get(environment.baseUrl + 'listMissionBenevoleEvent/' + id);
   }
 
+  /*** List  event count categories***/
+  getCountCategoriesEvent(): Observable<any> {
+    return this.http.get(environment.baseUrl + 'countEventCategories');
+  }
+
 
 }
