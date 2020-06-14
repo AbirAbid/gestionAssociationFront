@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {TabBordService} from '../services/tab-bord.service';
 import {UserService} from '../../membre_auth/services/user.service';
 import {UserBien} from '../../interaction_event/models/UserBien';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-dons-biens',
@@ -16,10 +17,13 @@ export class DonsBiensComponent implements OnInit {
   totalbien: number;
   page = 1;
 
-  constructor(private tabBordService: TabBordService, private userService: UserService, private router: Router) {
+  constructor(private tabBordService: TabBordService, private userService: UserService, private router: Router,
+              private SpinnerService: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
+    this.SpinnerService.show();
+
     this.getMesParticipations();
 
     console.log(' this.listParticiperBien ', this.listBienUser);
@@ -34,6 +38,8 @@ export class DonsBiensComponent implements OnInit {
 
       this.long = listBien.length;
       console.log(' this.listParticiperBien ', this.listBienUser);
+      this.SpinnerService.hide();
+
     }, error => console.log(error));
   }
 

@@ -17,6 +17,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <form class="form-inline pull-right" [formGroup]="myForm" (ngSubmit)="getAllMissionByRegion()">
+
           <label> Région : </label>
           <select class="form-control" name="region" name="region" formControlName="region">
             <option value="Tunisie">Tunisie</option>
@@ -46,8 +47,10 @@
             <option value="Tunis">Tunis</option>
             <option value="Zaghouan">Zaghouan</option>
           </select>
-          <button class="btn btn-primary  btn-sm pull-right"><i class="fas fa-search"></i></button>
+          <button class="btn btn-primary  btn-sm  form-control"><i class="fas fa-search"></i></button>
+
         </form>
+
       </div>
       <br>
 

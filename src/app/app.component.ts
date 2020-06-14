@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 declare var device;
 
@@ -11,8 +12,11 @@ declare var device;
 export class AppComponent implements OnInit {
   title = 'gestionAssociationFront';
 
+  constructor(private SpinnerService: NgxSpinnerService) {
+  }
+
   ngOnInit() {
-    document.addEventListener('deviceready', function() {
+    document.addEventListener('deviceready', function () {
       alert(device.platform);
     }, false);
   }

@@ -3,6 +3,7 @@ import {BiensService} from '../services/bien-service/biens.service';
 import {Bien} from '../models/Bien';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-donner-biens',
@@ -16,7 +17,7 @@ export class DonnerBiensComponent implements OnInit {
   totalRecords: number;
   page = 1;
 
-  constructor(private biensService: BiensService, private fb: FormBuilder, private router: Router) {
+  constructor(private biensService: BiensService, private fb: FormBuilder, private router: Router, private SpinnerService: NgxSpinnerService) {
     const formContrls = {
       region: new FormControl()
     };
@@ -29,12 +30,15 @@ export class DonnerBiensComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.SpinnerService.show();
+
     this.biensService.getAllBien().subscribe((data) => {
       this.listBien = data;
       console.log('this.listBien', this.listBien);
 
       this.totalRecords = this.listBien.length;
       console.log(' this.totalRecords ', this.totalRecords);
+      this.SpinnerService.hide();
 
 
     });

@@ -5,6 +5,7 @@ import {UserMission} from '../../interaction_event/models/UserMission';
 import {Mission} from '../../interaction_event/models/Mission';
 import {MissionBenevoleService} from '../../interaction_event/services/mission-benevole-service/mission-benevole.service';
 import {Router} from '@angular/router';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-activ-benevole',
@@ -18,10 +19,13 @@ export class ActivBenevoleComponent implements OnInit {
   totalbien: number;
   page = 1;
 
-  constructor(private router: Router, private tabBordService: TabBordService, private userService: UserService, private  missionBenevoleService: MissionBenevoleService) {
+  constructor(private router: Router, private tabBordService: TabBordService, private userService: UserService,
+              private  missionBenevoleService: MissionBenevoleService, private SpinnerService: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
+    this.SpinnerService.show();
+
     this.getMesParticipations();
 
     console.log('  this.listMissionUser ', this.listMissionUser);
@@ -56,6 +60,8 @@ export class ActivBenevoleComponent implements OnInit {
 
       this.long = listMission.length;
       console.log(' this.listMissionUser ', this.listMissionUser);
+      this.SpinnerService.hide();
+
     }, error => console.log(error));
   }
 }

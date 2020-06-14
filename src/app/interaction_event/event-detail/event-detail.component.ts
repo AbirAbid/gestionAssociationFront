@@ -12,6 +12,7 @@ import {Mission} from '../models/Mission';
 import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
 import {AuthLoginInfo} from '../../membre_auth/models/login-info';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 
 @Component({
@@ -43,13 +44,11 @@ export class EventDetailComponent implements OnInit {
   errorMessage = '';
   roles: string;
   loginInfo: AuthLoginInfo;
-
-  //MyArrayDate = [];
+  MyArrayDate = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
-              private toastr: ToastrService,/* private SpinnerService: NgxSpinnerService*/) {
-    //this.id = this.route.snapshot.params.id;
+              private toastr: ToastrService, private SpinnerService: NgxSpinnerService) {
 
     const formContrls = {
       // all validators to input firstname
@@ -66,7 +65,6 @@ export class EventDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //  this.listDays();
     this.id = this.route.snapshot.params.id;
     this.username = this.userService.getProfileCurrentUser().username;
     this.userService.getUserByUsername(this.username).subscribe((data) => {
@@ -74,11 +72,12 @@ export class EventDetailComponent implements OnInit {
 
     });
 
-    // this.SpinnerService.show();
+    this.SpinnerService.show();
     this.eventService.getEventById(this.id)
       .subscribe(data => {
         this.event = data;
-        // this.SpinnerService.hide();
+        this.listDays(this.event.dateDebut, this.event.dateFin);
+        this.SpinnerService.hide();
 
       }, error => console.log(error));
 
@@ -222,6 +221,42 @@ export class EventDetailComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
+  }
+
+  parseDate(input) {
+    var parts = input.match(/(\d+)/g);
+    // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+    return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
+  }
+
+  listDays(d: Date, d2: Date) {
+    let date1 = this.parseDate(d);
+    let date2 = this.parseDate(d2);
+
+    // let date2 = new Date('2020-06-06 00:00:00');
+    // To calculate the time difference of two dates
+    //let Difference_In_Time = date2.getTime() - date1.getTime();
+    let Difference_In_Time = date2.getTime() - date1.getTime();
+    console.log('Difference_In_Time ', Difference_In_Time);
+
+// To calculate the no. of days between two dates
+    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    console.log('Difference_In_Days ', Difference_In_Days);
+
+    let dateIncrement = new Date(date1);
+    console.log('dateIncrement outside ', dateIncrement);
+
+    for (let i = 0; i < Difference_In_Days + 1; i++) {
+      // tslint:disable-next-line:radix
+      this.MyArrayDate.push(dateIncrement);
+      dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
+      console.log('dateIncrement ', dateIncrement);
+
+      console.log('MyArrayType ', this.MyArrayDate[i]);
+
+    }
+
+    console.log('Difference_In_Days', Difference_In_Days);
   }
 
 }
