@@ -14,10 +14,12 @@
   <div class="col-md-12 col-sm-12">
     <div class="well widget widget_volunteer_form">
       <h2 class="text-center"> Mes dons des biens </h2>
-      <div class="alert alert-danger" role="alert" *ngIf="listBienUser.length == 0">
+
+      <div class="alert alert-danger" role="alert" *ngIf="listBienUser.length == 0 && isServerProblem==true">
         Impossible de se connecter au serveur pour l'instant .
       </div>
-
+      <div class="alert alert-danger" role="alert" *ngIf="listBienUser.length == 0 && isServerProblem==false">
+        Aucune participation trouvée      </div>
       <table class="table table-bordered" *ngIf="listBienUser.length!=0">
 
 
@@ -83,13 +85,13 @@
       </table>
 
       <div style="text-align: center;" *ngIf="listBienUser.length != 0">
-         <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                              previousLabel=""
-                              nextLabel=""
-                              responsive
-                              (pageChange)="page=$event"></pagination-controls>
+        <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                             previousLabel=""
+                             nextLabel=""
+                             responsive
+                             (pageChange)="page=$event"></pagination-controls>
 
-       </div>
+      </div>
     </div>
   </div>
 </div>

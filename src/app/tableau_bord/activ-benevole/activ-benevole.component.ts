@@ -18,6 +18,7 @@ export class ActivBenevoleComponent implements OnInit {
   long: number;
   totalbien: number;
   page = 1;
+  isServerProblem = true;
 
   constructor(private router: Router, private tabBordService: TabBordService, private userService: UserService,
               private  missionBenevoleService: MissionBenevoleService, private SpinnerService: NgxSpinnerService) {
@@ -61,6 +62,8 @@ export class ActivBenevoleComponent implements OnInit {
       this.long = listMission.length;
       console.log(' this.listMissionUser ', this.listMissionUser);
       this.SpinnerService.hide();
+      this.isServerProblem = false;
+
 
     }, error => console.log(error));
   }

@@ -273,14 +273,26 @@
                               class="btn btn-success btn-rounded btn-sm">
                         Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
                       </button>
+                      <div *ngIf="m.exist==0">
+                        Je suis disponible le...
+                        <div class="form-check form-check-inline form-control " *ngFor="let d of MyArrayDate">
 
-                      <button *ngIf="m.exist==0" (click)="addParticipationMission(m.mission)"
-                              class="btn btn-info btn-rounded btn-sm"
-                              title="Postuler">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                          <label class="form-check-label" for="inlineCheckbox1">{{d | date}}</label>
+
+                        </div>
+
+                        <button (click)="addParticipationMission(m.mission)"
+                                class="btn btn-info btn-rounded btn-sm"
+                                title="Postuler">
 
 
-                        <i class="fas fa-hands-helping"></i>
-                      </button>
+                          <i class="fas fa-hands-helping"></i>
+                        </button>
+
+
+                      </div>
+
                     </div>
 
                     <h1 style="text-align: center; "
@@ -454,9 +466,8 @@
     </div>
   </div>
 </div>
-<!--<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-  <p style="color: white">Chargement... </p>
-</ngx-spinner>-->
+
+
 <style>
   .my-pagination /deep/ .ngx-pagination .current {
     background: #3da0ff;

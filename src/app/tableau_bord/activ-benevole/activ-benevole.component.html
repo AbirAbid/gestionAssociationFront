@@ -14,9 +14,13 @@
   <div class="col-md-12 col-sm-12">
     <div class="well widget widget_volunteer_form">
       <h2 class="text-center"> Tous mes demandes </h2>
-      <div class="alert alert-danger" role="alert" *ngIf="listMissionUser.length == 0">
+
+      <div class="alert alert-danger" role="alert" *ngIf="listMissionUser.length == 0 && isServerProblem==true">
         Impossible de se connecter au serveur pour l'instant .
       </div>
+      <div class="alert alert-danger" role="alert" *ngIf="listMissionUser.length == 0 && isServerProblem==false">
+        Aucune participation trouvée      </div>
+
       <table class="table table-bordered" *ngIf="listMissionUser.length!=0">
 
 

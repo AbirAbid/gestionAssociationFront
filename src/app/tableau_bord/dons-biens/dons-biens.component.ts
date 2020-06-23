@@ -16,6 +16,7 @@ export class DonsBiensComponent implements OnInit {
   long: number;
   totalbien: number;
   page = 1;
+  isServerProblem = true;
 
   constructor(private tabBordService: TabBordService, private userService: UserService, private router: Router,
               private SpinnerService: NgxSpinnerService) {
@@ -23,7 +24,8 @@ export class DonsBiensComponent implements OnInit {
 
   ngOnInit(): void {
     this.SpinnerService.show();
-
+    console.log('    this.SpinnerService.show();', this.SpinnerService.show()
+    );
     this.getMesParticipations();
 
     console.log(' this.listParticiperBien ', this.listBienUser);
@@ -38,7 +40,10 @@ export class DonsBiensComponent implements OnInit {
 
       this.long = listBien.length;
       console.log(' this.listParticiperBien ', this.listBienUser);
+      console.log('       this.SpinnerService.hide();', this.SpinnerService.hide());
+
       this.SpinnerService.hide();
+      this.isServerProblem = false;
 
     }, error => console.log(error));
   }
