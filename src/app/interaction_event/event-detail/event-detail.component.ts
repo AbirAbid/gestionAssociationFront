@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn, AbstractControl} from '@angular/forms';
 import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import {Bien} from '../models/Bien';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UserService} from '../../membre_auth/services/user.service';
 import {BiensService} from '../services/bien-service/biens.service';
 import {ToastrService} from 'ngx-toastr';
@@ -13,7 +13,7 @@ import {User} from '../../membre_auth/models/user';
 import {MissionUserDisplay} from '../models/MissionUserDisplay';
 import {AuthLoginInfo} from '../../membre_auth/models/login-info';
 import {NgxSpinnerService} from 'ngx-spinner';
-
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-event-detail',
@@ -44,11 +44,23 @@ export class EventDetailComponent implements OnInit {
   errorMessage = '';
   roles: string;
   loginInfo: AuthLoginInfo;
-  MyArrayDate = [];
+   MyArrayDate = [];
+
+  formSelectDateMult: FormGroup;
+  ordersData = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
               private toastr: ToastrService, private SpinnerService: NgxSpinnerService) {
+
+
+    this.formSelectDateMult = this.fb.group({
+
+      // The FormArray is used to represent a collection of FormControls that are interrelated
+
+      orders: new FormArray([], minSelectedCheckboxes(1))
+    });
+
 
     const formContrls = {
       // all validators to input firstname
@@ -63,6 +75,10 @@ export class EventDetailComponent implements OnInit {
     return this.myForm.get('qtedonnee');
   }
 
+  getOrders() {
+    return this.MyArrayDate;
+  }
+
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
@@ -73,10 +89,19 @@ export class EventDetailComponent implements OnInit {
     });
 
     this.SpinnerService.show();
+    //   console.log(' this.MyArrayDate before', this.MyArrayDate);
     this.eventService.getEventById(this.id)
       .subscribe(data => {
         this.event = data;
-        this.listDays(this.event.dateDebut, this.event.dateFin);
+        this.MyArrayDate = this.listDays(this.event.dateDebut, this.event.dateFin);
+        console.log(' this.MyArrayDate inside ', this.MyArrayDate);
+
+        of(this.MyArrayDate).subscribe(orders => {
+          console.log('orders', orders);
+          this.addCheckboxes();
+        });
+
+
         this.SpinnerService.hide();
 
       }, error => console.log(error));
@@ -141,11 +166,18 @@ export class EventDetailComponent implements OnInit {
     this.participerMissionForm = {};
     const username = this.userService.getProfileCurrentUser().username;
     this.participerMissionForm.mission = m;
-    console.log('addParticipationMission m', m);
+
+    const selectedOrderIds = this.formSelectDateMult.value.orders
+      .map((v, i) => v ? this.ordersData[i].name : null)
+      .filter(v => v !== null);
+    console.log(selectedOrderIds);
+    this.participerMissionForm.dateDisponibiliteList = selectedOrderIds.join('/');
+
     this.participerMissionForm.demandeDate = this.today;
     this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
       console.log(data);
-      // this.missions = this.displayListMission();
+      //// this.missions = this.displayListMission();
+
       this.getAllMissionAuthentificated();
       this.toastr.success('Merci de votre participation');
 
@@ -164,7 +196,6 @@ export class EventDetailComponent implements OnInit {
     })
     ;
   }
-
 
   getMissionsNotAuth() {
     this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
@@ -229,61 +260,61 @@ export class EventDetailComponent implements OnInit {
     return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
   }
 
-  listDays(d: Date, d2: Date) {
+  listDays(d: Date, d2: Date): any {
     let date1 = this.parseDate(d);
     let date2 = this.parseDate(d2);
-
-    // let date2 = new Date('2020-06-06 00:00:00');
     // To calculate the time difference of two dates
-    //let Difference_In_Time = date2.getTime() - date1.getTime();
     let Difference_In_Time = date2.getTime() - date1.getTime();
     console.log('Difference_In_Time ', Difference_In_Time);
-
 // To calculate the no. of days between two dates
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    console.log('Difference_In_Days ', Difference_In_Days);
+    // console.log('Difference_In_Days ', Difference_In_Days);
 
     let dateIncrement = new Date(date1);
-    console.log('dateIncrement outside ', dateIncrement);
+    //console.log('dateIncrement outside ', dateIncrement);
 
     for (let i = 0; i < Difference_In_Days + 1; i++) {
       // tslint:disable-next-line:radix
-      this.MyArrayDate.push(dateIncrement);
+      let object: any = {};
+      object.name = dateIncrement.toDateString();
+      this.MyArrayDate.push(object);
       dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
-      console.log('dateIncrement ', dateIncrement);
-
-      console.log('MyArrayType ', this.MyArrayDate[i]);
-
     }
+    console.log('MyArrayType listDays', this.MyArrayDate);
+    this.ordersData = this.MyArrayDate;
 
-    console.log('Difference_In_Days', Difference_In_Days);
+    console.log('this.getOrders()', this.getOrders());
+    return this.MyArrayDate;
   }
 
-}
-
-/*listDays() {
-  let date1 = new Date('2020-05-31 00:00:00');
-  let date2 = new Date('2020-06-06 00:00:00');
-  // To calculate the time difference of two dates
-  let Difference_In_Time = date2.getTime() - date1.getTime();
-
-// To calculate the no. of days between two dates
-  let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  let dateIncrement = new Date(date1);
-
-  for (let i = 0; i < Difference_In_Days; i++) {
-    // tslint:disable-next-line:radix
-    this.MyArrayDate.push(dateIncrement);
-    dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
-
-    console.log('MyArrayType ', this.MyArrayDate[i]);
-
+  private addCheckboxes() {
+    this.ordersData.forEach((o, i) => {
+      const control = new FormControl(i === 0); // if first item set to true, else false
+      (this.formSelectDateMult.controls.orders as FormArray).push(control);
+    });
   }
 
-  console.log('Difference_In_Days', Difference_In_Days);
+
+  submit() {
+    const selectedOrderIds = this.formSelectDateMult.value.orders
+      .map((v, i) => v ? this.ordersData[i].name : null)
+      .filter(v => v !== null);
+    console.log(selectedOrderIds);
+  }
 }
+
+function minSelectedCheckboxes(min = 1) {
+  const validator: ValidatorFn = (formArray: FormArray) => {
+    const totalSelected = formArray.controls
+      .map(control => control.value)
+      .reduce((prev, next) => next ? prev + next : prev, 0);
+
+    return totalSelected >= min ? null : {required: true};
+  };
+
+  return validator;
 }
 
 
 
-*/
+
