@@ -1,60 +1,105 @@
-<br>
-<table class="table ">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 py-4 text-center">
+      <h1>List of Users</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-4">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of userList">
+          <th scope="row">{{ user.id }}</th>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" (click)="openModal(user)">
+              Launch demo modal
+            </button>
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
 
-  <!--Table head-->
-  <thead>
-  <tr>
-    <th>
-      <div style="text-align: center;">Nom sponsor</div>
-    </th>
-    <th>
-      <div style="text-align: center;">Email</div>
-    </th>
-    <th>
-      <div style="text-align: center;">PhotoSponsor</div>
-    </th>
+                    <p>{{firstname.value}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-  </tr>
-  </thead>
-  <!--Table head-->
+            <!--
+                        <button type="button" class="btn btn-primary" (click)="openModal(editProfileModal, user)">Edit</button>
+            -->
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-  <!--Table body-->
-  <tbody *ngFor="let sp of sponsors">
-  <tr>
-    <td>
-      <div style="text-align: center;"> {{sp.titreSponsor}}
+<!--
+<ng-template #editProfileModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+    <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
+  <div class="modal-body">
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="firstname" class="col-sm-4 col-form-label">First Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="firstname" id="firstname">
+        </div>
       </div>
-    </td>
-    <td>
-      <div style="text-align: center;">{{sp.emailSponsor}}</div>
-    </td>
-    <td>
-      <div style="text-align: center;">{{sp.photoSponsor}}</div>
-    </td>
-
-
-  </tr>
-
-  </tbody>
-  <!--Table body-->
-
-
-</table>
-<!--Table-->
-<p>
-  <a href="https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular">Dynamic Checkbox List with
-    FormBuilder</a>
-</p>
-
-<form [formGroup]="formSelectDateMult" (ngSubmit)="submit()">
-
-  <label formArrayName="orders" *ngFor="let order of formSelectDateMult.controls.orders; let i = index">
-    <input type="checkbox" [formControlName]="i">
-    {{ordersData[i].name}}
-  </label>
-
-  <div *ngIf="!formSelectDateMult.valid">At least one order must be selected</div>
-  <br>
-  <button [disabled]="!formSelectDateMult.valid">submit</button>
-</form>
+      <div class="form-group row">
+        <label for="lastname" class="col-sm-4 col-form-label">Last Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="lastname" id="lastname">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="username" class="col-sm-4 col-form-label">Username</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="username" id="username">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-sm-4 col-form-label">Email</label>
+        <div class="col-sm-8">
+          <input type="email" class="form-control" formControlName="email" id="email">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+-->

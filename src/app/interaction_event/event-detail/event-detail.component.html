@@ -13,7 +13,9 @@
 
   <div class="col-md-12 col-sm-12" *ngIf="event">
     <div class="well widget widget_volunteer_form">
-
+      <!-- ============================================================== -->
+      <!-- Information general event  -->
+      <!-- ============================================================== -->
 
       <div style="text-align: center;"><h2>  {{event.titre}} </h2> <span
         *ngIf="(event.dateFin|date:'shortDate') < (dateJour | date:'shortDate')" class="badge badge-danger">
@@ -56,6 +58,9 @@
         </div>
       </div>
       <br>
+      <!-- ============================================================== -->
+      <!-- END Information general event  -->
+      <!-- ============================================================== -->
 
       <div class="tabs">
         <ul class="nav nav-tabs">
@@ -63,6 +68,10 @@
           <li><a data-toggle="tab" href="#sampletab2"> Missions bénévoles </a></li>
         </ul>
         <div class="tab-content">
+          <!-- ============================================================== -->
+          <!-- Besoin des biens  -->
+          <!-- ============================================================== -->
+
           <div id="sampletab1" class="tab-pane active">
             <div class="alert alert-danger" role="alert" *ngIf="biens.length == 0">
               Cet événement ne contient pas des besoins
@@ -183,11 +192,25 @@
             </div>
           </div>
 
+          <!-- ============================================================== -->
+          <!-- End Besoin des biens  -->
+          <!-- ============================================================== -->
+
+
+          <!-- ============================================================== -->
+          <!-- Missions bénévolats  -->
+          <!-- ============================================================== -->
+
           <div id="sampletab2" class="tab-pane">
+
+            <!-- ============================================================== -->
+            <!-- issions bénévolats Is  Authentificated  -->
+            <!-- ============================================================== -->
             <div *ngIf="userService.isAuthenticated()">
               <div class="alert alert-danger" role="alert" *ngIf="missionsAuth.length == 0">
                 Cet événement ne contient pas des missions.
               </div>
+
               <table class="table table-bordered " *ngIf="missionsAuth.length != 0">
 
                 <!--Table head-->
@@ -210,15 +233,13 @@
 
                 <!--Table body-->
                 <tbody *ngFor="let m of missionsAuth| paginate:{
-    id:'listing_pagination2',
-    itemsPerPage:10,
-    currentPage:pagem,
-    totalItems:totalmission
-
-    }">
+             id:'listing_pagination2',
+             itemsPerPage:10,
+             currentPage:pagem,
+             totalItems:totalmission}">
                 <tr>
                   <td>
-                    <div style="text-align: center; color: black">{{m.mission.id}}*{{m.mission.titre}}</div>
+                    <div style="text-align: center; color: black">{{m.mission.titre}}</div>
                   </td>
                   <td>
                     <div style="text-align: center;  color: black">{{m.mission.description}}</div>
@@ -235,14 +256,16 @@
                         En Attente
 
                       </button>
-
                       <button *ngIf="m.exist==1 && m.affected==0"
                               class="btn btn-danger btn-rounded btn-sm" data-toggle="modal"
                               data-target="#modalAnnulation">
                         Annuler Votre demande
 
+
                       </button>
-                      <!-- Modal -->
+                      <!-- ============================================================== -->
+                      <!-- Modal Annulation -->
+                      <!-- ============================================================== -->
                       <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
                            aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="m.exist==1 && m.affected==0">
                         <div class="modal-dialog" role="document">
@@ -268,22 +291,35 @@
 
                         </div>
                       </div>
-
+                      <!-- ============================================================== -->
+                      <!-- End Modal Annulation -->
+                      <!-- ============================================================== -->
                       <button [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
                               class="btn btn-success btn-rounded btn-sm">
                         Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
                       </button>
+
+
                       <div *ngIf="m.exist==0">
-                        Je suis disponible le...
+                        <h5> Je suis disponible le...</h5>
                         <form [formGroup]="formSelectDateMult" (ngSubmit)="submit()">
 
-                          <label formArrayName="orders" *ngFor="let order of getOrders(); let i = index">
-                            <input type="checkbox" [formControlName]="i">
-                            {{ordersData[i].name}}
-                            <br>
-                          </label>
+                          <div *ngFor="let order of getOrders(); let i = index">
+                            <li>
+                              <label formArrayName="orders">
+                                <input type="checkbox"
+                                       [formControlName]="i">
+                                {{ordersData[i].name}}
 
-                          <div *ngIf="!formSelectDateMult.valid">At least one order must be selected</div>
+
+                              </label>
+
+                            </li>
+
+
+
+                          </div>
+                          <div *ngIf="!formSelectDateMult.valid">Au minimum 1 jour</div>
                           <br>
                           <button [disabled]="!formSelectDateMult.valid" (click)="addParticipationMission(m.mission)"
                                   class="btn btn-info btn-rounded btn-sm"
@@ -294,22 +330,11 @@
                           </button>
                         </form>
 
-<!--
-                        <div class="form-check form-check-inline form-control " *ngFor="let d of MyArrayDate">
-
-                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                          <label class="form-check-label" for="inlineCheckbox1">{{d.name|date}}</label>
-
-
-
-
-                        </div>
--->
-
-
-
 
                       </div>
+
+
+
 
                     </div>
 
@@ -338,6 +363,14 @@
             </div>
 
 
+            <!-- ============================================================== -->
+            <!-- Missions bénévolats End Is  Authentificated  -->
+            <!-- ============================================================== -->
+
+
+            <!-- ============================================================== -->
+            <!-- Missions bénévolats Is Not Authentificated  -->
+            <!-- ============================================================== -->
             <div *ngIf="!userService.isAuthenticated()">
               <div></div>
               <div class="alert alert-danger" role="alert" *ngIf="missionsNotAuth.length == 0">
@@ -416,15 +449,24 @@
 
               </div>
             </div>
+            <!-- ============================================================== -->
+            <!-- Missions bénévolats End Is Not Authentificated  -->
+            <!-- ============================================================== -->
           </div>
-
         </div>
+
+
+        <!-- ============================================================== -->
+        <!-- End Missions bénévolats  -->
+        <!-- ============================================================== -->
       </div>
 
 
     </div>
   </div>
 </div>
+
+
 <!-- Modal Login -->
 <div class="modal fade" id="modallogin" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true"

@@ -1,77 +1,55 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {SponsorService} from '../services/sponsor.service';
-import {Sponsor} from '../models/sponsor';
-import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
-import { of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-sponsor',
   templateUrl: './sponsor.component.html',
   styleUrls: ['./sponsor.component.scss']
 })
 export class SponsorComponent implements OnInit {
-  // path : 'sponsorsList'
-  formSelectDateMult: FormGroup;
-  ordersData = [];
+  title = 'modal2';
+  editProfileForm: FormGroup;
+  userList = [
+    {
+      id: "1",
+      firstname: "Aiman",
+      lastname: "Rahmat",
+      username: "aimanrahmat",
+      email: "aimanrahmat@gmail.com"
+    },
+    {
+      id: "2",
+      firstname: "Christiano",
+      lastname: "Ronaldo",
+      username: "ronaldo7",
+      email: "ronaldo7@gmail.com"
+    },
+    {
+      id: "3",
+      firstname: "Wayne",
+      lastname: "Rooney",
+      username: "rooney8",
+      email: "rooney8@gmail.com"
+    }];
 
-  sponsors: Sponsor [] = [];
-
-  constructor(private sponsorService: SponsorService,   private formBuilder: FormBuilder) {
-
-
-      this.formSelectDateMult = this.formBuilder.group({
-
-        // The FormArray is used to represent a collection of FormControls that are interrelated
-
-        orders: new FormArray([], minSelectedCheckboxes(1))
-      });
-
-      // async orders
-      of(this.getOrders()).subscribe(orders => {
-        this.ordersData = orders;
-        this.addCheckboxes();
-      });
+  constructor(private fb: FormBuilder, private modalService: NgbModal) {
   }
 
-  ngOnInit(): void {
-    this.sponsorService.getAllSponsor().subscribe((data) => {
-      this.sponsors = data;
-
-    });
-
-  }
-  private addCheckboxes() {
-    this.ordersData.forEach((o, i) => {
-      const control = new FormControl(i === 0); // if first item set to true, else false
-      (this.formSelectDateMult.controls.orders as FormArray).push(control);
+  ngOnInit() {
+    this.editProfileForm = this.fb.group({
+      firstname: [''],
     });
   }
-
-  getOrders() {
-    return [
-      { name: 'order 1' },
-      {  name: 'order 2' },
-      { name: 'order 3' },
-      { name: 'order 4' }
-    ];
+  openModal( user) {
+    this.editProfileForm.patchValue({
+      firstname: user.firstname
+    });
   }
 
-  submit() {
-    const selectedOrderIds = this.formSelectDateMult.value.orders
-      .map((v, i) => v ? this.ordersData[i].name : null)
-      .filter(v => v !== null);
-    console.log(selectedOrderIds);
+
+  get firstname() {
+    return this.editProfileForm.get('firstname');
   }
 }
 
-function minSelectedCheckboxes(min = 1) {
-  const validator: ValidatorFn = (formArray: FormArray) => {
-    const totalSelected = formArray.controls
-      .map(control => control.value)
-      .reduce((prev, next) => next ? prev + next : prev, 0);
-
-    return totalSelected >= min ? null : { required: true };
-  };
-
-  return validator;
-}

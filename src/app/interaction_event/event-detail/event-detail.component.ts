@@ -44,8 +44,7 @@ export class EventDetailComponent implements OnInit {
   errorMessage = '';
   roles: string;
   loginInfo: AuthLoginInfo;
-   MyArrayDate = [];
-
+  MyArrayDate = [];
   formSelectDateMult: FormGroup;
   ordersData = [];
 
@@ -53,15 +52,12 @@ export class EventDetailComponent implements OnInit {
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
               private toastr: ToastrService, private SpinnerService: NgxSpinnerService) {
 
-
     this.formSelectDateMult = this.fb.group({
 
       // The FormArray is used to represent a collection of FormControls that are interrelated
 
       orders: new FormArray([], minSelectedCheckboxes(1))
     });
-
-
     const formContrls = {
       // all validators to input firstname
       qtedonnee: new FormControl()
@@ -82,39 +78,53 @@ export class EventDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.username = this.userService.getProfileCurrentUser().username;
-    this.userService.getUserByUsername(this.username).subscribe((data) => {
-      this.user = data;
+    if (this.userService.isAuthenticated()) {
+      this.username = this.userService.getProfileCurrentUser().username;
+      this.userService.getUserByUsername(this.username).subscribe((data) => {
+        this.user = data;
+      });
 
-    });
+      this.SpinnerService.show();
 
-    this.SpinnerService.show();
-    //   console.log(' this.MyArrayDate before', this.MyArrayDate);
-    this.eventService.getEventById(this.id)
-      .subscribe(data => {
-        this.event = data;
-        this.MyArrayDate = this.listDays(this.event.dateDebut, this.event.dateFin);
-        console.log(' this.MyArrayDate inside ', this.MyArrayDate);
+      this.eventService.getEventById(this.id)
+        .subscribe(data => {
+          this.event = data;
+          this.MyArrayDate = this.listDays(this.event.dateDebut, this.event.dateFin);
+          console.log(' this.MyArrayDate inside ', this.MyArrayDate);
 
-        of(this.MyArrayDate).subscribe(orders => {
-          console.log('orders', orders);
-          this.addCheckboxes();
-        });
+          of(this.MyArrayDate).subscribe(orders => {
+            console.log('orders', orders);
+            this.addCheckboxes();
+          });
 
 
-        this.SpinnerService.hide();
+          this.SpinnerService.hide();
 
-      }, error => console.log(error));
+        }, error => console.log(error));
+      this.getAllMissionAuthentificated();
+
+    }
+    if (!this.userService.isAuthenticated()) {
+
+      this.SpinnerService.show();
+      this.getMissionsNotAuth();
+      this.eventService.getEventById(this.id)
+        .subscribe(data => {
+          this.event = data;
+          this.SpinnerService.hide();
+        }, error => console.log(error));
+    }
 
     this.getAllBien();
-
-    this.getAllMissionAuthentificated();
-    this.getMissionsNotAuth();
     if (this.userService.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.userService.getAuthorities();
     }
   }
+
+
+
+
 
 
   getAllMissionAuthentificated() {
@@ -176,7 +186,6 @@ export class EventDetailComponent implements OnInit {
     this.participerMissionForm.demandeDate = this.today;
     this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
       console.log(data);
-      //// this.missions = this.displayListMission();
 
       this.getAllMissionAuthentificated();
       this.toastr.success('Merci de votre participation');
@@ -272,13 +281,14 @@ export class EventDetailComponent implements OnInit {
 
     let dateIncrement = new Date(date1);
     //console.log('dateIncrement outside ', dateIncrement);
+    dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
 
     for (let i = 0; i < Difference_In_Days + 1; i++) {
-      // tslint:disable-next-line:radix
+      // tslint:disable-next-line:radixs
       let object: any = {};
       object.name = dateIncrement.toDateString();
       this.MyArrayDate.push(object);
-      dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
+
     }
     console.log('MyArrayType listDays', this.MyArrayDate);
     this.ordersData = this.MyArrayDate;
