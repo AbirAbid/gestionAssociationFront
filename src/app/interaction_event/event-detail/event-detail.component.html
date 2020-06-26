@@ -256,7 +256,7 @@
                       <div style="text-align: center; color: black" *ngIf="m.exist==1 && m.affected==0"
                       >
 
-                        <span class="badge badge-warning">  Statut: en attente de confirmation</span>
+                         Statut: en attente de confirmation
 
 
                       </div>
@@ -270,10 +270,10 @@
                       </button>
 
                       <div *ngIf="m.exist==1 && m.affected==1">
-                       <span class="badge badge-primary">
+
                          Statut: vous êtes affecté à cette mission
                          <span class=" fas fa-heart"></span>
-                      </span>
+
 
                       </div>
 
@@ -282,7 +282,7 @@
 
                     <h1 style="text-align: center; "
                         *ngIf="(m.mission.evenement.dateFin|date:'shortDate') < (dateJour |date:'shortDate')">
-                      <span class="badge badge-danger">Cet événement est passé</span>
+                      <span class="badge">Cet événement est passé</span>
 
                     </h1>
 
