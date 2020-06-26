@@ -32,7 +32,9 @@ export class EventDetailComponent implements OnInit {
   missionsAuth: MissionUserDisplay[] = [];
   missionsNotAuth: Mission[] = [];
   participerBienForm: any;
-  myForm: FormGroup;
+  formBien: FormGroup;
+  formSelectDateMult: FormGroup;
+  formLibererMission: FormGroup;
   greater = false;
   today = new Date();
   participerMissionForm: any;
@@ -45,30 +47,50 @@ export class EventDetailComponent implements OnInit {
   roles: string;
   loginInfo: AuthLoginInfo;
   MyArrayDate = [];
-  formSelectDateMult: FormGroup;
   ordersData = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
               private toastr: ToastrService, private SpinnerService: NgxSpinnerService) {
 
+    /***pour formulaire mission date disponibilité***/
     this.formSelectDateMult = this.fb.group({
-
       // The FormArray is used to represent a collection of FormControls that are interrelated
-
       orders: new FormArray([], minSelectedCheckboxes(1))
     });
-    const formContrls = {
-      // all validators to input firstname
+    /***pour formulaire donner  bien***/
+
+    this.formBien = this.fb.group({
       qtedonnee: new FormControl()
-    };
-    // relie formGrp + formControl
-    this.myForm = this.fb.group(formContrls);
+    });
+    this.formLibererMission = this.fb.group({
+      titre: [''],
+      id: ['']
+    });
+
     this.loginInfo = new AuthLoginInfo();
   }
 
+
+  openModalFreeMission(mission) {
+    console.log('missionmission:::', mission)
+    this.formLibererMission.patchValue({
+      titre: mission.mission.titre,
+      id: mission.mission.id
+
+    });
+  }
+
+  get titre() {
+    return this.formLibererMission.get('titre');
+  }
+
+  get idMisiion() {
+    return this.formLibererMission.get('id');
+  }
+
   get qtedonnee() {
-    return this.myForm.get('qtedonnee');
+    return this.formBien.get('qtedonnee');
   }
 
   getOrders() {
@@ -123,15 +145,18 @@ export class EventDetailComponent implements OnInit {
   }
 
 
-
-
-
-
   getAllMissionAuthentificated() {
 
     this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
       console.log('data', data);
       this.missionsAuth = data;
+    }, error => console.log(error));
+  }
+
+  getMissionsNotAuth() {
+    this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
+      console.log('data', data);
+      this.missionsNotAuth = data;
     }, error => console.log(error));
   }
 
@@ -162,7 +187,7 @@ export class EventDetailComponent implements OnInit {
       this.biensService.donnerBien(this.participerBienForm, username).subscribe(data => {
         console.log('data', data);
         this.getAllBien();
-        this.myForm.controls['qtedonnee'].setValue(0);
+        this.formBien.controls['qtedonnee'].setValue(0);
 
 
       }, error => console.log(error));
@@ -196,24 +221,18 @@ export class EventDetailComponent implements OnInit {
 
   }
 
-  libererMission(m: Mission) {
+  libererMission() {
     const username = this.userService.getProfileCurrentUser().username;
-    console.log(m);
-    this.missionBenevoleService.annulerDemande(m.id, username).subscribe(data => {
+    console.log("res:id", this.formLibererMission.getRawValue().id);
+    this.missionBenevoleService.annulerDemande(this.formLibererMission.getRawValue().id, username).subscribe(data => {
       console.log('liberer');
       this.getAllMissionAuthentificated();
     })
     ;
   }
 
-  getMissionsNotAuth() {
-    this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
-      console.log('data', data);
-      this.missionsNotAuth = data;
-    }, error => console.log(error));
-  }
 
-  onSubmit() {
+  onSubmitLoginModal() {
     this.isLoginFailed = false;
     this.loginInfo.username = this.form.username;
     this.loginInfo.password = this.form.password;
@@ -279,15 +298,18 @@ export class EventDetailComponent implements OnInit {
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     // console.log('Difference_In_Days ', Difference_In_Days);
 
-    let dateIncrement = new Date(date1);
+    let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
     //console.log('dateIncrement outside ', dateIncrement);
-    dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
 
-    for (let i = 0; i < Difference_In_Days + 1; i++) {
+    for (let i = 0; i < Difference_In_Days ; i++) {
       // tslint:disable-next-line:radixs
+
       let object: any = {};
       object.name = dateIncrement.toDateString();
+      console.log('object.name ', object.name);
+
       this.MyArrayDate.push(object);
+      dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
 
     }
     console.log('MyArrayType listDays', this.MyArrayDate);
