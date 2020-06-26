@@ -1,5 +1,4 @@
 import {Evenement} from './Evenement';
-import {UserMission} from './UserMission';
 
 export class Mission {
   id: number;
@@ -10,7 +9,5 @@ export class Mission {
 
   evenement: Evenement;
 
-  userMissions: Array<UserMission> = [];
-  enAtte: number;
 
 }

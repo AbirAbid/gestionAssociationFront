@@ -34,7 +34,7 @@ export class EventDetailComponent implements OnInit {
   participerBienForm: any;
   formBien: FormGroup;
   formSelectDateMult: FormGroup;
-  formLibererMission: FormGroup;
+  formMission: FormGroup;
   greater = false;
   today = new Date();
   participerMissionForm: any;
@@ -58,45 +58,23 @@ export class EventDetailComponent implements OnInit {
       // The FormArray is used to represent a collection of FormControls that are interrelated
       orders: new FormArray([], minSelectedCheckboxes(1))
     });
-    /***pour formulaire donner  bien***/
 
+    /***pour formulaire donner  bien****************/
     this.formBien = this.fb.group({
       qtedonnee: new FormControl()
     });
-    this.formLibererMission = this.fb.group({
+
+    /***pour formulaire Liberer mission***************/
+
+    this.formMission = this.fb.group({
       titre: [''],
+      description: [''],
+      evenement: [''],
       id: ['']
     });
 
     this.loginInfo = new AuthLoginInfo();
   }
-
-
-  openModalFreeMission(mission) {
-    console.log('missionmission:::', mission)
-    this.formLibererMission.patchValue({
-      titre: mission.mission.titre,
-      id: mission.mission.id
-
-    });
-  }
-
-  get titre() {
-    return this.formLibererMission.get('titre');
-  }
-
-  get idMisiion() {
-    return this.formLibererMission.get('id');
-  }
-
-  get qtedonnee() {
-    return this.formBien.get('qtedonnee');
-  }
-
-  getOrders() {
-    return this.MyArrayDate;
-  }
-
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
@@ -144,28 +122,78 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
+  /************************************** Pour Participer +liberer Mission *******************************************/
+  addParticipationMission() {
+    this.participerMissionForm = {};
+    console.log("res:id", this.formMission.getRawValue());
 
-  getAllMissionAuthentificated() {
+    const username = this.userService.getProfileCurrentUser().username;
+    this.participerMissionForm.mission = this.formMission.getRawValue();
 
-    this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
-      console.log('data', data);
-      this.missionsAuth = data;
-    }, error => console.log(error));
+    const selectedOrderIds = this.formSelectDateMult.value.orders
+      .map((v, i) => v ? this.ordersData[i].name : null)
+      .filter(v => v !== null);
+    console.log(selectedOrderIds);
+    this.participerMissionForm.dateDisponibiliteList = selectedOrderIds.join('/');
+
+    this.participerMissionForm.demandeDate = this.today;
+
+    this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
+      console.log(data);
+
+      this.getAllMissionAuthentificated();
+      this.toastr.success('Merci de votre participation');
+
+    }, error => {
+      console.log(error);
+    });
+
   }
 
-  getMissionsNotAuth() {
-    this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
-      console.log('data', data);
-      this.missionsNotAuth = data;
-    }, error => console.log(error));
+  openModalParticiperMission(mission) {
+
+    this.formMission.patchValue({
+      titre: mission.mission.titre,
+      id: mission.mission.id,
+      evenement: mission.mission.evenement,
+      description: mission.mission.description
+
+    });
+    console.log('this.formLibererMission:::', this.formMission.getRawValue());
+
   }
 
-  getAllBien() {
-    this.eventService.getAllBienByEvent(this.id).subscribe(data => {
-      this.biens = data;
-      console.log('this.biens ' + this.biens);
-      this.totalbien = this.biens.length;
-    }, error => console.log(error));
+  openModalFreeMission(mission) {
+    console.log('missionmission:::', mission)
+    this.formMission.patchValue({
+      titre: mission.mission.titre,
+      id: mission.mission.id
+
+    });
+  }
+
+  libererMission() {
+    const username = this.userService.getProfileCurrentUser().username;
+    console.log("res:id", this.formMission.getRawValue().id);
+    this.missionBenevoleService.annulerDemande(this.formMission.getRawValue().id, username).subscribe(data => {
+      console.log('liberer');
+      this.getAllMissionAuthentificated();
+    })
+    ;
+  }
+
+  get titre() {
+    return this.formMission.get('titre');
+  }
+
+  getOrders() {
+    return this.MyArrayDate;
+  }
+
+  /************************************** Donner bien *******************************************/
+
+  get qtedonnee() {
+    return this.formBien.get('qtedonnee');
   }
 
   addParticipationBien(b: Bien) {
@@ -197,39 +225,34 @@ export class EventDetailComponent implements OnInit {
 
   }
 
-  addParticipationMission(m: Mission) {
-    this.participerMissionForm = {};
-    const username = this.userService.getProfileCurrentUser().username;
-    this.participerMissionForm.mission = m;
 
-    const selectedOrderIds = this.formSelectDateMult.value.orders
-      .map((v, i) => v ? this.ordersData[i].name : null)
-      .filter(v => v !== null);
-    console.log(selectedOrderIds);
-    this.participerMissionForm.dateDisponibiliteList = selectedOrderIds.join('/');
+  /************************************** List missions + biens *******************************************/
 
-    this.participerMissionForm.demandeDate = this.today;
-    this.missionBenevoleService.demandeMission(this.participerMissionForm, username).subscribe(data => {
-      console.log(data);
 
-      this.getAllMissionAuthentificated();
-      this.toastr.success('Merci de votre participation');
+  getAllMissionAuthentificated() {
 
-    }, error => {
-      console.log(error);
-    });
-
+    this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
+      console.log('data', data);
+      this.missionsAuth = data;
+    }, error => console.log(error));
   }
 
-  libererMission() {
-    const username = this.userService.getProfileCurrentUser().username;
-    console.log("res:id", this.formLibererMission.getRawValue().id);
-    this.missionBenevoleService.annulerDemande(this.formLibererMission.getRawValue().id, username).subscribe(data => {
-      console.log('liberer');
-      this.getAllMissionAuthentificated();
-    })
-    ;
+  getMissionsNotAuth() {
+    this.missionBenevoleService.getMissionByEvent(this.id).subscribe(data => {
+      console.log('data', data);
+      this.missionsNotAuth = data;
+    }, error => console.log(error));
   }
+
+  getAllBien() {
+    this.eventService.getAllBienByEvent(this.id).subscribe(data => {
+      this.biens = data;
+      console.log('this.biens ' + this.biens);
+      this.totalbien = this.biens.length;
+    }, error => console.log(error));
+  }
+
+  /************************************** Authentification  *******************************************/
 
 
   onSubmitLoginModal() {
@@ -282,6 +305,8 @@ export class EventDetailComponent implements OnInit {
     );
   }
 
+  /************************************** Pour avoir la liste des dates  *******************************************/
+
   parseDate(input) {
     var parts = input.match(/(\d+)/g);
     // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
@@ -301,12 +326,12 @@ export class EventDetailComponent implements OnInit {
     let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
     //console.log('dateIncrement outside ', dateIncrement);
 
-    for (let i = 0; i < Difference_In_Days ; i++) {
+    for (let i = 0; i < Difference_In_Days; i++) {
       // tslint:disable-next-line:radixs
 
       let object: any = {};
       object.name = dateIncrement.toDateString();
-      console.log('object.name ', object.name);
+      //console.log('object.name ', object.name);
 
       this.MyArrayDate.push(object);
       dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);

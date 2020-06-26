@@ -2,7 +2,7 @@
   <div class="page-banner parallax" style="background-image:url('../../assets/images/carousel2.jpg');">
     <div class="container">
       <div class="page-banner-text">
-        <h1 class="block-title">Nos Événements </h1>
+        <h1 class="block-title">Détail événements </h1>
       </div>
     </div>
   </div>
@@ -10,7 +10,7 @@
 <div class="spacer-75"></div>
 
 <div class="container">
-
+  
   <div class="col-md-12 col-sm-12" *ngIf="event">
     <div class="well widget widget_volunteer_form">
       <!-- ============================================================== -->
@@ -51,7 +51,8 @@
               <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
             </div>
             <div class="col-sm-6">
-              <span class="badge badge-success">Inscription obligatoire</span></div>
+              <span class="badge badge-warning">Inscription obligatoire</span>
+            </div>
           </div>
 
 
@@ -211,9 +212,8 @@
                 Cet événement ne contient pas des missions.
               </div>
 
-              <table class="table table-bordered " *ngIf="missionsAuth.length != 0">
+              <table class="table table-bordered table-striped" *ngIf="missionsAuth.length != 0">
 
-                <!--Table head-->
                 <thead class="table-active ">
                 <tr>
                   <th>
@@ -222,83 +222,58 @@
                   <th>
                     <div style="text-align: center;color: black">Déscription</div>
                   </th>
-
-
                   <th>
-                    <div style="text-align: center; color: black">Postuler</div>
+                    <div style="text-align: center; color: black"></div>
                   </th>
                 </tr>
                 </thead>
-                <!--Table head-->
 
-                <!--Table body-->
                 <tbody *ngFor="let m of missionsAuth| paginate:{
              id:'listing_pagination2',
              itemsPerPage:10,
              currentPage:pagem,
              totalItems:totalmission}">
+
                 <tr>
-                  <td>
+
+                </tr>
+                <tr>
+                  <td rowspan="2">
                     <div style="text-align: center; color: black">{{m.mission.titre}}</div>
                   </td>
-                  <td>
+                  <td rowspan="2">
                     <div style="text-align: center;  color: black">{{m.mission.description}}</div>
                   </td>
-
-
                   <td>
                     <div style="text-align: center; color: black"
                          *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
 
 
-                      <button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
+                      <!--<button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
                               class="btn btn-info btn-rounded btn-sm">
-                        En Attente
+                        EN ATTENTE DE CONFIRMATION
+                      </button>-->
+                      <div style="text-align: center; color: black" *ngIf="m.exist==1 && m.affected==0"
+                      >
+
+                        <span class="badge badge-warning">  Statut: en attente de confirmation</span>
+
+
+                      </div>
+
+                      <button *ngIf="m.exist==0"
+                              class="btn btn-success" data-toggle="modal"
+                              data-target="#modalParticiperMission" (click)="openModalParticiperMission(m)">
+                        <i class="fas fa-hands-helping"></i>  Participer
+
 
                       </button>
-                      <button *ngIf="m.exist==1 && m.affected==0"
-                              class="btn btn-danger btn-rounded btn-sm" data-toggle="modal"
-                              data-target="#modalAnnulation" (click)="openModalFreeMission(m)">
-                        Annuler Votre demande
 
-
-                      </button>
-
-                      <button [disabled]="true" *ngIf="m.exist==1 && m.affected==1"
-                              class="btn btn-success btn-rounded btn-sm">
-                        Vous êtes affecté à cette mission <span class=" fas fa-heart"></span>
-                      </button>
-
-
-                      <div *ngIf="m.exist==0">
-                        <h5> Je suis disponible le...</h5>
-                        <form [formGroup]="formSelectDateMult" (ngSubmit)="addParticipationMission(m.mission)">
-
-                          <div *ngFor="let order of getOrders(); let i = index">
-                            <li>
-                              <label formArrayName="orders">
-                                <input type="checkbox"
-                                       [formControlName]="i">
-                                {{ordersData[i].name}}
-
-
-                              </label>
-
-                            </li>
-
-
-                          </div>
-                          <div *ngIf="!formSelectDateMult.valid">Au minimum 1 jour</div>
-                          <br>
-                          <button [disabled]="!formSelectDateMult.valid" (click)="addParticipationMission(m.mission)"
-                                  class="btn btn-info btn-rounded btn-sm"
-                                  title="Postuler">
-
-
-                            <i class="fas fa-hands-helping"></i>
-                          </button>
-                        </form>
-
+                      <div *ngIf="m.exist==1 && m.affected==1">
+                       <span class="badge badge-primary">
+                         Statut: vous êtes affecté à cette mission
+                         <span class=" fas fa-heart"></span>
+                      </span>
 
                       </div>
 
@@ -314,11 +289,25 @@
                   </td>
 
                 </tr>
+                <tr style="text-align:center" *ngIf="m.exist==1 && m.affected==0">
+                  <td>
+
+                    <button class="btn  btn-danger" title="Annuler"
+                            *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+                            data-toggle="modal"
+                            data-target="#modalAnnulation" (click)="openModalFreeMission(m)"><span
+                      class="fas fa-window-close"></span>  Annuler </button>
+
+
+                  </td>
+                </tr>
 
                 </tbody>
                 <!--Table body-->
 
               </table>
+
+
               <div style="text-align: center;" *ngIf="missionsAuth.length != 0">
                 <pagination-controls class="my-pagination" id="listing_pagination2" maxSize="5" directionLinks="true"
                                      previousLabel="Précédent"
@@ -384,12 +373,16 @@
                     <div style="text-align: center; color: black">
 
 
-                      <button class="btn btn-info btn-rounded btn-sm"
-                              title="Postuler" data-toggle="modal"
-                              data-target="#modallogin"
-                              *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
-                        <i class="fas fa-hands-helping"></i></button>
 
+                      <button  title="Postuler" data-toggle="modal"
+                               data-target="#modallogin"
+                               *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+                              class="btn btn-success" data-toggle="modal"
+                             >
+                        <i class="fas fa-hands-helping"></i> Participer
+
+
+                      </button>
 
                       <h1 *ngIf="(m.evenement.dateFin|date:'shortDate') < (dateJour |date:'shortDate')">
                       <span
@@ -434,6 +427,63 @@
 </div>
 
 <!-- ============================================================== -->
+<!-- Modal ParticiperMission -->
+<!-- ============================================================== -->
+<div class="modal fade" id="modalParticiperMission" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Participer en tant que bénévole</h5>
+
+      </div>
+      <div class="modal-body">
+        Devenir bénévolé pour <strong>{{titre.value}}</strong>
+        <h5> Je suis disponible le...</h5>
+        <form [formGroup]="formSelectDateMult">
+
+          <div *ngFor="let order of getOrders(); let i = index">
+            <li>
+              <label formArrayName="orders">
+                <input type="checkbox"
+                       [formControlName]="i">
+                {{ordersData[i].name}}
+
+
+              </label>
+
+            </li>
+
+
+          </div>
+          <div *ngIf="!formSelectDateMult.valid">Au minimum 1 jour</div>
+          <br>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Fermer
+        </button>
+
+        <button [disabled]="!formSelectDateMult.valid" data-dismiss="modal" title="Postuler"
+                (click)="addParticipationMission()"
+                class="btn btn-success btn-rounded btn-sm"><i class="fas fa-hands-helping"></i>
+
+
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End Modal ParticiperMission -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
 <!-- Modal Annulation -->
 <!-- ============================================================== -->
 <div class="modal fade" id="modalAnnulation" tabindex="-1" role="dialog"
@@ -469,6 +519,7 @@
 <!-- ============================================================== -->
 <!-- Modal Login -->
 <!-- ============================================================== -->
+
 <div class="modal fade" id="modallogin" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true"
      *ngIf="!userService.isAuthenticated() ">
