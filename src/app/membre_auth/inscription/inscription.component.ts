@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
-import Stepper from 'bs-stepper';
-import {TestServiceService} from '../../test/services/test-service.service';
+
 import {UserService} from '../services/user.service';
 import {User} from '../models/user';
 
@@ -11,7 +10,6 @@ import {User} from '../models/user';
   styleUrls: ['./inscription.component.scss']
 })
 export class InscriptionComponent implements OnInit {
-  private stepper: Stepper;
   myForm: FormGroup;
   membre: User;
   isSignedUp = false;
@@ -81,13 +79,6 @@ export class InscriptionComponent implements OnInit {
     return this.myForm.get('genre');
   }
 
-  next() {
-    this.stepper.next();
-  }
-
-  previous() {
-    this.stepper.previous();
-  }
 
   onSubmit() {
     this.membre = this.myForm.value;
@@ -109,9 +100,6 @@ export class InscriptionComponent implements OnInit {
 
 
   ngOnInit() {
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: true,
-      animation: true
-    });
+
   }
 }

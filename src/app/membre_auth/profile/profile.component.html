@@ -53,6 +53,7 @@
           <div class="form-group col-md-6">
             <label class="textlabel">Date de naissance </label>
             <input type="date" class="form-control" name="dateNaissance" formControlName="dateNaissance"
+                   max="2006-01-01"
             />
             <div *ngIf="dateNaissance.invalid && dateNaissance.touched">
               <small *ngIf="dateNaissance.errors.required" class="text-danger"> Veuillez remplir ce
