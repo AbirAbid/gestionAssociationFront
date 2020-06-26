@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   roles: string;
   loginInfo: AuthLoginInfo;
   user: User;
-  myForm: FormGroup;
+  formulaireLogin: FormGroup;
 
   constructor(private userService: UserService,
               private router: Router, private toastr: ToastrService, private fb: FormBuilder
@@ -32,17 +32,17 @@ export class LoginComponent implements OnInit {
         Validators.email])
     };
     // relie formGrp + formControl
-    this.myForm = this.fb.group(formContrls);
+    this.formulaireLogin = this.fb.group(formContrls);
 
     this.loginInfo = new AuthLoginInfo();
   }
 
   get password() {
-    return this.myForm.get('password');
+    return this.formulaireLogin.get('password');
   }
 
   get username() {
-    return this.myForm.get('username');
+    return this.formulaireLogin.get('username');
   }
 
 
@@ -54,13 +54,12 @@ export class LoginComponent implements OnInit {
      }*/
   }
 
-  onSubmit() {
-    this.loginInfo = this.myForm.value;
+  authentification() {
+    this.loginInfo = this.formulaireLogin.value;
     console.log(' this.loginInfo  ', this.loginInfo);
     console.log('this.form ', this.form);
     this.isLoginFailed = false;
-    /*this.loginInfo.username = this.form.username;
-    this.loginInfo.password = this.form.password;*/
+
     this.roles = this.userService.getAuthorities();
     /*subscribe like youtube chaine ==> les notifs intercept  */
     /*observer  observable Result  */

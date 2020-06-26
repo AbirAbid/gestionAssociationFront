@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn, AbstractControl} from '@angular/forms';
+import {FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn, AbstractControl, Validators} from '@angular/forms';
 import {EventService} from '../services/event-service/event.service';
 import {Evenement} from '../models/Evenement';
 import {Bien} from '../models/Bien';
@@ -48,6 +48,8 @@ export class EventDetailComponent implements OnInit {
   loginInfo: AuthLoginInfo;
   MyArrayDate = [];
   ordersData = [];
+  formulaireLogin: FormGroup;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
@@ -73,10 +75,21 @@ export class EventDetailComponent implements OnInit {
       id: ['']
     });
 
+    let formContrls = {
+      // all validators to input firstname
+      password: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required,
+        Validators.email])
+    };
+    // relie formGrp + formControl
+    this.formulaireLogin = this.fb.group(formContrls);
+
     this.loginInfo = new AuthLoginInfo();
   }
 
   ngOnInit(): void {
+    this.missionsAuth = [];
+
     this.id = this.route.snapshot.params.id;
     if (this.userService.isAuthenticated()) {
       this.username = this.userService.getProfileCurrentUser().username;
@@ -254,23 +267,34 @@ export class EventDetailComponent implements OnInit {
 
   /************************************** Authentification  *******************************************/
 
+  get password() {
+    return this.formulaireLogin.get('password');
+  }
 
-  onSubmitLoginModal() {
+  get usernameAuth() {
+    return this.formulaireLogin.get('username');
+  }
+
+  authentification() {
+    this.loginInfo = this.formulaireLogin.value;
+    console.log(' this.loginInfo  ', this.loginInfo);
+    console.log('this.form ', this.form);
     this.isLoginFailed = false;
-    this.loginInfo.username = this.form.username;
-    this.loginInfo.password = this.form.password;
     this.roles = this.userService.getAuthorities();
-
+    /*subscribe like youtube chaine ==> les notifs intercept  */
+    /*observer  observable Result  */
     this.userService.attemptAuth(this.loginInfo).subscribe(
       (data: any) => {
         console.log('data', data);
         try {
-          if (data && data.error) {
+          if (data == null) {
             this.isLoginFailed = true;
-          } else {
+            this.errorMessage = 'no';
+          } else  {
             let currentUser: any;
             currentUser = {};
             currentUser.profile = {};
+            currentUser.profile.user = data.user.nom;
             currentUser.profile.username = data.username;
             currentUser.isAuthenticated = true;
             currentUser.tokenAuth = data.accessToken;
@@ -297,13 +321,16 @@ export class EventDetailComponent implements OnInit {
         }
 
       },
+
       error => {
-        console.log(error);
+        console.log('error', error);
+
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
       }
     );
   }
+
 
   /************************************** Pour avoir la liste des dates  *******************************************/
 
@@ -358,6 +385,7 @@ export class EventDetailComponent implements OnInit {
       .filter(v => v !== null);
     console.log(selectedOrderIds);
   }
+
 }
 
 function minSelectedCheckboxes(min = 1) {
