@@ -5,6 +5,7 @@ import {Evenement} from '../models/Evenement';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {EventCountCategories} from '../models/EventCountCategories';
 import {NgxSpinnerService} from "ngx-spinner";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-evenement',
@@ -14,22 +15,23 @@ import {NgxSpinnerService} from "ngx-spinner";
 
 export class EvenementComponent implements OnInit {
   calendarPlugins = [dayGridPlugin];
-
   totalRecords: number;
   page = 1;
   evenements: Evenement [] = [];
   dateJour = new Date();
+
   eventCountCategories: EventCountCategories [] = [];
   nb = 0;
 
-  constructor(private eventService: EventService, private router: Router, private SpinnerService: NgxSpinnerService) {
+  constructor(private eventService: EventService, private router: Router, private SpinnerService: NgxSpinnerService, public datepipe: DatePipe) {
+
+
   }
 
   ngOnInit(): void {
     this.SpinnerService.show();
 
     this.eventService.getCountCategoriesEvent().subscribe((data) => {
-
       this.eventCountCategories = data;
       console.log(' this.eventCountCategories ', this.eventCountCategories);
       this.SpinnerService.hide();

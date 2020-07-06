@@ -14,6 +14,7 @@ import {MissionUserDisplay} from '../models/MissionUserDisplay';
 import {AuthLoginInfo} from '../../membre_auth/models/login-info';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {of} from 'rxjs';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-event-detail',
@@ -53,7 +54,7 @@ export class EventDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private eventService: EventService, private fb: FormBuilder,
               private  missionBenevoleService: MissionBenevoleService, public userService: UserService, private biensService: BiensService,
-              private toastr: ToastrService, private SpinnerService: NgxSpinnerService) {
+              private toastr: ToastrService, private SpinnerService: NgxSpinnerService, public datepipe: DatePipe) {
 
     /***pour formulaire mission date disponibilité***/
     this.formSelectDateMult = this.fb.group({
@@ -290,7 +291,7 @@ export class EventDetailComponent implements OnInit {
           if (data == null) {
             this.isLoginFailed = true;
             this.errorMessage = 'no';
-          } else  {
+          } else {
             let currentUser: any;
             currentUser = {};
             currentUser.profile = {};
@@ -346,29 +347,40 @@ export class EventDetailComponent implements OnInit {
     // To calculate the time difference of two dates
     let Difference_In_Time = date2.getTime() - date1.getTime();
     console.log('Difference_In_Time ', Difference_In_Time);
-// To calculate the no. of days between two dates
-    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    // console.log('Difference_In_Days ', Difference_In_Days);
-
-    let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
-    //console.log('dateIncrement outside ', dateIncrement);
-
-    for (let i = 0; i < Difference_In_Days; i++) {
-      // tslint:disable-next-line:radixs
+    if (Difference_In_Time === 0) {
+      let dateIncrement = new Date(date1.getTime());
 
       let object: any = {};
       object.name = dateIncrement.toDateString();
-      //console.log('object.name ', object.name);
 
       this.MyArrayDate.push(object);
-      dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
-
+      this.ordersData = this.MyArrayDate;
     }
-    console.log('MyArrayType listDays', this.MyArrayDate);
-    this.ordersData = this.MyArrayDate;
+    else {
+// To calculate the no. of days between two dates
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // console.log('Difference_In_Days ', Difference_In_Days);
 
-    console.log('this.getOrders()', this.getOrders());
+      let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
+      //console.log('dateIncrement outside ', dateIncrement);
+
+      for (let i = 0; i < Difference_In_Days; i++) {
+        // tslint:disable-next-line:radixs
+
+        let object: any = {};
+        object.name = dateIncrement.toDateString();
+
+        this.MyArrayDate.push(object);
+        dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
+
+      }
+      console.log('MyArrayType listDays', this.MyArrayDate);
+      this.ordersData = this.MyArrayDate;
+
+      console.log('this.getOrders()', this.getOrders());
+    }
     return this.MyArrayDate;
+
   }
 
   private addCheckboxes() {

@@ -1,5 +1,5 @@
 <div class="hero-area">
-  <div class="page-banner parallax" style="background-image:url('../../assets/images/carousel2.jpg');">
+  <div class="page-banner parallax" style="background-image:url('./assets/images/carousel2.jpg');">
     <div class="container">
       <div class="page-banner-text">
         <h1 class="block-title">Détail événements </h1>
@@ -17,13 +17,13 @@
       <!-- Information general event  -->
       <!-- ============================================================== -->
 
-      <div style="text-align: center;"><h2>  {{event.titre}} </h2> <span
-        *ngIf="(event.dateFin|date:'shortDate') < (dateJour | date:'shortDate')" class="badge badge-danger">
-        Passé
+      <div style="text-align: center;"><h2>  {{event.titre}} </h2>
 
+        <span *ngIf="(event.dateFin|date: 'yyyy/MM/dd') <this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')"
+              class="badge badge-danger">
+                  Passé  </span>
 
-
-      </span></div>
+      </div>
 
 
       <hr/>
@@ -37,6 +37,7 @@
           <div><i class="fas fa-clock"></i>
             Du <strong> {{event.dateDebut | date:'dd-MM-yyyy'}} </strong> au
             <strong> {{event.dateFin | date:'dd-MM-yyyy'}}</strong>
+
 
           </div>
           <div class="spacer-50"></div>
@@ -205,7 +206,7 @@
           <div id="sampletab2" class="tab-pane">
 
             <!-- ============================================================== -->
-            <!-- issions bénévolats Is  Authentificated  -->
+            <!-- Missions bénévolats Is  Authentificated  -->
             <!-- ============================================================== -->
             <div *ngIf="userService.isAuthenticated()">
               <div class="alert alert-danger" role="alert" *ngIf="missionsAuth.length == 0">
@@ -219,9 +220,9 @@
                   <th>
                     <div style="text-align: center;color: black">Titre Mission</div>
                   </th>
-                  <th>
+                  <!--<th>
                     <div style="text-align: center;color: black">Déscription</div>
-                  </th>
+                  </th>-->
                   <th>
                     <div style="text-align: center; color: black"></div>
                   </th>
@@ -241,12 +242,16 @@
                   <td rowspan="2">
                     <div style="text-align: center; color: black">{{m.mission.titre}}</div>
                   </td>
-                  <td rowspan="2">
+                  <!--<td rowspan="2">
                     <div style="text-align: center;  color: black">{{m.mission.description}}</div>
-                  </td>
+                  </td>-->
                   <td>
                     <div style="text-align: center; color: black"
+                         *ngIf="(m.mission.evenement.dateFin|date:'yyyy/MM/dd') >= this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
+
+                    <!--
                          *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
+-->
 
 
                       <!--<button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
@@ -256,7 +261,7 @@
                       <div style="text-align: center; color: black" *ngIf="m.exist==1 && m.affected==0"
                       >
 
-                         Statut: en attente de confirmation
+                        Statut: en attente de confirmation
 
 
                       </div>
@@ -271,8 +276,8 @@
 
                       <div *ngIf="m.exist==1 && m.affected==1">
 
-                         Statut: vous êtes affecté à cette mission
-                         <span class=" fas fa-heart"></span>
+                        Statut: vous êtes affecté à cette mission
+                        <span class=" fas fa-heart"></span>
 
 
                       </div>
@@ -281,7 +286,7 @@
                     </div>
 
                     <h1 style="text-align: center; "
-                        *ngIf="(m.mission.evenement.dateFin|date:'shortDate') < (dateJour |date:'shortDate')">
+                        *ngIf="(m.mission.evenement.dateFin|date:'yyyy/MM/dd') < this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
                       <span class="badge">Cet événement est passé</span>
 
                     </h1>
@@ -293,7 +298,7 @@
                   <td>
 
                     <button class="btn  btn-danger" title="Annuler"
-                            *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+                            *ngIf="(m.mission.evenement.dateFin|date:'yyyy/MM/dd') >=  this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')"
                             data-toggle="modal"
                             data-target="#modalAnnulation" (click)="openModalFreeMission(m)"><span
                       class="fas fa-window-close"></span> Annuler
@@ -341,9 +346,9 @@
                   <th>
                     <div style="text-align: center;color: black">Titre Mission</div>
                   </th>
-                  <th>
+                 <!-- <th>
                     <div style="text-align: center;color: black">Déscription</div>
-                  </th>
+                  </th>-->
 
 
                   <th>
@@ -365,9 +370,9 @@
                   <td>
                     <div style="text-align: center; color: black">{{m.id}}*{{m.titre}}</div>
                   </td>
-                  <td>
+                  <!--<td>
                     <div style="text-align: center;  color: black">{{m.description}}</div>
-                  </td>
+                  </td>-->
 
 
                   <td>
@@ -376,15 +381,20 @@
 
                       <button title="Postuler" data-toggle="modal"
                               data-target="#modallogin"
-                              *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+                              *ngIf="(m.evenement.dateFin|date:'yyyy/MM/dd') >= this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')"
+
                               class="btn btn-success" data-toggle="modal"
                       >
+<!--
+                              *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+-->
+
                         <i class="fas fa-hands-helping"></i> Participer
 
 
                       </button>
 
-                      <h1 *ngIf="(m.evenement.dateFin|date:'shortDate') < (dateJour |date:'shortDate')">
+                      <h1  *ngIf="(m.evenement.dateFin|date:'yyyy/MM/dd') < this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 
@@ -557,7 +567,6 @@
             </div>
 
 
-
             <div class="spacer-10"></div>
             <div *ngIf="isLoginFailed" class="alert alert-danger">
               <span class="fa fa-times-circle"> </span>
@@ -568,7 +577,8 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               <div class="form-group">
-                <input type="submit"  (click)="authentification()" class="btn btn-primary" value="Se connecter" data-dismiss="modal">
+                <input type="submit" (click)="authentification()" class="btn btn-primary" value="Se connecter"
+                       data-dismiss="modal">
               </div>
             </div>
             <div class="copy-text"> Vous n'avez pas encore de compte ? <a href="inscription"> Créer

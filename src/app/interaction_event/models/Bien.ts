@@ -7,6 +7,5 @@ export class Bien {
   qte: number;
   totaleqteDonnee: number;
   evenement: Evenement;
-  // userBiens: Array<UserBien> = [];
 
 }

@@ -6,16 +6,16 @@
     <div class="container">
 
       <ul class="social-icons topmenu pull-right">
-        <li class="facebook"><a [routerLink]="['/login']" *ngIf="!userService.isAuthenticated()"> S'authentifier </a>
+        <li class="twitter"><a [routerLink]="['/login']" *ngIf="!userService.isAuthenticated()"> S'authentifier </a>
         </li>
         <li class="twitter"><a [routerLink]="['/inscription']" *ngIf="!userService.isAuthenticated()"> S'inscrire</a>
         </li>
-        <li class="youtube"><a routerLink="/account" *ngIf="userService.isAuthenticated()"> <i class="fas fa-user"></i>
+        <li class="twitter"><a routerLink="/account" *ngIf="userService.isAuthenticated()"> <i class="fas fa-user"></i>
           Mon profile </a></li>
-        <li class="youtube"><a routerLink="/tabBord" *ngIf="userService.isAuthenticated()"><i class="fa fa-table"
+        <li class="twitter"><a routerLink="/tabBord" *ngIf="userService.isAuthenticated()"><i class="fa fa-table"
                                                                                               aria-hidden="true"></i>
           Tableau de bord </a></li>
-        <li class="youtube"><a (click)="logout()" *ngIf="userService.isAuthenticated()"><i
+        <li class="twitter"><a (click)="logout()" *ngIf="userService.isAuthenticated()"><i
           class="fas fa-sign-out-alt"></i></a></li>
 
 
