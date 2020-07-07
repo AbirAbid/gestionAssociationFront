@@ -35,24 +35,47 @@
         </div>
         <div class="col-sm-6">
           <div><i class="fas fa-clock"></i>
-            Du <strong> {{event.dateDebut | date:'dd-MM-yyyy'}} </strong> au
-            <strong> {{event.dateFin | date:'dd-MM-yyyy'}}</strong>
-
-
+            Du <strong> {{event.dateDebut | date:'dd-MM-yyyy'}} à {{event.dateDebut | date:'shortTime'}} </strong> au
+            <strong> {{event.dateFin | date:'dd-MM-yyyy'}} à {{event.dateFin | date:'shortTime'}} </strong>
           </div>
-          <div class="spacer-50"></div>
 
+
+          <div class="spacer-20"></div>
 
           <div><i class="fas fa-map-marked-alt"></i> Lieu :
             <strong> {{event.ville}}</strong> , <strong>{{event.adresse}}</strong>
           </div>
-          <br>
+
+          <div class="spacer-20"></div>
+
           <div class="row" *ngIf="event.frais">
             <div class="col-sm-6">
               <strong> <i class="fas fa-money-check-alt"></i> Prix d'inscription? :</strong>  {{event.frais}} DT
             </div>
             <div class="col-sm-6">
               <span class="badge badge-warning">Inscription obligatoire</span>
+            </div>
+          </div>
+
+
+          <div class="row" *ngIf="!event.frais">
+            <div class="col-sm-4">
+              <strong> <i class="fas fa-money-check-alt"></i> Prix :</strong>
+            </div>
+            <div class="col-sm-8">
+              <span class="badge badge-success">Événement Gratuit</span>
+            </div>
+          </div>
+
+          <div class="spacer-20"></div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <strong> <i class="fas fa-handshake"></i> Nos partenaires :</strong>
+            </div>
+            <div class="col-sm-8" *ngFor="let s of event.sponsors">
+              <span class="badge">{{s.titreSponsor}}</span>
+
             </div>
           </div>
 
@@ -91,13 +114,13 @@
                   <div style="text-align: center; color: black">Titre Bien</div>
                 </th>
                 <th>
-                  <div style="text-align: center;color: black">Quantités demandées</div>
+                  <div style="text-align: center;color: black">Totale Quantités demandées</div>
                 </th>
                 <th>
                   <div style="text-align: center;color: black">Totale Quantités données</div>
                 </th>
                 <th>
-                  <div style="text-align: center;color: black">Reste</div>
+                  <div style="text-align: center;color: black">Nous avons encore besoin</div>
                 </th>
 
                 <th>
@@ -118,7 +141,7 @@
     }">
               <tr>
                 <td>
-                  <div style="text-align: center; color: black">{{b.id}}* *{{b.titreBien}}</div>
+                  <div style="text-align: center; color: black">{{b.titreBien}}</div>
                 </td>
                 <td>
                   <div style="text-align: center;color: black">{{b.qte}}</div>
@@ -134,8 +157,7 @@
 
                     <form [formGroup]="formBien" (ngSubmit)="addParticipationBien(b)">
                       <div class="input-group"
-                           *ngIf="(b.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
-
+                           *ngIf="(b.evenement.dateFin|date:'yyyy/MM/dd') >= (this.datepipe.transform(this.dateJour, 'yyyy/MM/dd'))">
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
                                name="qtedonnee"
                                *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated() "
@@ -153,7 +175,7 @@
 
 
                     <div class="input-group-btn"
-                         *ngIf="(b.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
+                         *ngIf="(b.evenement.dateFin|date:'yyyy/MM/dd') >= (this.datepipe.transform(this.dateJour, 'yyyy/MM/dd'))">
                       <button class="btn btn-primary btn-sm"
                               *ngIf="!userService.isAuthenticated() && b.qte>b.totaleqteDonnee "
                               title="Donner"
@@ -163,11 +185,12 @@
                       </button>
                     </div>
                     <h1
-                      *ngIf="b.qte==b.totaleqteDonnee && (b.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"><span
+                      *ngIf="b.qte==b.totaleqteDonnee && (b.evenement.dateFin|date:'yyyy/MM/dd') >= (this.datepipe.transform(this.dateJour, 'yyyy/MM/dd'))"><span
                       class="badge badge-success">Nous avous obtenu le besoin</span>
                     </h1>
 
-                    <h1 *ngIf="(b.evenement.dateFin|date:'shortDate') < (dateJour  |date:'shortDate')">
+                    <h1
+                      *ngIf="(b.evenement.dateFin|date:'yyyy/MM/dd') < (this.datepipe.transform(this.dateJour, 'yyyy/MM/dd'))">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 
@@ -249,9 +272,9 @@
                     <div style="text-align: center; color: black"
                          *ngIf="(m.mission.evenement.dateFin|date:'yyyy/MM/dd') >= this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
 
-                    <!--
-                         *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
--->
+                      <!--
+                           *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
+  -->
 
 
                       <!--<button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
@@ -275,10 +298,10 @@
                       </button>
 
                       <div *ngIf="m.exist==1 && m.affected==1">
-
-                        Statut: vous êtes affecté à cette mission
+<div class="badge badge-primary">
+                        Statut: Vous êtes affecté à cette mission
                         <span class=" fas fa-heart"></span>
-
+</div>
 
                       </div>
 
@@ -346,9 +369,9 @@
                   <th>
                     <div style="text-align: center;color: black">Titre Mission</div>
                   </th>
-                 <!-- <th>
-                    <div style="text-align: center;color: black">Déscription</div>
-                  </th>-->
+                  <!-- <th>
+                     <div style="text-align: center;color: black">Déscription</div>
+                   </th>-->
 
 
                   <th>
@@ -368,7 +391,7 @@
     }">
                 <tr>
                   <td>
-                    <div style="text-align: center; color: black">{{m.id}}*{{m.titre}}</div>
+                    <div style="text-align: center; color: black">{{m.titre}}</div>
                   </td>
                   <!--<td>
                     <div style="text-align: center;  color: black">{{m.description}}</div>
@@ -385,16 +408,17 @@
 
                               class="btn btn-success" data-toggle="modal"
                       >
-<!--
-                              *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
--->
+                        <!--
+                                                      *ngIf="(m.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')"
+                        -->
 
                         <i class="fas fa-hands-helping"></i> Participer
 
 
                       </button>
 
-                      <h1  *ngIf="(m.evenement.dateFin|date:'yyyy/MM/dd') < this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
+                      <h1
+                        *ngIf="(m.evenement.dateFin|date:'yyyy/MM/dd') < this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
                       <span
                         class="badge badge-danger">Cet événement est passé</span>
 

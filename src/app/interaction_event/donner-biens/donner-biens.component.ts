@@ -4,6 +4,7 @@ import {Bien} from '../models/Bien';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-donner-biens',
@@ -16,8 +17,9 @@ export class DonnerBiensComponent implements OnInit {
   show = false;
   totalRecords: number;
   page = 1;
+  dateJour = new Date();
 
-  constructor(private biensService: BiensService, private fb: FormBuilder, private router: Router, private SpinnerService: NgxSpinnerService) {
+  constructor(private biensService: BiensService, private fb: FormBuilder, private router: Router, private SpinnerService: NgxSpinnerService, public datepipe: DatePipe) {
     const formContrls = {
       region: new FormControl()
     };

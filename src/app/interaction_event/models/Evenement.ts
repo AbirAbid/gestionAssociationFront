@@ -7,4 +7,5 @@ export class Evenement {
   ville: string;
   adresse: string;
   frais: number;
+  sponsors: any;
 }

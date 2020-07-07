@@ -4,6 +4,7 @@ import {MissionBenevoleService} from '../services/mission-benevole-service/missi
 import {Router} from '@angular/router';
 import {Mission} from '../models/Mission';
 import {NgxSpinnerService} from "ngx-spinner";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-devenir-benevole',
@@ -16,8 +17,9 @@ export class DevenirBenevoleComponent implements OnInit {
     show = false;
     totalRecords: number;
     page = 1;
+  dateJour = new Date();
 
-    constructor(private missionBenevoleService: MissionBenevoleService, private fb: FormBuilder, private router: Router, private SpinnerService: NgxSpinnerService) {
+    constructor(private missionBenevoleService: MissionBenevoleService, private fb: FormBuilder, private router: Router, private SpinnerService: NgxSpinnerService, public  datepipe: DatePipe) {
         const formContrls = {
             region: new FormControl()
         };

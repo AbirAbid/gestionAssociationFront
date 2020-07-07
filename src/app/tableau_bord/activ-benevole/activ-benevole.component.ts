@@ -7,6 +7,7 @@ import {MissionBenevoleService} from '../../interaction_event/services/mission-b
 import {Router} from '@angular/router';
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-activ-benevole',
@@ -21,9 +22,10 @@ export class ActivBenevoleComponent implements OnInit {
   page = 1;
   isServerProblem = true;
   formMission: FormGroup;
+  dateJour = new Date();
 
   constructor(private router: Router, private tabBordService: TabBordService, private userService: UserService,
-              private  missionBenevoleService: MissionBenevoleService, private SpinnerService: NgxSpinnerService, private fb: FormBuilder) {
+              private  missionBenevoleService: MissionBenevoleService, private SpinnerService: NgxSpinnerService, private fb: FormBuilder, public datepipe: DatePipe) {
     this.formMission = this.fb.group({
       titre: [''],
       description: [''],

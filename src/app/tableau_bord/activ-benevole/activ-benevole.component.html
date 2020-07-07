@@ -19,83 +19,94 @@
         Impossible de se connecter au serveur pour l'instant .
       </div>
       <div class="alert alert-danger" role="alert" *ngIf="listMissionUser.length == 0 && isServerProblem==false">
-        Aucune participation trouvée      </div>
+        Aucune participation trouvée
+      </div>
+      <div class="table-responsive">
 
-      <table class="table table-bordered" *ngIf="listMissionUser.length!=0">
-
-
-        <!--Table head-->
-        <thead class="table-active rounded">
-        <tr>
-          <th>
-            <div style="text-align: center;">Titre Mission</div>
-          </th>
+        <table class="table table-bordered" *ngIf="listMissionUser.length!=0">
 
 
-          <th>
-            <div style="text-align: center;">Événements</div>
-          </th>
-          <th>
-            <div style="text-align: center;">Date de participation</div>
-          </th>
+          <!--Table head-->
+          <thead class="table-active rounded">
+          <tr>
+            <th>
+              <div style="text-align: center;">Titre Mission</div>
 
-          <th>
-            <div style="text-align: center;"></div>
-          </th>
-
-        </tr>
-        </thead>
-        <!--Table head-->
+            </th>
 
 
-        <tbody *ngFor="let lm of listMissionUser | paginate:{
+            <th>
+              <div style="text-align: center;">Événements</div>
+            </th>
+            <th>
+              <div style="text-align: center;">Date de participation</div>
+            </th>
+
+            <th>
+              <div style="text-align: center;"></div>
+            </th>
+
+          </tr>
+          </thead>
+          <!--Table head-->
+
+
+          <tbody *ngFor="let lm of listMissionUser | paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
     totalItems:totalbien
 
     }">
-        <tr>
-          <td>
-            <div style="text-align: center;"> {{lm.mission.titre}}</div>
-          </td>
-          <td>
-            <div style="text-align: center;"><a [routerLink]=""
-                                                (click)="eventDetail(lm.mission.evenement.id)">{{lm.mission.evenement.titre}} </a>
-            </div>
-          </td>
-          <td>
-            <div style="text-align: center;">{{lm.demandeDate | date}}</div>
-          </td>
-          <td>
-            <div *ngIf="lm.affected==1" class="alert alert-success"> Vous êtes affectée à cette mission</div>
-            <div style="text-align: center;" *ngIf="lm.affected==0">
+          <tr>
+            <td>
+              <div style="text-align: center;"> {{lm.mission.titre}}</div>
+            </td>
+            <td>
+              <div style="text-align: center;"><a [routerLink]=""
+                                                  (click)="eventDetail(lm.mission.evenement.id)">{{lm.mission.evenement.titre}} </a>
+                <span
+                  *ngIf="(lm.mission.evenement.dateFin|date: 'yyyy/MM/dd') <this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')"
+                  class="badge badge-danger">
+                  Passé  </span>
 
 
-              <button class="btn btn-rounded  btn-danger" title="Annuler"
-                      data-toggle="modal"
-                      data-target="#modalAnnulation" (click)="openModalFreeMission(lm.mission)"><span
-                class="fas fa-window-close"></span> Annuler
-              </button>
+              </div>
+            </td>
+            <td>
+              <div style="text-align: center;">{{lm.demandeDate | date}}</div>
+            </td>
+            <td>
+              <div *ngIf="lm.affected==1" class="alert alert-success"> Vous êtes affectée à cette mission</div>
+              <div style="text-align: center;" *ngIf="lm.affected==0">
 
-            </div>
-          </td>
+
+                <button class="btn btn-rounded  btn-danger" title="Annuler"
+                        data-toggle="modal"
+                        data-target="#modalAnnulation" (click)="openModalFreeMission(lm.mission)"><span
+                  class="fas fa-window-close"></span> Annuler
+                </button>
+
+              </div>
+            </td>
 
 
-        </tr>
+          </tr>
 
-        </tbody>
-        <!--Table body-->
+          </tbody>
+          <!--Table body-->
 
-      </table>
-    <div style="text-align: center;" *ngIf="listMissionUser.length != 0">
-         <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
-                              previousLabel=""
-                              nextLabel=""
-                              responsive
-                              (pageChange)="page=$event"></pagination-controls>
+        </table>
+      </div>
+      <div style="text-align: center;" *ngIf="listMissionUser.length != 0">
+        <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+                             previousLabel=""
+                             nextLabel=""
+                             responsive
+                             (pageChange)="page=$event"></pagination-controls>
 
-       </div></div>
+      </div>
+    </div>
   </div>
 </div>
 

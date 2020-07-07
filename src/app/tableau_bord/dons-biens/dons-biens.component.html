@@ -19,70 +19,79 @@
         Impossible de se connecter au serveur pour l'instant .
       </div>
       <div class="alert alert-danger" role="alert" *ngIf="listBienUser.length == 0 && isServerProblem==false">
-        Aucune participation trouvée      </div>
-      <table class="table table-bordered" *ngIf="listBienUser.length!=0">
+        Aucune participation trouvée
+      </div>
+      <div class="table-responsive">
+
+          <table class="table table-bordered" *ngIf="listBienUser.length!=0">
 
 
-        <!--Table head-->
-        <thead class="table-active rounded">
-        <tr>
-          <th>
-            <div style="text-align: center;">Titre Bien</div>
-          </th>
+            <!--Table head-->
+            <thead class="table-active rounded">
+            <tr>
+              <th>
+                <div style="text-align: center;">Titre Bien</div>
+              </th>
 
-          <th>
-            <div style="text-align: center;"> Quantités données</div>
-          </th>
+              <th>
+                <div style="text-align: center;"> Quantités données</div>
+              </th>
 
-          <th>
-            <div style="text-align: center;">Événements</div>
-          </th>
-          <th>
-            <div style="text-align: center;">Date de participation</div>
-          </th>
-          <th>
-            <div style="text-align: center;"></div>
-          </th>
-        </tr>
-        </thead>
-        <!--Table head-->
+              <th>
+                <div style="text-align: center;">Événements</div>
+              </th>
+              <th>
+                <div style="text-align: center;">Date de participation</div>
+              </th>
+              <th>
+                <div style="text-align: center;"></div>
+              </th>
+            </tr>
+            </thead>
+            <!--Table head-->
 
 
-        <tbody *ngFor="let ub of listBienUser | paginate:{
+            <tbody *ngFor="let ub of listBienUser | paginate:{
     id:'listing_pagination',
     itemsPerPage:10,
     currentPage:page,
     totalItems:totalbien
 
     }">
-        <tr>
-          <td>
-            <div style="text-align: center;">{{ub.bien.titreBien}}</div>
-          </td>
-          <td>
-            <div style="text-align: center;">{{ub.qteDonnee}}</div>
-          </td>
-          <td>
-            <div style="text-align: center;"><a [routerLink]=""
-                                                (click)="eventDetail(ub.bien.evenement.id)">{{ub.bien.evenement.titre}}</a>
-            </div>
-          </td>
+            <tr>
+              <td>
+                <div style="text-align: center;">{{ub.bien.titreBien}}</div>
+              </td>
+              <td>
+                <div style="text-align: center;">{{ub.qteDonnee}}</div>
+              </td>
+              <td>
+                <div style="text-align: center;"><a [routerLink]=""
+                                                    (click)="eventDetail(ub.bien.evenement.id)">{{ub.bien.evenement.titre}}
+                  <span
+                    *ngIf="(ub.bien.evenement.dateFin|date: 'yyyy/MM/dd') <this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')"
+                    class="badge badge-danger">
+                  Passé  </span>
+                </a>
+                </div>
+              </td>
 
-          <td>
-            <div style="text-align: center;">{{ub.dateParticipation|date}}</div>
-          </td>
-          <td>
-            <div style="text-align: center;" class="alert alert-success" role="alert">
-              Merci de votre Générosité
-            </div>
-          </td>
+              <td>
+                <div style="text-align: center;">{{ub.dateParticipation|date}}</div>
+              </td>
+              <td>
+                <div style="text-align: center;" class="alert alert-success" role="alert">
+                  Merci de votre Générosité
+                </div>
+              </td>
 
-        </tr>
+            </tr>
 
-        </tbody>
-        <!--Table body-->
+            </tbody>
+            <!--Table body-->
 
-      </table>
+          </table>
+        </div>
 
       <div style="text-align: center;" *ngIf="listBienUser.length != 0">
         <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
@@ -101,4 +110,5 @@
   .my-pagination /deep/ .ngx-pagination .current {
     background: #0CC9E8;
   }
+
 </style>
