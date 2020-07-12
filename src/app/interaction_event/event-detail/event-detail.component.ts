@@ -115,6 +115,7 @@ export class EventDetailComponent implements OnInit {
           this.SpinnerService.hide();
 
         }, error => console.log(error));
+
       this.getAllMissionAuthentificated();
 
     }
@@ -246,7 +247,7 @@ export class EventDetailComponent implements OnInit {
   getAllMissionAuthentificated() {
 
     this.missionBenevoleService.getMissionPart(this.username, this.id).subscribe(data => {
-      console.log('data', data);
+      console.log('getAllMissionAuthentificated', data);
       this.missionsAuth = data;
     }, error => console.log(error));
   }

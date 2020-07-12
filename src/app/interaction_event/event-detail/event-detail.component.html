@@ -161,7 +161,10 @@
                         <input class="form-control mr-sm-2" type="number" class="form-control mr-sm-2 "
                                name="qtedonnee"
                                *ngIf="b.qte>b.totaleqteDonnee && userService.isAuthenticated() "
-                               id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don" min="0">
+                               id="qtedonnee" formControlName="qtedonnee" placeholder="Taper Votre Don" min="1" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+
+
+
                         <span class="input-group-btn">
                          <button class="btn btn-primary btn-sm form-control"
                                  *ngIf="userService.isAuthenticated() && b.qte>b.totaleqteDonnee "
@@ -265,22 +268,12 @@
                   <td rowspan="2">
                     <div style="text-align: center; color: black">{{m.mission.titre}}</div>
                   </td>
-                  <!--<td rowspan="2">
-                    <div style="text-align: center;  color: black">{{m.mission.description}}</div>
-                  </td>-->
+
                   <td>
                     <div style="text-align: center; color: black"
                          *ngIf="(m.mission.evenement.dateFin|date:'yyyy/MM/dd') >= this.datepipe.transform(this.dateJour, 'yyyy/MM/dd')">
 
-                      <!--
-                           *ngIf="(m.mission.evenement.dateFin|date:'shortDate') >= (dateJour |date:'shortDate')">
-  -->
 
-
-                      <!--<button [disabled]="true" *ngIf="m.exist==1 && m.affected==0"
-                              class="btn btn-info btn-rounded btn-sm">
-                        EN ATTENTE DE CONFIRMATION
-                      </button>-->
                       <div style="text-align: center; color: black" *ngIf="m.exist==1 && m.affected==0"
                       >
 
@@ -298,10 +291,10 @@
                       </button>
 
                       <div *ngIf="m.exist==1 && m.affected==1">
-<div class="badge badge-primary">
-                        Statut: Vous êtes affecté à cette mission
-                        <span class=" fas fa-heart"></span>
-</div>
+                        <div class="badge badge-primary">
+                          Statut: Vous êtes affecté à cette mission
+                          <span class=" fas fa-heart"></span>
+                        </div>
 
                       </div>
 

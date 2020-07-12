@@ -67,11 +67,11 @@
         <h2 class="text-center">Liste des missions bénévoles
 
         </h2>
-        <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0">
+        <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0 &&  !show">
           Impossible de se connecter au serveur pour l'instant .
         </div>
         <div class="alert alert-danger" role="alert" *ngIf="listMission.length == 0 &&  show">
-          Aucune Mission bénévole disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
+          Aucune Mission bénévole est disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
 
           <!--      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>

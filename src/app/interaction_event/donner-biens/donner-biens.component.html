@@ -52,7 +52,7 @@
         </div>
 
         <br>
-        <div class="alert alert-info fade in" role="alert" *ngIf="show">
+        <div class="alert alert-info fade in" role="alert" *ngIf="showMsg">
           Filtres actif Région sélectionnée:<strong>{{region.value}}</strong>
 
           <button (click)="load()" type="button" class="close" aria-label="Close">
@@ -64,11 +64,11 @@
         <h2 class="text-center">Nos Besoins
 
         </h2>
-        <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0">
+        <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0 && !showMsg">
           Impossible de se connecter au serveur pour l'instant .
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0 && show">
-          Aucune Mission bénévole disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
+        <div class="alert alert-danger" role="alert" *ngIf="listBien.length == 0 && showMsg">
+          Aucun besoin des biens est  disponible pour l'instant à <span class="label label-danger">  {{region.value}}</span>
         </div>
 
         <table class="table table-bordered" *ngIf="listBien.length != 0">

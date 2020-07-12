@@ -14,7 +14,7 @@ import {DatePipe} from "@angular/common";
 export class DonnerBiensComponent implements OnInit {
   listBien: Bien[] = [];
   myForm: FormGroup;
-  show = false;
+  showMsg = false;
   totalRecords: number;
   page = 1;
   dateJour = new Date();
@@ -47,7 +47,7 @@ export class DonnerBiensComponent implements OnInit {
   }
 
   load() {
-    this.show = false;
+    this.showMsg = false;
 
     this.biensService.getAllBien().subscribe((data) => {
       this.listBien = data;
@@ -57,7 +57,7 @@ export class DonnerBiensComponent implements OnInit {
 
   getAllBienByRegion() {
     if (this.region.value) {
-      this.show = true;
+      this.showMsg = true;
       this.biensService.getAllBienRegion(this.region.value).subscribe((data) => {
         this.listBien = data;
         console.log('this.listBien', this.listBien);
