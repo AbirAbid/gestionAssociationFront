@@ -347,12 +347,15 @@ export class EventDetailComponent implements OnInit {
     let date2 = this.parseDate(d2);
     // To calculate the time difference of two dates
     let Difference_In_Time = date2.getTime() - date1.getTime();
+
     console.log('Difference_In_Time ', Difference_In_Time);
+
     if (Difference_In_Time === 0) {
       let dateIncrement = new Date(date1.getTime());
 
       let object: any = {};
-      object.name = dateIncrement.toDateString();
+        object.name = this.datepipe.transform(dateIncrement, 'yyyy-MM-dd')
+
 
       this.MyArrayDate.push(object);
       this.ordersData = this.MyArrayDate;
@@ -361,10 +364,11 @@ export class EventDetailComponent implements OnInit {
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log('Difference_In_Days ', Difference_In_Days);
 
-      let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
-      //console.log('dateIncrement outside ', dateIncrement);
 
-      for (let i = 0; i < Difference_In_Days; i++) {
+      //let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
+      let dateIncrement = new Date(date1.getTime());
+
+      for (let i = 0; i <= Difference_In_Days; i++) {
         // tslint:disable-next-line:radixs
 
         let object: any = {};
@@ -376,6 +380,7 @@ export class EventDetailComponent implements OnInit {
         //this.datePipe.transform(myDate, 'yyyy-MM-dd');
         this.MyArrayDate.push(object);
         dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
+        //let dateIncrement = new Date(date1.getTime() + 1000 * 60 * 60 * 24);
 
       }
       //console.log('MyArrayType listDays', this.MyArrayDate);
