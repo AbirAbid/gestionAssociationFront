@@ -149,7 +149,7 @@ export class EventDetailComponent implements OnInit {
       .map((v, i) => v ? this.ordersData[i].name : null)
       .filter(v => v !== null);
     console.log(selectedOrderIds);
-    this.participerMissionForm.dateDisponibiliteList = selectedOrderIds.join('/');
+    this.participerMissionForm.dateDisponibiliteList = selectedOrderIds.join('*');
 
     this.participerMissionForm.demandeDate = this.today;
 
@@ -356,8 +356,7 @@ export class EventDetailComponent implements OnInit {
 
       this.MyArrayDate.push(object);
       this.ordersData = this.MyArrayDate;
-    }
-    else {
+    } else {
 // To calculate the no. of days between two dates
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log('Difference_In_Days ', Difference_In_Days);
@@ -369,16 +368,21 @@ export class EventDetailComponent implements OnInit {
         // tslint:disable-next-line:radixs
 
         let object: any = {};
-        object.name = dateIncrement.toDateString();
+        this.datepipe.transform(dateIncrement, 'yyyy-MM-dd');
+        // console.log('object ',  this.datepipe.transform(dateIncrement, 'yyyy-MM-dd'));
 
+        // object.name = dateIncrement.toDateString();
+        object.name = this.datepipe.transform(dateIncrement, 'yyyy-MM-dd')
+        //this.datePipe.transform(myDate, 'yyyy-MM-dd');
         this.MyArrayDate.push(object);
         dateIncrement = new Date(dateIncrement.getTime() + 1000 * 60 * 60 * 24);
 
       }
-      console.log('MyArrayType listDays', this.MyArrayDate);
+      //console.log('MyArrayType listDays', this.MyArrayDate);
       this.ordersData = this.MyArrayDate;
+      console.log('Difference_In_Days ', this.ordersData);
 
-      console.log('this.getOrders()', this.getOrders());
+      // console.log('this.getOrders()', this.getOrders());
     }
     return this.MyArrayDate;
 
